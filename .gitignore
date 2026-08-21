@@ -1,0 +1,11 @@
+# credenciais locais: a chave de servico do Supabase nunca entra no repositorio
+.env
+supabase/.env
+supabase/.temp/
+supabase/.branches/
+
+# planilhas e especificacao baixadas do TCE para gerar as tabelas
+ferramentas/*.xlsx
+
+# pasta montada por ferramentas/preparar-publicacao.mjs
+publicar/

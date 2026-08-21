@@ -1,0 +1,15 @@
+# Identifica esta pasta como a raiz do projeto para a CLI do Supabase.
+#
+# Sem este arquivo a CLI sobe procurando a raiz do repositório git, que aqui é a
+# pasta pessoal inteira (C:\Users\Francisco), e vai procurar supabase/functions
+# no lugar errado.
+
+project_id = "olho-no-crato"
+
+[functions.sincronizar]
+# A função é chamada pelo pg_cron, que manda apenas o cabeçalho
+# x-segredo-sincronizacao, sem token de usuário. Com a verificação de JWT
+# ligada, a plataforma recusaria a chamada com 401 antes de o código rodar.
+# A autorização fica por conta do segredo compartilhado, conferido dentro da
+# própria função.
+verify_jwt = false

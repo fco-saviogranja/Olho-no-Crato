@@ -1,0 +1,963 @@
+{
+ "_fonte": "Tabela III - Fonte ou Destinacao de Recursos, do Manual do SIM 2026 (TCE-CE), baseada na Portaria STN/MF. Cada verbete traz o nome do grupo de fonte e o nome analitico do codigo completo de nove digitos.",
+ "500000000": {
+  "nome": "Recursos não vinculados de Impostos",
+  "grupo": "500",
+  "grupoNome": "Recursos não vinculados de Impostos",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Recursos de impostos e transferências de impostos de livre aplicação. Em atendimento ao disposto no inciso X do art. 4º da Lei Complementar nº 141, de 13 de janeiro de 2012, para identificação do percentual mínimo aplicado em ASPS, essa fonte de recursos deverá ser associada ao marcador que identifica as despesas que podem ser consideradas para esse limite. A mesma lógica será utilizada para a identificação do percentual mínimo de aplicação em MDE."
+ },
+ "500100100": {
+  "nome": "Receitas de Impostos e de Transferência de Impostos – Educação",
+  "grupo": "500",
+  "grupoNome": "Recursos não vinculados de Impostos",
+  "detalhamento": "Identificação das despesas com manutenção e desenvolvimento do ensino",
+  "especificacao": "Identificação das despesas com MDE consideradas para o cumprimento do limite constitucional. Observa o disposto nos art. 70 e 71 da Lei nº 9.394, de 20 de dezembro de 1996. Identificação associada à Fonte de Recursos não Vinculados de Impostos, bem como à Fonte de Recursos não vinculados da compensação de impostos para verificação dos limites estabelecidos no artigo 212 da Constituição Federal."
+ },
+ "500100200": {
+  "nome": "Receitas de Impostos e de Transferência de Impostos – Saúde",
+  "grupo": "500",
+  "grupoNome": "Recursos não vinculados de Impostos",
+  "detalhamento": "Identificação das despesas com ações e serviços públicos de saúde",
+  "especificacao": "Identificação das despesas com ASPS consideradas para o cumprimento do limite constitucional. Observa o disposto nos art. 2º e 3º da Lei Complementar nº 141, de 13 de janeiro de 2012. Identificação associada à Fonte de Recursos não Vinculados de Impostos, bem como à Fonte de Recursos não vinculados da compensação de impostos para verificação do cumprimento dos limites estabelecidos na LC 141/2012 e na Constituição Federal."
+ },
+ "501000000": {
+  "nome": "Outros Recursos não Vinculados",
+  "grupo": "501",
+  "grupoNome": "Outros Recursos não Vinculados",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Outros recursos não vinculados que não se enquadram na especificação acima."
+ },
+ "502000000": {
+  "nome": "Recursos não vinculados da compensação de impostos",
+  "grupo": "502",
+  "grupoNome": "Recursos não vinculados da compensação de impostos",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos não vinculados provenientes da compensação de impostos. Essa fonte de recursos deverá ser associada ao marcador que identifica as despesas que podem ser consideradas para cumprimento dos limites mínimos de aplicação em ASPS e em MDE."
+ },
+ "503000000": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pela União a título de apoio financeiro com o objetivo de enfrentar situações de calamidade pública e suas consequências sociais e econômicas, como o apoio financeiro decorrente da Medida Provisória nº 1.222, de 21 de maio de 2024."
+ },
+ "503101000": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Identificação das despesas custeadas com os recursos decorrentes da postergação do pagamento da dívida com a União em razão de calamidade pública",
+  "especificacao": "Identifica as despesas custeadas com os recursos decorrentes da postergação do pagamento da dívida dos entes federativos afetados por calamidade pública reconhecida pelo Congresso Nacional, mediante proposta do Poder Executivo federal, nos termos da Lei Complementar nº 206, de 16 de maio de 2024. Esse marcador será associado às fontes de recursos na fase de execução das despesas custeadas com esses recursos."
+ },
+ "503310100": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Identificação das transferências da União para enfrentamento à calamidade pública.",
+  "especificacao": "Identifica as transferências e a aplicação dos recursos transferidos pela União aos estados e aos municípios em decorrência de situações de calamidade pública e de emergência. Esse marcador será associado às fontes de recursos referentes às transferências na fase da arrecadação da receita, no controle dos ativos e passivos e na fase de execução das despesas custeadas com esses recursos."
+ },
+ "503312100": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Identificação das Transferências da União decorrentes de emendas parlamentares de bancada - calamidade pública",
+  "especificacao": "Identifica as transferências e a aplicação dos recursos transferidos pela União em decorrência de situações de calamidade pública e de emergência por meio de emendas parlamentares de bancada, na forma prevista no parágrafo 12 do art. 166, da CF/88. Esse marcador deverá ser associado às fontes de recursos referentes às transferências decorrentes de emendas obrigatórias, na fase de arrecadação da receita, no controle dos ativos e passivos e na fase de execução das despesas custeadas com esses recursos"
+ },
+ "503320100": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Identificação das transferências do Estado para enfrentamento à calamidade pública",
+  "especificacao": "Identifica as transferências e a aplicação dos recursos transferidos pelos Estados aos municípios em decorrência de situações de calamidade pública e de emergência. Esse marcador será associado às fontes de recursos referentes às transferências na fase da arrecadação da receita, no controle dos ativos e passivos e na fase de execução das despesas custeadas com esses recursos."
+ },
+ "503320200": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Identificação das transferências de municípios e de demais instituições para enfrentamento à calamidade pública.",
+  "especificacao": "Identifica as transferências e a aplicação dos recursos transferidos ou doados por municípios e por outras entidades públicas ou privadas em decorrência de situações de calamidade pública e de emergência. Esse marcador será associado às fontes de recursos referentes às transferências na fase da arrecadação da receita, no controle dos ativos e passivos e na fase de execução das despesas custeadas com esses recursos."
+ },
+ "503321100": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Identificação das Transferências dos Estados decorrentes de emendas parlamentares individuais - calamidade pública",
+  "especificacao": "Identifica as transferências e a aplicação dos recursos transferidos pelos estados em decorrência de situações de calamidade pública e de emergência por meio de emendas parlamentares individuais, na forma prevista nas Constituições Estaduais de forma similar ao previsto no parágrafo 9º do art. 166, da CF/88. Esse marcador, de utilização pelos municípios, será associado às fontes de recursos referentes às transferências decorrentes de emendas obrigatórias dos estados, devendo ser utilizado na fase da arrecadação da receita, no controle dos ativos e passivos e na fase de execução das despesas custeadas com esses recursos"
+ },
+ "503322100": {
+  "nome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "grupo": "503",
+  "grupoNome": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "detalhamento": "Identificação das Transferências dos Estados decorrentes de emendas parlamentares de bancada - calamidade pública.",
+  "especificacao": "Identifica as transferências e a aplicação dos recursos transferidos pelos estados em decorrência de situações de calamidade pública e de emergência por meio de emendas parlamentares de bancada, na forma prevista nas Constituições Estaduais, de forma similar ao previsto no parágrafo 12 do art. 166, da CF/88. Esse marcador, de utilização pelos municípios, deverá ser associado às fontes de recursos referentes às transferências decorrentes de emendas obrigatórias dos estados, devendo ser utilizado na fase de arrecadação da receita, no controle dos ativos e passivos e na fase de execução das despesas custeadas com esses recursos."
+ },
+ "540000000": {
+  "nome": "Transferências do FUNDEB – impostos 30%",
+  "grupo": "540",
+  "grupoNome": "Transferências do FUNDEB - Impostos e Transferências de Impostos",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos recebidos do FUNDEB referente à repartição dentro de cada Estado, com base nos incisos I, II e III do art. 212-A da Constituição Federal. Na fase da despesa, quando for o caso, será necessário associar esta fonte ao marcador do percentual de aplicação no pagamento da remuneração dos profissionais da educação básica em efetivo exercício para identificar o cumprimento do percentual mínimo de 70% estabelecido no inciso XI do art. 212-A da CF."
+ },
+ "540107000": {
+  "nome": "Transferências do FUNDEB – impostos 70%",
+  "grupo": "540",
+  "grupoNome": "Transferências do FUNDEB - Impostos e Transferências de Impostos",
+  "detalhamento": "Identificação do percentual aplicado no pagamento da remuneração dos profissionais da educação básica em efetivo exercício",
+  "especificacao": "Controle dos recursos recebidos do FUNDEB referente à repartição dentro de cada Estado, com base nos incisos I, II e III do art. 212-A da Constituição Federal. Na fase da despesa, quando for o caso, será necessário associar esta fonte ao marcador do percentual de aplicação no pagamento da remuneração dos profissionais da educação básica em efetivo exercício para identificar o cumprimento do percentual mínimo de 70% estabelecido no inciso XI do art. 212-A da CF."
+ },
+ "541000000": {
+  "nome": "Transferências do FUNDEB 30%-Complementação União – VAAF",
+  "grupo": "541",
+  "grupoNome": "Transferências do FUNDEB - Complementação da União - VAAF",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de complementação da União ao FUNDEB - VAAF, com base na alínea a do inciso V do art. 212-A da Constituição Federal. Na fase da despesa, quando for o caso, será necessário associar esta fonte ao marcador do percentual de aplicação no pagamento da remuneração dos profissionais da educação básica em efetivo exercício para identificar o cumprimento do percentual mínimo de 70% estabelecido no inciso XI do art. 212-A da CF."
+ },
+ "541107000": {
+  "nome": "Transferências do FUNDEB 70%-Complementação União – VAAF",
+  "grupo": "541",
+  "grupoNome": "Transferências do FUNDEB - Complementação da União - VAAF",
+  "detalhamento": "Identificação do percentual aplicado no pagamento da remuneração dos profissionais da educação básica em efetivo exercício",
+  "especificacao": "Controle dos recursos de complementação da União ao FUNDEB - VAAF, com base na alínea a do inciso V do art. 212-A da Constituição Federal. Na fase da despesa, quando for o caso, será necessário associar esta fonte ao marcador do percentual de aplicação no pagamento da remuneração dos profissionais da educação básica em efetivo exercício para identificar o cumprimento do percentual mínimo de 70% estabelecido no inciso XI do art. 212-A da CF."
+ },
+ "542000000": {
+  "nome": "Transferências do FUNDEB 30%-Complementação União – VAAT",
+  "grupo": "542",
+  "grupoNome": "Transferências do FUNDEB - Complementação da União - VAAT",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de complementação da União ao FUNDEB - VAAT, com base na alínea b do inciso V do art. 212-A da Constituição Federal. Na fase da despesa, quando for o caso, será necessário associar esta fonte ao marcador do percentual de aplicação no pagamento da remuneração dos profissionais da educação básica em efetivo exercício para identificar o cumprimento do percentual mínimo de 70% estabelecido no inciso XI do art. 212-A da CF."
+ },
+ "542107000": {
+  "nome": "Transferências do FUNDEB 70%-Complementação União – VAAT",
+  "grupo": "542",
+  "grupoNome": "Transferências do FUNDEB - Complementação da União - VAAT",
+  "detalhamento": "Identificação do percentual aplicado no pagamento da remuneração dos profissionais da educação básica em efetivo exercício",
+  "especificacao": "Controle dos recursos de complementação da União ao FUNDEB - VAAT, com base na alínea b do inciso V do art. 212-A da Constituição Federal. Na fase da despesa, quando for o caso, será necessário associar esta fonte ao marcador do percentual de aplicação no pagamento da remuneração dos profissionais da educação básica em efetivo exercício para identificar o cumprimento do percentual mínimo de 70% estabelecido no inciso XI do art. 212-A da CF."
+ },
+ "543000000": {
+  "nome": "Transferências do FUNDEB 30%-Complementação União – VAAR",
+  "grupo": "543",
+  "grupoNome": "Transferências do FUNDEB - Complementação da União - VAAR",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de complementação da União ao FUNDEB - VAAR, com base na alínea c, inciso V do art. 212-A da Constituição Federal."
+ },
+ "543107000": {
+  "nome": "Transferências do FUNDEB 70%-Complementação União – VAAR",
+  "grupo": "543",
+  "grupoNome": "Transferências do FUNDEB - Complementação da União - VAAR",
+  "detalhamento": "Identificação do percentual aplicado no pagamento da remuneração dos profissionais da educação básica em efetivo exercício",
+  "especificacao": "Controle dos recursos de complementação da União ao FUNDEB - VAAR, com base na alínea c, inciso V do art. 212-A da Constituição Federal."
+ },
+ "544000000": {
+  "nome": "Recursos de Precatórios do FUNDEF",
+  "grupo": "544",
+  "grupoNome": "Recursos de Precatórios do FUNDEF",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos decorrentes do recebimento de precatórios derivados de ações judiciais associadas à complementação devida pela União ao Fundo de Manutenção e Desenvolvimento do Ensino Fundamental e de Valorização do Magistério dos demais entes federados (Precatórios Fundef)."
+ },
+ "545000000": {
+  "nome": "Recursos de Precatórios do FUNDEB (2007- 2020)",
+  "grupo": "545",
+  "grupoNome": "Recursos de Precatórios do FUNDEB (2007- 2020)",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos decorrentes do recebimento de precatórios derivados de ações judiciais associadas aos repasses ao Fundo de Manutenção e Desenvolvimento da Educação Básica e de Valorização dos Profissionais da Educação (Fundeb) 2007-2020, para atendimento ao previsto no artigo 47-A da Lei nº 14.113, de 25 de dezembro de 2020."
+ },
+ "546000000": {
+  "nome": "Transferências do FUNDEB - Complementação da União - ETI",
+  "grupo": "546",
+  "grupoNome": "Transferências do FUNDEB - Complementação da União - ETI",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de complementação da União ao Fundeb destinados às ações de fomento à criação de matrículas em tempo integral na educação básica pública no âmbito do Fundeb, conforme disposto no art. 212-A, inciso XIV, da CF/88."
+ },
+ "550000000": {
+  "nome": "Transferência do Salário-Educação",
+  "grupo": "550",
+  "grupoNome": "Transferência do Salário-Educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências recebidas do Fundo Nacional do Desenvolvimento da Educação – FNDE, relativos aos repasses referentes ao salário-educação."
+ },
+ "551000000": {
+  "nome": "Transferências de Recursos do FNDE Referentes ao Programa Dinheiro Direto na Escola (PDDE)",
+  "grupo": "551",
+  "grupoNome": "Transferências de Recursos do FNDE Referentes ao Programa Dinheiro Direto na Escola (PDDE)",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Nacional do Desenvolvimento da Educação – FNDE, destinados ao Programa Dinheiro Direto na Escola (PDDE)."
+ },
+ "552000000": {
+  "nome": "Transferências de Recursos do FNDE Referentes ao Programa Nacional de Alimentação Escolar (PNAE)",
+  "grupo": "552",
+  "grupoNome": "Transferências de Recursos do FNDE Referentes ao Programa Nacional de Alimentação Escolar (PNAE)",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Nacional do Desenvolvimento da Educação – FNDE, destinados ao Programa Nacional de Alimentação Escolar (PNAE)."
+ },
+ "553000000": {
+  "nome": "Transferências de Recursos do FNDE Referentes ao Programa Nacional de Apoio ao Transporte Escolar (PNATE)",
+  "grupo": "553",
+  "grupoNome": "Transferências de Recursos do FNDE Referentes ao Programa Nacional de Apoio ao Transporte Escolar (PNATE)",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Nacional do Desenvolvimento da Educação – FNDE, destinados ao Programa Nacional de Apoio ao Transporte Escolar (PNATE)."
+ },
+ "569000000": {
+  "nome": "Outras Transferências de Recursos do FNDE",
+  "grupo": "569",
+  "grupoNome": "Outras Transferências de Recursos do FNDE",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos demais recursos originários de transferências do Fundo Nacional do Desenvolvimento da Educação – FNDE."
+ },
+ "570000000": {
+  "nome": "Transferências do Governo Federal referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "grupo": "570",
+  "grupoNome": "Transferências do Governo Federal referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres com a União, cuja destinação encontra-se vinculada a programas da educação."
+ },
+ "571000000": {
+  "nome": "Transferências do Estado referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "grupo": "571",
+  "grupoNome": "Transferências do Estado referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres com os Estados, cuja destinação encontra-se vinculada a programas da educação."
+ },
+ "572000000": {
+  "nome": "Transferências de Municípios referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "grupo": "572",
+  "grupoNome": "Transferências de Municípios referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres com outros municípios, cuja destinação encontra-se vinculada a programas da educação."
+ },
+ "573000000": {
+  "nome": "Royalties e Participação Especial de Petróleo e Gás Natural Vinculados à Educação - Lei nº 12.858/2013",
+  "grupo": "573",
+  "grupoNome": "Royalties e Participação Especial de Petróleo e Gás Natural Vinculados à Educação - Lei nº 12.858/2013",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos vinculados à Educação, originários de transferências recebidas pelos entes, relativos a Royalties e Participação Especial com base no art. 2º da Lei nº 12.858/2013."
+ },
+ "574000000": {
+  "nome": "Operações de Crédito Vinculadas à Educação",
+  "grupo": "574",
+  "grupoNome": "Operações de Crédito Vinculadas à Educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de operações de crédito, cuja destinação encontra-se vinculada a programas da educação."
+ },
+ "575000000": {
+  "nome": "Outras Transferências de Convênios e Instrumentos Congêneres vinculados à Educação",
+  "grupo": "575",
+  "grupoNome": "Outras Transferências de Convênios e Instrumentos Congêneres vinculados à Educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências de entidades privadas, estrangeiras ou multigovernamentais em virtude de assinatura de convênios e instrumentos congêneres, cuja destinação encontra-se vinculada a programas de educação."
+ },
+ "576000000": {
+  "nome": "Transferências de Recursos dos Estados para programas de educação",
+  "grupo": "576",
+  "grupoNome": "Transferências de Recursos dos Estados para programas de educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pelos Estados para programas de educação, que não decorram de celebração de convênios, contratos de repasse e termos de parceria."
+ },
+ "599000000": {
+  "nome": "Outros Recursos Vinculados à Educação",
+  "grupo": "599",
+  "grupoNome": "Outros Recursos Vinculados à Educação",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos demais recursos vinculados à Educação, não enquadrados nas especificações anteriores."
+ },
+ "600000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Manutenção das Ações e Serviços Públicos de Saúde",
+  "grupo": "600",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Manutenção das Ações e Serviços Públicos de Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Nacional de Saúde, referentes ao Sistema Único de Saúde (SUS) e relacionados ao Bloco de Manutenção das Ações e Serviços Públicos de Saúde."
+ },
+ "601000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Estruturação da Rede de Serviços Públicos de Saúde",
+  "grupo": "601",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Estruturação da Rede de Serviços Públicos de Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Nacional de Saúde, referentes ao Sistema Único de Saúde (SUS) e relacionados ao Bloco de Estruturação na Rede de Serviços Públicos de Saúde."
+ },
+ "602000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Manutenção das Ações e Serviços Públicos de Saúde – Recursos destinados ao enfrentamento da COVID-19 no bojo da ação 21C0.",
+  "grupo": "602",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Manutenção das Ações e Serviços Públicos de Saúde – Recursos destinados ao enfrentamento da COVID-19 no bojo da ação 21C0.",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Nacional de Saúde, referentes ao Sistema Único de Saúde (SUS), relacionados ao Bloco de Manutenção das Ações e Serviços Públicos de Saúde, e destinados ao enfrentamento da COVID-19 no bojo da ação 21C0 do orçamento da União."
+ },
+ "603000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Estruturação da Rede de Serviços Públicos de Saúde – Recursos destinados ao enfrentamento da COVID-19 no bojo da ação 21C0.",
+  "grupo": "603",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Estruturação da Rede de Serviços Públicos de Saúde – Recursos destinados ao enfrentamento da COVID-19 no bojo da ação 21C0.",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Nacional de Saúde, referentes ao Sistema Único de Saúde (SUS), relacionados ao Bloco de Estruturação na Rede de Serviços Públicos de Saúde e destinados ao enfrentamento da COVID-19 no bojo da ação 21C0 do orçamento da União."
+ },
+ "604000000": {
+  "nome": "Transferências provenientes do Governo Federal destinadas ao vencimento dos agentes comunitários de saúde e dos agentes de combate às endemias",
+  "grupo": "604",
+  "grupoNome": "Transferências provenientes do Governo Federal destinadas ao vencimento dos agentes comunitários de saúde e dos agentes de combate às endemias",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários do Governo Federal, referentes ao Sistema Único de Saúde (SUS), relacionados ao vencimento dos agentes comunitários de saúde e dos agentes de combate às endemias, nos termos do art. 198, §7ª da Constituição Federal."
+ },
+ "605000000": {
+  "nome": "Assistência financeira da União destinada à complementação ao pagamento dos pisos salariais para profissionais da enfermagem.",
+  "grupo": "605",
+  "grupoNome": "Assistência financeira da União destinada à complementação ao pagamento dos pisos salariais para profissionais da enfermagem.",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pela União, a título de assistência financeira complementar, para o cumprimento dos pisos salariais profissionais nacionais para o enfermeiro, o técnico de enfermagem, o auxiliar de enfermagem e a parteira, conforme estabelecido pela CF/88, art. 198, §§12 a 15."
+ },
+ "621000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Estadual",
+  "grupo": "621",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Estadual",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências do Fundo Estadual de Saúde, referentes ao Sistema Único de Saúde (SUS)."
+ },
+ "622000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do SUS provenientes dos Governos Municipais",
+  "grupo": "622",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do SUS provenientes dos Governos Municipais",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências dos Fundos de Saúde de outros municípios, referentes ao Sistema Único de Saúde (SUS)."
+ },
+ "631000000": {
+  "nome": "Transferências do Governo Federal referentes a Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "grupo": "631",
+  "grupoNome": "Transferências do Governo Federal referentes a Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres com a União, cuja destinação encontra-se vinculada a programas da saúde."
+ },
+ "632000000": {
+  "nome": "Transferências do Estado referentes a Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "grupo": "632",
+  "grupoNome": "Transferências do Estado referentes a Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres com os Estados, cuja destinação encontra-se vinculada a programas da saúde."
+ },
+ "633000000": {
+  "nome": "Transferências de Municípios referentes a Convênios Instrumentos Congêneres vinculados à Saúde",
+  "grupo": "633",
+  "grupoNome": "Transferências de Municípios referentes a Convênios Instrumentos Congêneres vinculados à Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres com outros Municípios, cuja destinação encontra-se vinculada a programas da saúde."
+ },
+ "634000000": {
+  "nome": "Operações de Crédito vinculadas à Saúde",
+  "grupo": "634",
+  "grupoNome": "Operações de Crédito vinculadas à Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de operações de crédito, cuja destinação encontra-se vinculada a programas da saúde."
+ },
+ "635000000": {
+  "nome": "Royalties e Participação Especial de Petróleo e Gás Natural vinculados à Saúde - Lei nº 12.858/2013",
+  "grupo": "635",
+  "grupoNome": "Royalties e Participação Especial de Petróleo e Gás Natural vinculados à Saúde - Lei nº 12.858/2013",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos vinculados à Saúde, originários de transferências recebidas pelos entes, relativos a Royalties e Participação Especial com base no art. 2º da Lei nº 12.858/2013."
+ },
+ "636000000": {
+  "nome": "Outras Transferências de Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "grupo": "636",
+  "grupoNome": "Outras Transferências de Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências de entidades privadas, estrangeiras ou multigovernamentais em virtude de assinatura de convênios e instrumentos congêneres, cuja destinação encontra-se vinculada a programas de saúde."
+ },
+ "659000000": {
+  "nome": "Outros Recursos Vinculados à Saúde",
+  "grupo": "659",
+  "grupoNome": "Outros Recursos Vinculados à Saúde",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos demais recursos vinculados à Saúde, não enquadrados nas especificações anteriores."
+ },
+ "660000000": {
+  "nome": "Transferência de Recursos do Fundo Nacional de Assistência Social - FNAS",
+  "grupo": "660",
+  "grupoNome": "Transferência de Recursos do Fundo Nacional de Assistência Social - FNAS",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle os recursos originários de transferências do Fundo Nacional de Assistência Social - Lei Federal nº 8.742, 07/12/1993."
+ },
+ "661000000": {
+  "nome": "Transferência de Recursos dos Fundos Estaduais de Assistência Social",
+  "grupo": "661",
+  "grupoNome": "Transferência de Recursos dos Fundos Estaduais de Assistência Social",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências dos fundos estaduais de assistência social."
+ },
+ "662000000": {
+  "nome": "Transferências de Recursos dos Fundos Municipais de Assistência Social",
+  "grupo": "662",
+  "grupoNome": "Transferências de Recursos dos Fundos Municipais de Assistência Social",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle os recursos originários de transferência dos fundos municipais de assistência social."
+ },
+ "665000000": {
+  "nome": "Transferências de Outras Entidades de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "grupo": "665",
+  "grupoNome": "Transferências de Outras Entidades de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres cuja destinação encontra-se vinculada a programas da assistência social."
+ },
+ "665000001": {
+  "nome": "Transferências da União de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "grupo": "665",
+  "grupoNome": "Transferências de Outras Entidades de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres cuja destinação encontra-se vinculada a programas da assistência social."
+ },
+ "665000002": {
+  "nome": "Transferências dos Estados de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "grupo": "665",
+  "grupoNome": "Transferências de Outras Entidades de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres cuja destinação encontra-se vinculada a programas da assistência social."
+ },
+ "665000003": {
+  "nome": "Transferências dos Municípios de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "grupo": "665",
+  "grupoNome": "Transferências de Outras Entidades de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências em decorrência da celebração de convênios e instrumentos congêneres cuja destinação encontra-se vinculada a programas da assistência social."
+ },
+ "669000000": {
+  "nome": "Outros Recursos Vinculados à Assistência Social",
+  "grupo": "669",
+  "grupoNome": "Outros Recursos Vinculados à Assistência Social",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos demais recursos vinculados à Assistência Social, não enquadrados nas especificações anteriores."
+ },
+ "700000000": {
+  "nome": "Outras Transferências de Convênios ou Instrumentos Congêneres da União",
+  "grupo": "700",
+  "grupoNome": "Outras Transferências de Convênios ou Instrumentos Congêneres da União",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências federais em decorrência da celebração de convênios e instrumentos congêneres cuja destinação encontra-se vinculada aos seus objetos. Não serão controlados por esta fonte os recursos de convênios vinculados a programas da educação, da saúde e da assistência social."
+ },
+ "701000000": {
+  "nome": "Outras Transferências de Convênios ou Instrumentos Congêneres dos Estados",
+  "grupo": "701",
+  "grupoNome": "Outras Transferências de Convênios ou Instrumentos Congêneres dos Estados",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências estaduais em decorrência da celebração de convênios e instrumentos congêneres, cuja destinação encontra-se vinculada aos seus objetos. Não serão controlados por esta fonte os recursos de convênios ou contratos de repasse vinculados a programas da educação, da saúde e da assistência social."
+ },
+ "702000000": {
+  "nome": "Outras Transferências de Convênios ou Instrumentos Congêneres dos Municípios",
+  "grupo": "702",
+  "grupoNome": "Outras Transferências de Convênios ou Instrumentos Congêneres dos Municípios",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências de municípios em decorrência da celebração de convênios e instrumentos congêneres, cuja destinação encontra-se vinculada aos seus objetos. Não serão controlados por esta fonte os recursos de convênios ou contratos de repasse vinculados a programas da educação, da saúde e da assistência social."
+ },
+ "703000000": {
+  "nome": "Outras Transferências de Convênios ou Instrumentos Congêneres de outras Entidades",
+  "grupo": "703",
+  "grupoNome": "Outras Transferências de Convênios ou Instrumentos Congêneres de outras Entidades",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de transferências de entidades privadas, estrangeiras ou multigovernamentais em virtude de assinatura de convênios e instrumentos congêneres, cuja destinação encontra-se vinculada aos seus objetos. Não serão controlados por esta fonte os recursos de convênios ou contratos de repasse vinculados a programas da educação, da saúde e da assistência social."
+ },
+ "704000000": {
+  "nome": "Transferências da União Referentes a Compensações Financeiras pela Exploração de Recursos Naturais",
+  "grupo": "704",
+  "grupoNome": "Transferências da União Referentes a Compensações Financeiras pela Exploração de Recursos Naturais",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pela União, originários da arrecadação de royalties do petróleo, do gás natural, da cota-parte do bônus de assinatura de contrato de partilha de produção, exceto os recursos provenientes da Lei nº 12.858/2013, destinados às áreas da saúde ou da educação, e exceto os recursos classificados na FR 720 e na FR 721."
+ },
+ "705000000": {
+  "nome": "Transferências dos Estados Referentes a Compensações Financeiras pela Exploração de Recursos Naturais",
+  "grupo": "705",
+  "grupoNome": "Transferências dos Estados Referentes a Compensações Financeiras pela Exploração de Recursos Naturais",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pelos Estados, originários da arrecadação de royalties do petróleo, do gás natural, da cota-parte do bônus de assinatura de contrato de partilha de produção."
+ },
+ "706000000": {
+  "nome": "Transferência Especial da União",
+  "grupo": "706",
+  "grupoNome": "Transferência Especial da União",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pela União provenientes de emendas individuais impositivas ao orçamento da União, por meio de transferências especiais, nos termos do art. 166-A da Constituição Federal."
+ },
+ "707000000": {
+  "nome": "Transferências da União – inciso I do art. 5º da Lei Complementar 173/2020",
+  "grupo": "707",
+  "grupoNome": "Transferências da União – inciso I do art. 5º da Lei Complementar 173/2020",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos provenientes de transferência da União com base no disposto no inciso I do art. 5º da Lei Complementar 173, de 27 de maio de 2020."
+ },
+ "708000000": {
+  "nome": "Transferência da União Referente à Compensação Financeira de Recursos Minerais",
+  "grupo": "708",
+  "grupoNome": "Transferência da União Referente à Compensação Financeira de Recursos Minerais",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pela União, referentes à compensação financeira pela exploração de recursos minerais em atendimento às destinações e vedações previstas na legislação."
+ },
+ "709000000": {
+  "nome": "Transferência da União referente à Compensação Financeira de Recursos Hídricos",
+  "grupo": "709",
+  "grupoNome": "Transferência da União referente à Compensação Financeira de Recursos Hídricos",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pela União, referentes à compensação financeira de recursos hídricos em atendimento às destinações e vedações previstas na legislação."
+ },
+ "710000000": {
+  "nome": "Transferência Especial dos Estados",
+  "grupo": "710",
+  "grupoNome": "Transferência Especial dos Estados",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pelos Estados provenientes de emendas individuais impositivas ao orçamento desses entes, por meio de transferências especiais, nos termos das constituições estaduais que reproduziram o disposto no art. 166-A da Constituição Federal."
+ },
+ "711000000": {
+  "nome": "Demais Transferências Obrigatórias não Decorrentes de Repartições de Receitas",
+  "grupo": "711",
+  "grupoNome": "Demais Transferências Obrigatórias não Decorrentes de Repartições de Receitas",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "controle dos recursos originários de transferências obrigatórias da União que não decorram de repartição de receitas, como as transferências a Ntulo de auxílio ou apoio financeiro, e para os quais não tenha sido criada fonte ou destinação de recursos específica"
+ },
+ "712000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do Fundo Penitenciário - FUNPEN",
+  "grupo": "712",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do Fundo Penitenciário - FUNPEN",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla as transferências obrigatórias de recursos do Fundo Penitenciário Nacional - FUNPEN."
+ },
+ "713000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do Fundo de Segurança Pública - FSP",
+  "grupo": "713",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do Fundo de Segurança Pública - FSP",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla as transferências obrigatórias de recursos do Fundo de Segurança Pública - FSP"
+ },
+ "714000000": {
+  "nome": "Transferências Fundo a Fundo de Recursos do Fundo de Amparo ao Trabalhador - FAT",
+  "grupo": "714",
+  "grupoNome": "Transferências Fundo a Fundo de Recursos do Fundo de Amparo ao Trabalhador - FAT",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla as transferências obrigatórias de recursos do Fundo de Amparo ao Trabalhador - FAT"
+ },
+ "715000000": {
+  "nome": "Transferências Destinadas ao Setor Cultural - LC nº 195/2022 - Art. 5º - Audiovisual",
+  "grupo": "715",
+  "grupoNome": "Transferências Destinadas ao Setor Cultural - LC nº 195/2022 - Art. 5º - Audiovisual",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla a parcela dos recursos provenientes das transferências efetuadas pela União destinadas ao setor cultural, especificamente ao setor audiovisual, como ação emergencial adotada em decorrência dos efeitos econômicos e sociais da pandemia da covid-19, em cumprimento ao Art. 5º da Lei Complementar nº 195, de 8 de julho de 2022."
+ },
+ "716000000": {
+  "nome": "Transferências Destinadas ao Setor cultural - LC nº 195/2022 - Art. 8º - Demais Setores da Cultura",
+  "grupo": "716",
+  "grupoNome": "Transferências Destinadas ao Setor cultural - LC nº 195/2022 - Art. 8º - Demais Setores da Cultura",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla a parcela dos recursos provenientes das transferências efetuadas pela União destinadas ao setor cultural, como ação emergencial adotada em decorrência dos efeitos econômicos e sociais da pandemia da covid-19, em cumprimento ao Art. 8º da Lei Complementar nº 195, de 8 de julho de 2022"
+ },
+ "717000000": {
+  "nome": "Assistência Financeira Transporte Coletivo - Art. 5º, Inciso IV, EC nº 123/2022",
+  "grupo": "717",
+  "grupoNome": "Assistência Financeira Transporte Coletivo - Art. 5º, Inciso IV, EC nº 123/2022",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla os recursos provenientes das transferências da União a título de assistência financeira a serem utilizados no custeio da garantia prevista no §2º do art. 230 da CF, de gratuidade dos transportes coletivos urbanos aos maiores de 65 anos, conforme prevê o inciso IV, art. 5º, da Emenda Constitucional nº 123/2022."
+ },
+ "718000000": {
+  "nome": "Auxílio Financeiro - Outorga Crédito Tributário ICMS - Art. 5º, Inciso V, EC nº 123/2022",
+  "grupo": "718",
+  "grupoNome": "Auxílio Financeiro - Outorga Crédito Tributário ICMS - Art. 5º, Inciso V, EC nº 123/2022",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla os recursos provenientes das transferências da União a título de auxílio financeiro para os Estados e o Distrito Federal que outorgarem créditos tributários do Imposto sobre Operações relativas à Circulação de Mercadorias e sobre Prestações de Serviços de Transporte Interestadual e Intermunicipal e de Comunicação (ICMS) aos produtores ou distribuidores de etanol hidratado em seu território, em montante equivalente ao valor recebido, conforme prevê o Inciso V, art. 5º, da Emenda Constitucional nº 123/2022."
+ },
+ "718100100": {
+  "nome": "Auxílio Financeiro – Outorga Crédito Tributário ICMS – Art. 5º, Inciso V, EC nº 123/2022 – Educação",
+  "grupo": "718",
+  "grupoNome": "Auxílio Financeiro - Outorga Crédito Tributário ICMS - Art. 5º, Inciso V, EC nº 123/2022",
+  "detalhamento": "Identificação das despesas com manutenção e desenvolvimento do ensino",
+  "especificacao": "Identificação das despesas com MDE consideradas para o cumprimento do limite constitucional. Observa o disposto nos art. 70 e 71 da Lei nº 9.394, de 20 de dezembro de 1996. Identificação associada à Fonte de Recursos não Vinculados de Impostos, bem como à Fonte de Recursos não vinculados da compensação de impostos para verificação dos limites estabelecidos no artigo 212 da Constituição Federal."
+ },
+ "719000000": {
+  "nome": "Transferências da Política Nacional Aldir Blanc de Fomento à Cultura - Lei nº 14.399/202",
+  "grupo": "719",
+  "grupoNome": "Transferências da Política Nacional Aldir Blanc de Fomento à Cultura - Lei nº 14.399/202",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla os recursos provenientes de transferências efetuadas pela União em decorrência da Política Nacional Aldir Blanc de Fomento à Cultura previstas no art. 6º da Lei nº 14.399, de 8 de julho de 2022."
+ },
+ "720000000": {
+  "nome": "Transferências da União Referentes às participações na exploração de Petróleo e Gás Natural destinadas ao FEP - Lei 9.478/1997",
+  "grupo": "720",
+  "grupoNome": "Transferências da União Referentes às participações na exploração de Petróleo e Gás Natural destinadas ao FEP - Lei 9.478/1997",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Transferências da União referentes às participações na exploração de petróleo, gás natural e outros hidrocarbonetos fluidos, destinadas ao Fundo Especial - FEP, conforme estabelece o art. 50-F da Lei 9.478/97, exceto os recursos obrigatórios para educação e saúde e que trata a Lei 12.858/2013"
+ },
+ "721000000": {
+  "nome": "Transferências da União Referentes a Cessão Onerosa de Petróleo – Lei nº 13.885/2019",
+  "grupo": "721",
+  "grupoNome": "Transferências da União Referentes a Cessão Onerosa de Petróleo – Lei nº 13.885/2019",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos transferidos pela União, provenientes da cessão onerosa à Petróleo Brasileiro S.A. - PETROBRAS, do exercício das atividades de pesquisa e lavra de petróleo, gás natural e outros hidrocarbonetos fluidos, originários dos leilões dos volumes xcedentes ao limite a que se refere o § 2º do art. 1º da Lei nº 12.276, conforme estabelecido na Lei nº 13.885/2019."
+ },
+ "722000000": {
+  "nome": "Transferências do Fundo de Equalização Federativa (FEF) – LC nº 212/2025 – Propag (Portaria STN/MF nº 1.701/2025)",
+  "grupo": "722",
+  "grupoNome": "Transferências do Fundo de Equalização Federativa (FEF) – LC nº 212/2025 – Propag (Portaria STN/MF nº 1.701/2025)",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla os recursos recebidos pelos Estados provenientes das transferências do FEF, em observância ao disposto no art. 9º, §2º da Lei Complementar nº 212, de 13 de janeiro de 2025."
+ },
+ "747000000": {
+  "nome": "Outras vinculações de transferências da União",
+  "grupo": "747",
+  "grupoNome": "Outras vinculações de transferências da União",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de outras transferências vinculadas da União, não enquadrados nas especificações anteriores."
+ },
+ "748000000": {
+  "nome": "Outras vinculações de transferências dos Estados",
+  "grupo": "748",
+  "grupoNome": "Outras vinculações de transferências dos Estados",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de outras transferências vinculadas dos Estados, não enquadrados nas especificações anteriores."
+ },
+ "749000000": {
+  "nome": "Outras vinculações de transferências",
+  "grupo": "749",
+  "grupoNome": "Outras vinculações de transferências",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de outras transferências vinculadas, não enquadrados nas especificações anteriores."
+ },
+ "749000001": {
+  "nome": "Transferência de Recursos do Fundo Nacional de Habitação de Interesse Social FNHIS",
+  "grupo": "749",
+  "grupoNome": "Outras vinculações de transferências",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de outras transferências vinculadas, não enquadrados nas especificações anteriores."
+ },
+ "750000000": {
+  "nome": "Recursos da Contribuição de Intervenção no Domínio Econômico - CIDE",
+  "grupo": "750",
+  "grupoNome": "Recursos da Contribuição de Intervenção no Domínio Econômico - CIDE",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos recebidos pelos Estados, Distrito Federal e Municípios, decorrentes da distribuição da arrecadação da União com a CIDE - Combustíveis, com base no disposto na Lei nº 10.336/2001."
+ },
+ "751000000": {
+  "nome": "Recursos da Contribuição para o Custeio do Serviço de Iluminação Pública - COSIP",
+  "grupo": "751",
+  "grupoNome": "Recursos da Contribuição para o Custeio do Serviço de Iluminação Pública - COSIP",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos da COSIP, nos termos do artigo 149-A da Constituição Federal da República."
+ },
+ "752000000": {
+  "nome": "Recursos Vinculados ao Trânsito",
+  "grupo": "752",
+  "grupoNome": "Recursos Vinculados ao Trânsito",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos com a cobrança das multas de trânsito nos termos do art. 320 da Lei nº 9.503/1997 - Código de Trânsito Brasileiro."
+ },
+ "753000000": {
+  "nome": "Recursos Provenientes de Taxas, Contribuições e Preços Públicos",
+  "grupo": "753",
+  "grupoNome": "Recursos Provenientes de Taxas, Contribuições e Preços Públicos",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de taxas, contribuições e preços públicos vinculados conforme legislações específicas."
+ },
+ "754000000": {
+  "nome": "Recursos de Operações de Crédito",
+  "grupo": "754",
+  "grupoNome": "Recursos de Operações de Crédito",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos originários de operações de crédito, exceto as operações cuja aplicação esteja destinada a programas de educação e saúde."
+ },
+ "755000000": {
+  "nome": "Recursos de Alienação de Bens/Ativos - Administração Direta",
+  "grupo": "755",
+  "grupoNome": "Recursos de Alienação de Bens/Ativos - Administração Direta",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos decorrentes da alienação de bens da Administração Direta, nos termos do art. 44 da Lei Complementar nº 101/2000."
+ },
+ "756000000": {
+  "nome": "Recursos de Alienação de Bens/Ativos - Administração Indireta",
+  "grupo": "756",
+  "grupoNome": "Recursos de Alienação de Bens/Ativos - Administração Indireta",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos decorrentes da alienação de bens da Administração Indireta, nos termos do art. 44 da Lei Complementar nº 101/2000."
+ },
+ "757000000": {
+  "nome": "Recursos de depósitos judiciais – Lides das quais o ente faz parte",
+  "grupo": "757",
+  "grupoNome": "Recursos de depósitos judiciais – Lides das quais o ente faz parte",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de depósitos judiciais apropriados pelo ente de lides das quais o ente faz parte, com base na Lei Complementar nº 151/2015, no art. 101 do ADCT da Constituição Federal."
+ },
+ "758000000": {
+  "nome": "Recursos de depósitos judiciais – Lides das quais o ente não faz parte",
+  "grupo": "758",
+  "grupoNome": "Recursos de depósitos judiciais – Lides das quais o ente não faz parte",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de depósitos judiciais apropriados pelo ente de lides das quais o ente não faz parte, com base no art. 101 do ADCT da Constituição Federal."
+ },
+ "759000000": {
+  "nome": "Recursos vinculados a fundos",
+  "grupo": "759",
+  "grupoNome": "Recursos vinculados a fundos",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos vinculados a fundos, com exceção dos fundos relacionados à saúde, à educação, à assistência social e aos regimes de previdência."
+ },
+ "760000000": {
+  "nome": "Recursos de Emolumentos, Taxas e Custas",
+  "grupo": "760",
+  "grupoNome": "Recursos de Emolumentos, Taxas e Custas",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos de emolumentos, taxas e outros recursos arrecadados, judiciais ou extrajudiciais, observado o disposto em legislações específicas."
+ },
+ "761000000": {
+  "nome": "Recursos Vinculados ao Fundo de Combate e Erradicação da Pobreza",
+  "grupo": "761",
+  "grupoNome": "Recursos Vinculados ao Fundo de Combate e Erradicação da Pobreza",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos vinculados ao Fundo de Combate e Erradicação da Pobreza, na forma prevista nos art. 82 do ADCT e da Lei Complementar nº 111, de 6 de julho de 2001."
+ },
+ "762000000": {
+  "nome": "Recursos de Alienação de Ativos - Cessão de Direitos Creditórios.",
+  "grupo": "762",
+  "grupoNome": "Recursos de Alienação de Ativos - Cessão de Direitos Creditórios. (Portaria STN/MF Nº 2.297/2025)",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos recebidos em razão da alienação de ativos no âmbito de cessão de direitos creditórios, de acordo com o disposto no §6º, art. 39-A, da Lei nº 4.320/64, que faz referência ao art. 44 da LRF."
+ },
+ "763000000": {
+  "nome": "Recursos próprios dos estados vinculados ao Propag – LC nº 212/202",
+  "grupo": "763",
+  "grupoNome": "Recursos próprios dos estados vinculados ao Propag – LC nº 212/202",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controla os recursos próprios dos estados relativos ao percentual do saldo devedor atualizado das dívidas elencadas no art. 2º, § 1º, da Lei Complementar nº 212, de 13 de janeiro de 2025, e respectivos rendimentos, que o estado se comprometeu a aplicar diretamente nas finalidades previstas no art. 5º, § 2º, da referida Lei Complementar, conforme inciso I e III do art. 65 do Decreto nº12.433, de 14 de abril de 2025. FR a ser utilizada quando o estado optar pela contabilização dos recursos do art. 65 do Decreto nº 12.433/2025 por meio de fundo público específico."
+ },
+ "799000000": {
+  "nome": "Outras vinculações legais",
+  "grupo": "799",
+  "grupoNome": "Outras vinculações legais",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle de outros recursos vinculados por lei, não enquadrados nas especificações anteriores."
+ },
+ "800111101": {
+  "nome": "Benefícios previdenciários - Poder Executivo – Fundo em Capitalização (Plano Previdenciário)",
+  "grupo": "800",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Capitalização (Plano Previdenciário)",
+  "detalhamento": "Benefícios previdenciários - Poder Executivo – Fundo em Capitalização (Plano Previdenciário)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em capitalização do RPPS. Esse plano existe tanto nos entes que segregaram quanto nos que não segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase das despesas, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "800112101": {
+  "nome": "Benefícios previdenciários - Poder Legislativo – Fundo em Capitalização (Plano Previdenciário)",
+  "grupo": "800",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Capitalização (Plano Previdenciário)",
+  "detalhamento": "Benefícios previdenciários - Poder Legislativo – Fundo em Capitalização (Plano Previdenciário)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em capitalização do RPPS. Esse plano existe tanto nos entes que segregaram quanto nos que não segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase das despesas, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "800111102": {
+  "nome": "Benefícios previdenciários - Poder Executivo – Fundo em Capitalização (Plano Previdenciário) - Compensação Financeira",
+  "grupo": "800",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Capitalização (Plano Previdenciário)",
+  "detalhamento": "Benefícios previdenciários - Poder Executivo – Fundo em Capitalização (Plano Previdenciário)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em capitalização do RPPS. Esse plano existe tanto nos entes que segregaram quanto nos que não segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase das despesas, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "800112102": {
+  "nome": "Benefícios previdenciários - Poder Legislativo – Fundo em Capitalização (Plano Previdenciário) - Compensação Financeira",
+  "grupo": "800",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Capitalização (Plano Previdenciário)",
+  "detalhamento": "Benefícios previdenciários - Poder Legislativo – Fundo em Capitalização (Plano Previdenciário)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em capitalização do RPPS. Esse plano existe tanto nos entes que segregaram quanto nos que não segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase das despesas, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "801211101": {
+  "nome": "Benefícios previdenciários - Poder Executivo - Fundo em Repartição (Plano Financeiro)",
+  "grupo": "801",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Repartição (Plano Financeiro)",
+  "detalhamento": "Benefícios previdenciários - Poder Executivo - Fundo em Repartição (Plano Financeiro)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em repartição do RPPS. Esse plano deve existir somente nos entes que segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase da despesa, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "801212101": {
+  "nome": "Benefícios previdenciários - Poder Legislativo - Fundo em Repartição (Plano Financeiro)",
+  "grupo": "801",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Repartição (Plano Financeiro)",
+  "detalhamento": "Benefícios previdenciários - Poder Legislativo - Fundo em Repartição (Plano Financeiro)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em repartição do RPPS. Esse plano deve existir somente nos entes que segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase da despesa, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "801211102": {
+  "nome": "Benefícios previdenciários - Poder Executivo - Fundo em Repartição (Plano Financeiro) - Compensação Financeira",
+  "grupo": "801",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Repartição (Plano Financeiro)",
+  "detalhamento": "Benefícios previdenciários - Poder Executivo - Fundo em Repartição (Plano Financeiro)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em repartição do RPPS. Esse plano deve existir somente nos entes que segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase da despesa, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "801212102": {
+  "nome": "Benefícios previdenciários - Poder Legislativo - Fundo em Repartição (Plano Financeiro) - Compensação Financeira",
+  "grupo": "801",
+  "grupoNome": "Recursos vinculados ao RPPS - Fundo em Repartição (Plano Financeiro)",
+  "detalhamento": "Benefícios previdenciários - Poder Legislativo - Fundo em Repartição (Plano Financeiro)",
+  "especificacao": "Controle dos recursos vinculados ao fundo em repartição do RPPS. Esse plano deve existir somente nos entes que segregaram a massa dos segurados, observando-se o disposto na Portaria MF nº 464/2018. Na fase da despesa, será necessário associar esta fonte ao marcador que identifica a qual Poder ou Órgão se refere a despesa quando ela é executada no PO RPPS."
+ },
+ "802000000": {
+  "nome": "Recursos vinculados ao RPPS - Taxa de Administração",
+  "grupo": "802",
+  "grupoNome": "Recursos vinculados ao RPPS - Taxa de Administração",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos destinados ao custeio das despesas necessárias à organização e ao funcionamento da unidade gestora do RPPS, observando-se o disposto na Portaria MPS nº 402/2008 e na Portaria MF nº 464/2018, ambas alteradas pela Portaria ME nº 19.451/2020."
+ },
+ "803000000": {
+  "nome": "Recursos vinculados ao Sistema de Proteção Social dos Militares (SPSM)",
+  "grupo": "803",
+  "grupoNome": "Recursos vinculados ao Sistema de Proteção Social dos Militares (SPSM)",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos vinculados ao Sistema de Proteção Social dos Militares (SPSM), com base na Lei nº 6.880/1980 (Estatuto dos Militares), alterada pela Lei nº 13.954/2019."
+ },
+ "804000000": {
+  "nome": "Demais Recursos Previdenciários",
+  "grupo": "804",
+  "grupoNome": "Demais Recursos Previdenciários",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle de demais recursos vinculados a benefícios previdenciários, como os benefícios mantidos sob responsabilidade financeira direta do Tesouro do ente Federativo, concedidos em atendimento a legislações específicas e que não foram incorporados ao RPPS."
+ },
+ "860000000": {
+  "nome": "Recursos extraorçamentários vinculados a precatórios",
+  "grupo": "860",
+  "grupoNome": "Recursos extraorçamentários vinculados a precatórios",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos financeiros junto aos tribunais de justiça vinculados ao pagamento de precatórios."
+ },
+ "861000000": {
+  "nome": "Recursos extraorçamentários vinculados a depósitos judiciais",
+  "grupo": "861",
+  "grupoNome": "Recursos extraorçamentários vinculados a depósitos judiciais",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos financeiros junto aos tribunais de justiça vinculados aos depósitos judiciais."
+ },
+ "862000000": {
+  "nome": "Recursos de Depósitos de Terceiros",
+  "grupo": "862",
+  "grupoNome": "Recursos de Depósitos de Terceiros",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos financeiros decorrentes de depósitos de terceiros."
+ },
+ "863000000": {
+  "nome": "Recursos a distribuir – Comitê Gestor IBS",
+  "grupo": "863",
+  "grupoNome": "Recursos a distribuir – Comitê Gestor IBS",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos financeiros do IBS sob responsabilidade do Comitê Gestor a serem geridos e, após cumpridos os requisitos legais pertinentes, distribuídos aos estados, DF e municípios."
+ },
+ "869000000": {
+  "nome": "Outros recursos extraorçamentários",
+  "grupo": "869",
+  "grupoNome": "Outros recursos extraorçamentários",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos demais recursos financeiros extraorçamentários, como, por exemplo, retenções e consignações."
+ },
+ "880000000": {
+  "nome": "Recursos próprios dos consórcios",
+  "grupo": "880",
+  "grupoNome": "Recursos próprios dos consórcios",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos próprios dos Consórcios Públicos (utilizada pelos consórcios públicos)"
+ },
+ "899000000": {
+  "nome": "Outros Recursos Vinculados",
+  "grupo": "899",
+  "grupoNome": "Outros Recursos Vinculados",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos cuja aplicação seja vinculada e não tenha sido enquadrado em outras especificações."
+ },
+ "899000001": {
+  "nome": "Recursos Destinados aos Direitos da Criança e do Adolescente",
+  "grupo": "899",
+  "grupoNome": "Outros Recursos Vinculados",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos cuja aplicação seja vinculada e não tenha sido enquadrado em outras especificações."
+ },
+ "899000002": {
+  "nome": "Recursos Destinados ao Meio Ambiente",
+  "grupo": "899",
+  "grupoNome": "Outros Recursos Vinculados",
+  "detalhamento": "Sem detalhamento",
+  "especificacao": "Controle dos recursos cuja aplicação seja vinculada e não tenha sido enquadrado em outras especificações."
+ },
+ "_grupos": {
+  "500": "Recursos não vinculados de Impostos",
+  "501": "Outros Recursos não Vinculados",
+  "502": "Recursos não vinculados da compensação de impostos",
+  "503": "Apoio financeiro da União em decorrência de estado de calamidade pública.",
+  "540": "Transferências do FUNDEB - Impostos e Transferências de Impostos",
+  "541": "Transferências do FUNDEB - Complementação da União - VAAF",
+  "542": "Transferências do FUNDEB - Complementação da União - VAAT",
+  "543": "Transferências do FUNDEB - Complementação da União - VAAR",
+  "544": "Recursos de Precatórios do FUNDEF",
+  "545": "Recursos de Precatórios do FUNDEB (2007- 2020)",
+  "546": "Transferências do FUNDEB - Complementação da União - ETI",
+  "550": "Transferência do Salário-Educação",
+  "551": "Transferências de Recursos do FNDE Referentes ao Programa Dinheiro Direto na Escola (PDDE)",
+  "552": "Transferências de Recursos do FNDE Referentes ao Programa Nacional de Alimentação Escolar (PNAE)",
+  "553": "Transferências de Recursos do FNDE Referentes ao Programa Nacional de Apoio ao Transporte Escolar (PNATE)",
+  "569": "Outras Transferências de Recursos do FNDE",
+  "570": "Transferências do Governo Federal referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "571": "Transferências do Estado referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "572": "Transferências de Municípios referentes a Convênios e Instrumentos Congêneres vinculados à Educação",
+  "573": "Royalties e Participação Especial de Petróleo e Gás Natural Vinculados à Educação - Lei nº 12.858/2013",
+  "574": "Operações de Crédito Vinculadas à Educação",
+  "575": "Outras Transferências de Convênios e Instrumentos Congêneres vinculados à Educação",
+  "576": "Transferências de Recursos dos Estados para programas de educação",
+  "599": "Outros Recursos Vinculados à Educação",
+  "600": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Manutenção das Ações e Serviços Públicos de Saúde",
+  "601": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Estruturação da Rede de Serviços Públicos de Saúde",
+  "602": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Manutenção das Ações e Serviços Públicos de Saúde – Recursos destinados ao enfrentamento da COVID-19 no bojo da ação 21C0.",
+  "603": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Federal - Bloco de Estruturação da Rede de Serviços Públicos de Saúde – Recursos destinados ao enfrentamento da COVID-19 no bojo da ação 21C0.",
+  "604": "Transferências provenientes do Governo Federal destinadas ao vencimento dos agentes comunitários de saúde e dos agentes de combate às endemias",
+  "605": "Assistência financeira da União destinada à complementação ao pagamento dos pisos salariais para profissionais da enfermagem.",
+  "621": "Transferências Fundo a Fundo de Recursos do SUS provenientes do Governo Estadual",
+  "622": "Transferências Fundo a Fundo de Recursos do SUS provenientes dos Governos Municipais",
+  "631": "Transferências do Governo Federal referentes a Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "632": "Transferências do Estado referentes a Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "633": "Transferências de Municípios referentes a Convênios Instrumentos Congêneres vinculados à Saúde",
+  "634": "Operações de Crédito vinculadas à Saúde",
+  "635": "Royalties e Participação Especial de Petróleo e Gás Natural vinculados à Saúde - Lei nº 12.858/2013",
+  "636": "Outras Transferências de Convênios e Instrumentos Congêneres vinculados à Saúde",
+  "659": "Outros Recursos Vinculados à Saúde",
+  "660": "Transferência de Recursos do Fundo Nacional de Assistência Social - FNAS",
+  "661": "Transferência de Recursos dos Fundos Estaduais de Assistência Social",
+  "662": "Transferências de Recursos dos Fundos Municipais de Assistência Social",
+  "665": "Transferências de Outras Entidades de Convênios e Instrumentos Congêneres vinculados à Assistência Social",
+  "669": "Outros Recursos Vinculados à Assistência Social",
+  "700": "Outras Transferências de Convênios ou Instrumentos Congêneres da União",
+  "701": "Outras Transferências de Convênios ou Instrumentos Congêneres dos Estados",
+  "702": "Outras Transferências de Convênios ou Instrumentos Congêneres dos Municípios",
+  "703": "Outras Transferências de Convênios ou Instrumentos Congêneres de outras Entidades",
+  "704": "Transferências da União Referentes a Compensações Financeiras pela Exploração de Recursos Naturais",
+  "705": "Transferências dos Estados Referentes a Compensações Financeiras pela Exploração de Recursos Naturais",
+  "706": "Transferência Especial da União",
+  "707": "Transferências da União – inciso I do art. 5º da Lei Complementar 173/2020",
+  "708": "Transferência da União Referente à Compensação Financeira de Recursos Minerais",
+  "709": "Transferência da União referente à Compensação Financeira de Recursos Hídricos",
+  "710": "Transferência Especial dos Estados",
+  "711": "Demais Transferências Obrigatórias não Decorrentes de Repartições de Receitas",
+  "712": "Transferências Fundo a Fundo de Recursos do Fundo Penitenciário - FUNPEN",
+  "713": "Transferências Fundo a Fundo de Recursos do Fundo de Segurança Pública - FSP",
+  "714": "Transferências Fundo a Fundo de Recursos do Fundo de Amparo ao Trabalhador - FAT",
+  "715": "Transferências Destinadas ao Setor Cultural - LC nº 195/2022 - Art. 5º - Audiovisual",
+  "716": "Transferências Destinadas ao Setor cultural - LC nº 195/2022 - Art. 8º - Demais Setores da Cultura",
+  "717": "Assistência Financeira Transporte Coletivo - Art. 5º, Inciso IV, EC nº 123/2022",
+  "718": "Auxílio Financeiro - Outorga Crédito Tributário ICMS - Art. 5º, Inciso V, EC nº 123/2022",
+  "719": "Transferências da Política Nacional Aldir Blanc de Fomento à Cultura - Lei nº 14.399/202",
+  "720": "Transferências da União Referentes às participações na exploração de Petróleo e Gás Natural destinadas ao FEP - Lei 9.478/1997",
+  "721": "Transferências da União Referentes a Cessão Onerosa de Petróleo – Lei nº 13.885/2019",
+  "722": "Transferências do Fundo de Equalização Federativa (FEF) – LC nº 212/2025 – Propag (Portaria STN/MF nº 1.701/2025)",
+  "747": "Outras vinculações de transferências da União",
+  "748": "Outras vinculações de transferências dos Estados",
+  "749": "Outras vinculações de transferências",
+  "750": "Recursos da Contribuição de Intervenção no Domínio Econômico - CIDE",
+  "751": "Recursos da Contribuição para o Custeio do Serviço de Iluminação Pública - COSIP",
+  "752": "Recursos Vinculados ao Trânsito",
+  "753": "Recursos Provenientes de Taxas, Contribuições e Preços Públicos",
+  "754": "Recursos de Operações de Crédito",
+  "755": "Recursos de Alienação de Bens/Ativos - Administração Direta",
+  "756": "Recursos de Alienação de Bens/Ativos - Administração Indireta",
+  "757": "Recursos de depósitos judiciais – Lides das quais o ente faz parte",
+  "758": "Recursos de depósitos judiciais – Lides das quais o ente não faz parte",
+  "759": "Recursos vinculados a fundos",
+  "760": "Recursos de Emolumentos, Taxas e Custas",
+  "761": "Recursos Vinculados ao Fundo de Combate e Erradicação da Pobreza",
+  "762": "Recursos de Alienação de Ativos - Cessão de Direitos Creditórios. (Portaria STN/MF Nº 2.297/2025)",
+  "763": "Recursos próprios dos estados vinculados ao Propag – LC nº 212/202",
+  "799": "Outras vinculações legais",
+  "800": "Recursos vinculados ao RPPS - Fundo em Capitalização (Plano Previdenciário)",
+  "801": "Recursos vinculados ao RPPS - Fundo em Repartição (Plano Financeiro)",
+  "802": "Recursos vinculados ao RPPS - Taxa de Administração",
+  "803": "Recursos vinculados ao Sistema de Proteção Social dos Militares (SPSM)",
+  "804": "Demais Recursos Previdenciários",
+  "860": "Recursos extraorçamentários vinculados a precatórios",
+  "861": "Recursos extraorçamentários vinculados a depósitos judiciais",
+  "862": "Recursos de Depósitos de Terceiros",
+  "863": "Recursos a distribuir – Comitê Gestor IBS",
+  "869": "Outros recursos extraorçamentários",
+  "880": "Recursos próprios dos consórcios",
+  "899": "Outros Recursos Vinculados"
+ }
+}

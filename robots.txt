@@ -1,0 +1,5 @@
+# Olho no Crato — dados públicos, indexação liberada.
+User-agent: *
+Allow: /
+
+Sitemap: https://olhonocrato.site/sitemap.xml

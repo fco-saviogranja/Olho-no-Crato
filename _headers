@@ -1,0 +1,25 @@
+# Cabeçalhos do Cloudflare Pages.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+
+# Os arquivos têm nome fixo: não há versão no nome que force o navegador a
+# buscar de novo. Então tudo que é código precisa ser revalidado a cada visita,
+# senão uma correção publicada hoje só chega a quem já entrou quando o cache
+# vencer. no-cache não impede guardar: manda perguntar antes de usar, e a
+# resposta é um 304 de poucos bytes quando nada mudou.
+/index.html
+  Cache-Control: no-cache
+/js/*
+  Cache-Control: no-cache
+/css/*
+  Cache-Control: no-cache
+/dados/*
+  Cache-Control: no-cache
+
+# A imagem de compartilhamento muda quase nunca, e o WhatsApp guarda por conta
+# própria de qualquer jeito.
+/compartilhar.png
+  Cache-Control: public, max-age=86400

@@ -1,0 +1,21 @@
+// Configuração para publicar no Cloudflare a partir do GitHub.
+//
+// Não há código de servidor: o site é estático e o Cloudflare só entrega
+// arquivos. O que existe aqui é o endereço da pasta pronta e a regra de
+// endereço desconhecido.
+//
+// A pasta publicar/ não está no repositório, e não deve estar: ela é montada.
+// Por isso o comando de build no painel do Cloudflare precisa ser
+//   node ferramentas/preparar-publicacao.mjs
+// que roda só com Node puro, sem instalar nada.
+{
+  "name": "olho-no-crato",
+  "compatibility_date": "2026-08-21",
+  "assets": {
+    "directory": "./publicar",
+    // A navegação é por hash, então toda rota é a mesma página. Quem digitar
+    // um endereço que não existe cai na inicial em vez de num 404 do
+    // Cloudflare, e o site então lê o hash e monta a seção certa.
+    "not_found_handling": "single-page-application"
+  }
+}
