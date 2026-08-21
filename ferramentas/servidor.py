@@ -6,7 +6,12 @@
 #   python ferramentas/servidor.py
 import functools, http.server, os, socketserver, sys
 
-PASTA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Serve a pasta do projeto por padrao. Passar um nome depois da porta serve
+# outra, o que permite conferir publicar/ exatamente como o visitante vera,
+# em vez de conferir os arquivos de trabalho.
+PASTA = os.path.join(RAIZ, sys.argv[2]) if len(sys.argv) > 2 else RAIZ
 # a porta pode vir do ambiente ou da linha de comando, para conviver com outro
 # servidor ja ocupando a padrao
 PORTA = int(os.environ.get('PORT') or (sys.argv[1] if len(sys.argv) > 1 else 5510))

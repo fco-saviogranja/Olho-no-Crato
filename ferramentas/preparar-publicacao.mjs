@@ -118,5 +118,15 @@ if (suspeitos.length || comSegredo.length) {
 const tamanho = arquivos.reduce((total, a) => total + statSync(join(destino, a)).size, 0);
 console.log('publicar/ pronta com %d arquivos, %s KB', arquivos.length, Math.round(tamanho / 1024));
 console.log('conferido: nenhum .env e nenhuma chave além da anônima.');
-console.log('\nPara subir no Cloudflare Pages, arraste a pasta publicar/ em');
-console.log('  https://dash.cloudflare.com > Workers & Pages > Create > Pages > Upload assets');
+// Este script e o build do Cloudflare, que o roda a cada push na main. Rodar
+// a mao serve para conferir antes de publicar, ou para servir a pasta local.
+if (process.env.CI || process.env.CF_PAGES || process.env.WORKERS_CI) {
+  console.log('publicar/ montada pelo build do Cloudflare.');
+} else {
+  console.log('');
+  console.log('Publicar e dar push: o Cloudflare roda este mesmo script na main.');
+  console.log('  git push');
+  console.log('');
+  console.log('Para conferir a pasta montada antes disso:');
+  console.log('  python ferramentas/servidor.py 5511 publicar');
+}
