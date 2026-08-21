@@ -37,7 +37,13 @@ function lerArgumento(nome, padrao) {
 function lerEnvLocal() {
   for (const caminho of [join(raiz, '.env'), join(raiz, 'supabase', '.env')]) {
     try {
-      for (const linha of readFileSync(caminho, 'utf8').split('\n')) {
+      // O Bloco de Notas do Windows grava UTF-8 com marca de ordem de byte, e
+      // essa marca invisível grudaria na primeira chave do arquivo,
+      // transformando SUPABASE_URL em algo que não é lido por ninguém. Quem
+      // edita o .env está trocando uma credencial, geralmente com pressa, e
+      // não merece caçar um caractere que não aparece na tela.
+      const bruto = readFileSync(caminho, 'utf8').replace(/^﻿/, '');
+      for (const linha of bruto.split('\n')) {
         const limpa = linha.trim();
         if (!limpa || limpa.startsWith('#')) continue;
         const corte = limpa.indexOf('=');
