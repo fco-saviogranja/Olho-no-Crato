@@ -4,7 +4,7 @@
 # para que qualquer alteracao apareca ao recarregar a pagina.
 #
 #   python ferramentas/servidor.py
-import functools, http.server, os, socketserver, sys
+import functools, http.server, os, socketserver, sys, urllib.parse
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,6 +22,18 @@ class SemCache(http.server.SimpleHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store, must-revalidate')
         self.send_header('Pragma', 'no-cache')
         super().end_headers()
+
+    def send_head(self):
+        # Servir a raiz do projeto punha o .env, com a chave que grava no banco,
+        # a um GET de distancia, e o SimpleHTTPRequestHandler entrega isso de
+        # bom grado. Arquivo que comeca com ponto nao e do site: .env, .git e
+        # .gitignore ficam de fora, sempre.
+        caminho = urllib.parse.urlparse(self.path).path
+        partes = urllib.parse.unquote(caminho).replace('\\', '/').split('/')
+        if any(p.startswith('.') and p not in ('.', '..') for p in partes):
+            self.send_error(403, 'arquivo oculto nao e servido')
+            return None
+        return super().send_head()
 
     def log_message(self, formato, *args):
         pass

@@ -22,16 +22,23 @@ pelo Windows Explorer, porque o navegador bloqueia módulos JavaScript no
 protocolo `file://`. Use um servidor local:
 
 ```bash
-python ferramentas/servidor.py
+node ferramentas/servidor.mjs
 ```
 
-Depois abra <http://localhost:5510>.
-
-Qualquer outro servidor estático serve. Com Node instalado:
+Depois abra <http://localhost:5510>. Para ver a pasta pronta exatamente como o
+visitante verá, passe a porta e a pasta:
 
 ```bash
-npx http-server . -p 5510 -c-1
+node ferramentas/servidor.mjs 5511 publicar
 ```
+
+Node é a única exigência, e ela já existe: é o que monta a pasta de publicação
+e o que o Cloudflare roda no build. Existe um equivalente em Python
+(`ferramentas/servidor.py`), com os mesmos argumentos, para quem preferir.
+
+Os dois recusam qualquer caminho que comece com ponto. Sem isso, servir a raiz
+do projeto deixaria o `.env`, que tem a chave de escrita no banco, a um GET de
+distância em `localhost`.
 
 ## Como publicar
 

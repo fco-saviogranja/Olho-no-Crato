@@ -128,5 +128,5 @@ if (process.env.CI || process.env.CF_PAGES || process.env.WORKERS_CI) {
   console.log('  git push');
   console.log('');
   console.log('Para conferir a pasta montada antes disso:');
-  console.log('  python ferramentas/servidor.py 5511 publicar');
+  console.log('  node ferramentas/servidor.mjs 5511 publicar');
 }
