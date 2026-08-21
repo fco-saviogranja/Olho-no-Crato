@@ -1,3 +1,0 @@
-# Rota por hash: qualquer caminho desconhecido volta para a página inicial,
-# que então lê o hash e monta a seção certa.
-/*  /index.html  200

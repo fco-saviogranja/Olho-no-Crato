@@ -22,8 +22,11 @@ const CONTEUDO = [
   // imagem que o WhatsApp e as redes leem ao receber o link
   'compartilhar.png',
   'robots.txt', 'sitemap.xml',
-  // lidos pelo Cloudflare Pages, não pelo navegador
-  '_headers', '_redirects',
+  // lido pelo Cloudflare, não pelo navegador. Não há _redirects: a regra de
+  // endereço desconhecido vive no wrangler.jsonc, em not_found_handling, e
+  // escrever a mesma regra nos dois lugares faz o Cloudflare recusar o deploy
+  // por laço infinito, porque /index.html casaria com a própria regra.
+  '_headers',
 ];
 
 // nunca podem sair daqui, nem por engano
