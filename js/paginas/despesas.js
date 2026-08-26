@@ -9,7 +9,7 @@ import {
 import { dinheiro, MESES, percentual } from '../api/formato.js';
 import { agrupar, ordenarPor, somarVarios } from '../dados/agregacoes.js';
 import {
-  abas, aviso, botao, carimbo, carregando, el, erroNaTela, gaveta, listaDetalhes, ranking, secao,
+  abas, aviso, botao, carimbo, carregando, el, erroNaTela, gaveta, listaDetalhes, ranking, saidas, secao,
 } from '../ui/componentes.js';
 import { pictogramaFuncao } from '../ui/pictogramas.js';
 import { tabela } from '../ui/tabela.js';
@@ -23,6 +23,18 @@ const CAMPOS = [
 ];
 
 const VALORES = CAMPOS.slice(10);
+
+// Conferido com o balancete fora do ar em 21/08/2026: estas cinco continuaram
+// de pé. Busca ficou de fora de propósito, porque depende do banco de apoio e
+// nao do TCE: mandar alguem para la quando o problema e outro so gera uma
+// segunda decepcao.
+const SEM_BALANCETE = [
+  { href: '#/fornecedores', rotulo: 'Quem recebe o dinheiro', nota: 'lê as notas de empenho' },
+  { href: '#/contratos', rotulo: 'Contratos e licitações' },
+  { href: '#/obras', rotulo: 'Obras e serviços de engenharia' },
+  { href: '#/patrimonio', rotulo: 'Bens do município' },
+  { href: '#/creditos', rotulo: 'Créditos extras abertos no ano' },
+];
 
 export const titulo = 'Para onde vai';
 
@@ -131,7 +143,8 @@ export async function montar(raiz, estado) {
       endpoints: ['balancetes_despesas_orcamentarias'],
     }));
   } catch (erro) {
-    raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar()));
+    raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar(),
+      erro && erro.ausente ? saidas(SEM_BALANCETE) : null));
   }
 }
 

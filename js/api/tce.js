@@ -123,10 +123,18 @@ async function buscarUrl(url, opcoes = {}) {
         throw new ErroTCE(msg, { url, definitivo: true });
       }
       if (resposta.status === 404) {
+        // Esta mensagem já afirmou que o conjunto de dados simplesmente não
+        // existia, porque o único 404 que eu conhecia era o de um endpoint que
+        // nunca funcionou. Em 21/08/2026 o grupo inteiro dos balancetes passou a
+        // devolver 404 depois de meses respondendo normalmente, e a mensagem
+        // virou mentira: dizia ser lacuna permanente o que era queda temporária,
+        // e dizia não haver nada a fazer quando o que havia a fazer era voltar
+        // depois. Agora ela relata o que se observa e não inventa a causa.
         throw new ErroTCE(
-          'Este conjunto de dados consta na documentação do TCE, mas o servidor responde que ele '
-          + 'não existe. Nada a fazer do lado de cá: é uma lacuna da própria API.',
-          { url, definitivo: true },
+          'O TCE respondeu que este conjunto de dados não existe, embora ele conste na '
+          + 'documentação do Tribunal. Isso acontece quando uma consulta sai do ar por lá, e '
+          + 'costuma voltar sozinho. Tente de novo mais tarde ou escolha outro exercício.',
+          { url, definitivo: true, ausente: true },
         );
       }
       if (!resposta.ok) throw new ErroTCE('O TCE respondeu ' + resposta.status + '.', { url });
@@ -232,6 +240,11 @@ export async function emLote(itens, tarefa, concorrencia = 4) {
  * Anos fechados terminam em dezembro; o ano corrente e descoberto por busca
  * binaria (3 ou 4 consultas leves em vez de 12).
  */
+/**
+ * Ultimo mes do exercicio com dado publicado.
+ * opcoes.path  endpoint a consultar (padrao: balancete de despesa)
+ * opcoes.campo campo curto a pedir nesse endpoint, so para a linha vir leve
+ */
 export async function ultimoMesComDados(ano, opcoes = {}) {
   const teto = ano < anoAtual() ? 12 : new Date().getMonth() + 1;
 
@@ -262,10 +275,22 @@ export async function ultimoMesComDados(ano, opcoes = {}) {
 }
 
 /** Quantas linhas de balancete o mês devolve, até o limite pedido. */
+/**
+ * Descobrir ate que mes existe dado exige perguntar a algum endpoint, e por
+ * muito tempo esse endpoint foi sempre o balancete de despesa, escrito aqui
+ * dentro. Parecia inofensivo: ele e o conjunto mais completo e responde rapido.
+ *
+ * Em 21/08/2026 o TCE tirou do ar o grupo inteiro dos balancetes, e seis
+ * paginas cairam de uma vez, inclusive quatro que nao leem balancete nenhum e
+ * cujos dados continuavam servidos normalmente. O calendario de uma pagina tem
+ * de sair do mesmo lugar de onde saem os dados dela, senao um endpoint fora do
+ * ar derruba os outros junto.
+ */
 async function quantasLinhas(ano, mes, opcoes, limite) {
-  const resposta = await consultar('/balancetes_despesas_orcamentarias', {
+  const { path = '/balancetes_despesas_orcamentarias', campo = 'codigo_orgao', ...resto } = opcoes;
+  const resposta = await consultar(path, {
     ano, mes: referencia(ano, mes),
-  }, Object.assign({ select: ['codigo_orgao'], limite }, opcoes));
+  }, Object.assign({ select: [campo], limite }, resto));
   return resposta.dados.length;
 }
 

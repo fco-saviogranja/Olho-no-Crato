@@ -1226,3 +1226,16 @@ main {
 :root[data-trocando-tema] *::after {
   transition: none !important;
 }
+
+/* Saídas oferecidas quando um conjunto de dados do TCE sai do ar. Ficam dentro
+   do bloco de erro, então herdam a cor dele; o que muda é só o espaçamento. */
+.saidas { margin-top: var(--esp-4); }
+.saidas .nota { margin-top: 0; }
+.lista-saidas {
+  margin: var(--esp-2) 0 0;
+  padding-left: var(--esp-5);
+  font-family: var(--fonte-texto);
+  font-size: var(--txt-sm);
+  line-height: 1.7;
+}
+.saida-nota { color: var(--cor-texto-suave); }

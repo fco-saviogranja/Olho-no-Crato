@@ -147,7 +147,8 @@ function porCampo(bens, campo, nomeColuna) {
 async function montarControle(alvo, estado, dic) {
   alvo.append(carregando('Buscando o controle de bens por unidade...'));
   try {
-    const ultimo = await ultimoMesComDados(estado.ano);
+    const ultimo = await ultimoMesComDados(estado.ano,
+      { path: '/controle_bens_unidades_orcamentarias', campo: 'codigo_orgao' });
     const meses = Array.from({ length: ultimo || 12 }, (_, i) => i + 1);
     const partes = await emLote(meses, async (m) => {
       const { dados } = await consultar('/controle_bens_unidades_orcamentarias',

@@ -189,7 +189,8 @@ function situacoesSoltas(status, estado) {
 async function montarMedicoes(alvo, estado) {
   alvo.append(carregando('Buscando medições mês a mês...'));
   try {
-    const ultimo = await ultimoMesComDados(estado.ano);
+    const ultimo = await ultimoMesComDados(estado.ano,
+      { path: '/medicoes_obras_municipio', campo: 'codigo_orgao' });
     const meses = Array.from({ length: ultimo || 12 }, (_, i) => i + 1);
     const partes = await emLote(meses, async (m) => {
       const { dados } = await consultar('/medicoes_obras_municipio',

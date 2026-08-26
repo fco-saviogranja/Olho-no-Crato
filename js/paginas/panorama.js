@@ -6,7 +6,7 @@ import { dicionarios, nomeFuncao, nomeOrgao } from '../api/auxiliares.js';
 import { data, dinheiro, MESES, numero, percentual, texto } from '../api/formato.js';
 import { agrupar, comOutros, ordenarPor, somarVarios } from '../dados/agregacoes.js';
 import {
-  aviso, botao, carimbo, carregando, cartao, el, erroNaTela, grade, ranking, secao,
+  aviso, botao, carimbo, carregando, cartao, el, erroNaTela, grade, ranking, saidas, secao,
 } from '../ui/componentes.js';
 import { barraExecucao, linhas, rosca } from '../ui/grafico.js';
 import { pictogramaFuncao } from '../ui/pictogramas.js';
@@ -18,6 +18,18 @@ const CAMPOS_DESPESA = [
 
 const CAMPOS_MES = [
   'valor_empenhado_no_mes', 'valor_liquidado_no_mes', 'valor_pago_no_mes',
+];
+
+// Conferido com o balancete fora do ar em 21/08/2026: estas cinco continuaram
+// de pé. Busca ficou de fora de propósito, porque depende do banco de apoio e
+// nao do TCE: mandar alguem para la quando o problema e outro so gera uma
+// segunda decepcao.
+const SEM_BALANCETE = [
+  { href: '#/fornecedores', rotulo: 'Quem recebe o dinheiro', nota: 'lê as notas de empenho' },
+  { href: '#/contratos', rotulo: 'Contratos e licitações' },
+  { href: '#/obras', rotulo: 'Obras e serviços de engenharia' },
+  { href: '#/patrimonio', rotulo: 'Bens do município' },
+  { href: '#/creditos', rotulo: 'Créditos extras abertos no ano' },
 ];
 
 export const titulo = 'Panorama';
@@ -60,7 +72,8 @@ export async function montar(raiz, estado) {
       endpoints: ['balancetes_despesas_orcamentarias', 'balancetes_receitas_orcamentarias'],
     }));
   } catch (erro) {
-    raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar()));
+    raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar(),
+      erro && erro.ausente ? saidas(SEM_BALANCETE) : null));
   }
 }
 

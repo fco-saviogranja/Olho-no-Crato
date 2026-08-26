@@ -84,12 +84,27 @@ export function vazio(titulo, texto, extra) {
     extra || null);
 }
 
-export function erroNaTela(erro, aoRepetir) {
+export function erroNaTela(erro, aoRepetir, extra) {
   return el('div', { class: 'aviso aviso-erro' },
     el('span', { class: 'aviso-icone', 'aria-hidden': 'true', texto: '!' }),
     el('div', {},
       el('p', { texto: (erro && erro.message) || 'Algo deu errado ao consultar o TCE.' }),
-      aoRepetir ? el('button', { class: 'botao', onClick: aoRepetir, texto: 'Tentar de novo' }) : null));
+      aoRepetir ? el('button', { class: 'botao', onClick: aoRepetir, texto: 'Tentar de novo' }) : null,
+      extra || null));
+}
+
+/**
+ * Quando um conjunto de dados do TCE sai do ar, a página que dependia dele vira
+ * um beco sem saída. Quem chegou querendo saber do dinheiro público merece uma
+ * porta em vez de um pedido de desculpas: as outras páginas leem endpoints
+ * diferentes e costumam continuar de pé na mesma hora.
+ */
+export function saidas(itens) {
+  return el('div', { class: 'saidas' },
+    el('p', { class: 'nota', texto: 'Estas partes do site não dependem desse dado e devem estar funcionando:' }),
+    el('ul', { class: 'lista-saidas' }, itens.map((i) => el('li', {},
+      el('a', { href: i.href, texto: i.rotulo }),
+      i.nota ? el('span', { class: 'saida-nota', texto: ' — ' + i.nota }) : null))));
 }
 
 const FONTES_CARIMBO = {

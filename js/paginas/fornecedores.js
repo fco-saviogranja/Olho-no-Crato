@@ -80,7 +80,8 @@ export async function montar(raiz, estado) {
   raiz.append(progresso);
 
   try {
-    const mes = await ultimoMesComDados(estado.ano);
+    const mes = await ultimoMesComDados(estado.ano,
+      { path: '/notas_empenhos', campo: 'numero_empenho' });
     if (!mes) {
       raiz.replaceChildren(aviso('alerta',
         'Não há empenhos publicados para ' + estado.ano + '. Escolha outro exercício.'));

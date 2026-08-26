@@ -37,7 +37,8 @@ export async function montar(raiz, estado) {
   raiz.append(carregando('Consultando a receita de ' + estado.ano + '...'));
 
   try {
-    const mes = await ultimoMesComDados(estado.ano);
+    const mes = await ultimoMesComDados(estado.ano,
+      { path: '/balancetes_receitas_orcamentarias', campo: 'codigo_orgao' });
     if (!mes) {
       raiz.replaceChildren(aviso('alerta',
         'Ainda não há balancete publicado para ' + estado.ano + '. Escolha outro exercício.'));
