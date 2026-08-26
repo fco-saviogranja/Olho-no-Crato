@@ -64,10 +64,19 @@
         </div>
       </div>
       <div class="controles" id="area-ano"></div>
-      <!-- só aparece no celular: com quinze seções abertas, o menu tomava dois
-           terços da tela e o cabeçalho grudento cobria o que se estava lendo -->
+      <!-- Só aparece no celular: com quinze seções abertas, o menu tomava dois
+           terços da tela e o cabeçalho grudento cobria o que se estava lendo.
+           O ícone é SVG e não caractere: escrito como escape de CSS, ele saiu
+           uma vez como caixa vazia, e um ícone que falha em silêncio é pior
+           que ícone nenhum. -->
       <button class="menu-botao" id="menu-botao" type="button"
-              aria-expanded="false" aria-controls="navegacao">Seções</button>
+              aria-expanded="false" aria-controls="navegacao">
+        <svg class="menu-icone" viewBox="0 0 24 24" aria-hidden="true">
+          <path class="menu-tracos" d="M3 6h18M3 12h18M3 18h18"/>
+          <path class="menu-xis" d="M5 5l14 14M19 5L5 19"/>
+        </svg>
+        <span>Seções</span>
+      </button>
     </div>
     <nav class="navegacao" id="navegacao" aria-label="Seções do site"></nav>
   </header>

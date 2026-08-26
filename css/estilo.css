@@ -306,6 +306,8 @@ select, input[type="date"], input[type="search"], input[type="text"] {
    em duas linhas e ficam sempre à vista. */
 .menu-botao {
   display: none;
+  align-items: center;
+  gap: var(--esp-2);
   font-family: var(--fonte-titulo);
   font-size: var(--txt-xs);
   font-weight: 700;
@@ -316,12 +318,20 @@ select, input[type="date"], input[type="search"], input[type="text"] {
   color: var(--oc-creme);
   background: transparent;
   border: 1px solid rgba(251, 247, 238, .38);
-  border-radius: var(--raio-0);
   cursor: pointer;
 }
-.menu-botao::before { content: "1"; margin-right: var(--esp-2); font-size: 17px; }
-.menu-botao[aria-expanded="true"]::before { content: " D7"; }
-.menu-botao:hover { background: rgba(251, 247, 238, .12); }
+.menu-icone {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: square;
+}
+.menu-botao .menu-xis { display: none; }
+.menu-botao[aria-expanded="true"] .menu-tracos { display: none; }
+.menu-botao[aria-expanded="true"] .menu-xis { display: inline; }
 
 .nav-grupo { display: flex; gap: 2px; flex-wrap: wrap; }
 .nav-mais, .nav-apoio { position: relative; padding-left: var(--esp-4); }
@@ -1224,7 +1234,7 @@ main {
      cabeçalho grudento cobria dois terços do que se estava lendo. Agora ele
      começa recolhido: o cabeçalho fica em torno de 64px e o primeiro número
      da página aparece sem rolar. */
-  .menu-botao { display: inline-flex; align-items: center; }
+  .menu-botao { display: inline-flex; }
   /* Atualizar dados e trocar o tema sao acoes secundarias: no celular elas
      empilhavam em duas linhas proprias e empurravam a pagina para baixo.
      Passam a viver dentro do menu. O seletor de exercicio fica, porque e ele
@@ -1232,18 +1242,35 @@ main {
   .controles .botao { display: none; }
   .cabecalho.menu-aberto .controles .botao { display: inline-flex; }
   .cabecalho-topo { gap: var(--esp-3); }
-  .navegacao { display: none; flex-direction: column; gap: var(--esp-2); }
+  /* Lista vertical, um item por linha, como em qualquer menu de celular.
+     Antes os links continuavam fluindo lado a lado dentro de cada grupo e o
+     menu aberto virava um bloco de palavras soltas, difícil de mirar. */
+  .navegacao { display: none; padding: 0; }
   .cabecalho.menu-aberto .navegacao {
-    display: flex;
-    max-height: 60vh;
+    display: block;
+    max-height: 68vh;
     overflow-y: auto;
-    padding-bottom: var(--esp-4);
+    border-top: 1px solid rgba(251, 247, 238, .18);
   }
+  .navegacao .nav-grupo { display: block; }
+  /* fio separando os três grupos: principal, mais e apoio */
+  .navegacao .nav-grupo + .nav-grupo { border-top: 1px solid rgba(251, 247, 238, .18); }
+  .navegacao a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 var(--esp-4);
+    font-size: var(--txt-sm);
+    border-bottom: 1px solid rgba(251, 247, 238, .07);
+  }
+  .navegacao .nav-grupo > a:last-child { border-bottom: none; }
   .nav-mais, .nav-apoio { padding-left: 0; }
   .nav-mais::before, .nav-apoio::before { display: none; }
   .cabecalho-topo { padding-bottom: var(--esp-3); }
-  /* alvo de toque de 44px: no dedo, 35px de altura erra com frequência */
-  .navegacao a, .rodape a {
+  /* alvo de toque de 44px: no dedo, 35px de altura erra com frequência.
+     A navegação já tem o seu, acima, e vem antes nesta folha; repeti-la aqui
+     desfazia a lista vertical e devolvia os links lado a lado. */
+  .rodape a {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
