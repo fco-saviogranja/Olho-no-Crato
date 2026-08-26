@@ -541,6 +541,74 @@ main {
   min-height: 96px;
 }
 .carregando p { margin: 0; }
+/* ---------- timbre: o olho grande atrás de tudo ---------- */
+
+/* Marca-d'água de papel timbrado. Fica presa à janela, não rola com a página,
+   e nunca intercepta clique.
+
+   Quase todo o texto do site vive sobre cartões e seções de fundo opaco, e o
+   timbre passa por trás deles: numa janela de 1440px, 54% do anel da íris
+   aparece e o resto some atrás do conteúdo, que é o comportamento de uma
+   marca-d'água. Onde ele encosta em texto, medi o efeito real com a opacidade
+   de 5%: o pior caso é o carimbo de procedência, que cai de 5,92:1 para
+   5,55:1, e o melhor é o número grande do cartão, de 18,74:1 para 17,47:1.
+   Todos seguem acima dos 4,5:1 exigidos.
+
+   Textura, não conteúdo: sai da árvore de acessibilidade e some na impressão. */
+.timbre {
+  /* Só a partir de 900px. Medi quanto do anel da íris escapa por trás do
+     conteúdo: 54% numa janela de 1440px, 38% em 1000px, e apenas 6% num
+     celular de 375px, onde os blocos ocupam a largura inteira. Seis por cento
+     não é marca-d'água, é lasca vermelha solta parecendo defeito. */
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  place-items: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+@media (min-width: 900px) {
+  .timbre { display: grid; }
+}
+.timbre svg {
+  width: min(92vmin, 860px);
+  height: min(92vmin, 860px);
+  fill: none;
+  stroke: var(--cor-acao);
+  stroke-width: 1.1;
+  opacity: .05;
+}
+.timbre-pupila { fill: var(--cor-acao); stroke: none; }
+.timbre-palpebra { opacity: 0; }
+
+/* No escuro o vermelhão clareia e pesa mais sobre o carvão, então o timbre
+   recua. */
+:root[data-tema="escuro"] .timbre svg { opacity: .045; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) .timbre svg { opacity: .045; }
+}
+
+/* Uma piscada a cada catorze segundos: "de vez em quando" é o ponto. Num
+   fundo, movimento frequente compete com a leitura em vez de acompanhá-la. */
+.timbre-globo { transform-box: fill-box; transform-origin: center; }
+.timbre-globo { animation: piscar-timbre 14s ease-in-out infinite; }
+.timbre-palpebra { animation: palpebra-timbre 14s ease-in-out infinite; }
+
+@keyframes piscar-timbre {
+  0%, 96%, 100% { transform: scaleY(1); }
+  98%           { transform: scaleY(.04); }
+}
+@keyframes palpebra-timbre {
+  0%, 96%, 100% { opacity: 0; }
+  98%           { opacity: 1; }
+}
+
+/* O conteúdo sobe acima do timbre; o cabeçalho já tem z-index próprio. */
+main, .rodape { position: relative; z-index: 1; }
+
+@media print { .timbre { display: none; } }
+
 /* ---------- o olho da marca em uso ---------- */
 
 /* Traço, nunca preenchimento: assim o mesmo desenho serve no claro, no escuro
@@ -1316,7 +1384,9 @@ main {
    diz a mesma coisa que o piscando. */
 @media (prefers-reduced-motion: reduce) {
   .olho-piscando .olho-globo,
-  .olho-piscando .olho-palpebra { animation: none; }
+  .olho-piscando .olho-palpebra,
+  .timbre-globo,
+  .timbre-palpebra { animation: none; }
   *, *::before, *::after {
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;

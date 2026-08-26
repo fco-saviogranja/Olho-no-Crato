@@ -87,6 +87,19 @@
     <nav class="navegacao" id="navegacao" aria-label="Seções do site"></nav>
   </header>
 
+  <!-- Timbre: o olho em escala grande atrás de tudo, como a marca-d'água de um
+       papel timbrado. Fica fora da árvore de acessibilidade e não recebe
+       clique; é textura, não conteúdo. -->
+  <div class="timbre" aria-hidden="true">
+    <svg viewBox="0 0 46 46" focusable="false">
+      <g class="timbre-globo">
+        <circle cx="23" cy="23" r="9" class="timbre-iris"/>
+        <circle cx="23" cy="23" r="2.5" class="timbre-pupila"/>
+      </g>
+      <path d="M11 23h24" class="timbre-palpebra"/>
+    </svg>
+  </div>
+
   <main id="app" tabindex="-1"></main>
 
   <footer class="rodape">
