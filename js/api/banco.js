@@ -7,7 +7,7 @@
 
 import { BANCO, ESPERA_BANCO } from '../config.js';
 
-const CONFIGURADO = Boolean(BANCO.url && BANCO.chaveAnonima);
+const CONFIGURADO = Boolean(BANCO.url && BANCO.chavePublica);
 
 let estadoAtual = CONFIGURADO ? 'desconhecido' : 'ausente';
 let verificacao = null;
@@ -24,8 +24,8 @@ export function estado() {
 
 function cabecalhos(extras = {}) {
   return {
-    apikey: BANCO.chaveAnonima,
-    Authorization: 'Bearer ' + BANCO.chaveAnonima,
+    apikey: BANCO.chavePublica,
+    Authorization: 'Bearer ' + BANCO.chavePublica,
     Accept: 'application/json',
     ...extras,
   };

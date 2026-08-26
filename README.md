@@ -283,7 +283,7 @@ Para carregar só uma parte: `--tabela=empenhos,contratos --de=2024 --ate=2026`.
 
 **6. Apontar o site para o banco.** Em `js/config.js`, preencha `url` com o
 endereço do projeto e `chaveAnonima` com a chave **anon**, não a de serviço. A
-chave anônima é pública por natureza: ela só permite leitura, porque cada tabela
+chave publicável é pública por natureza: ela só permite leitura, porque cada tabela
 tem política de acesso somente de leitura.
 
 **7. Deixar a atualização no automático** (opcional):

@@ -86,25 +86,45 @@ for (const item of CONTEUDO) {
 }
 
 // A navegação é por hash, então o servidor entrega sempre o index.html da raiz.
-// O _redirects vai junto mesmo assim, para que um endereço digitado errado caia
-// na página inicial em vez de num 404 do Cloudflare.
 
 const arquivos = listar(destino);
 const suspeitos = arquivos.filter((a) => PROIBIDOS.some((p) => p.test(a)));
 
-// confere o conteúdo também: chave de serviço é um JWT com role service_role
-const comSegredo = [];
-for (const arquivo of arquivos) {
-  if (!['.js', '.json', '.html', '.css', '.txt', '.md'].includes(extname(arquivo))) continue;
-  const texto = readFileSync(join(destino, arquivo), 'utf8');
-  for (const achado of texto.match(/eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]+/g) || []) {
+/**
+ * Procura chave de escrita no que vai ao ar.
+ *
+ * Foram dois formatos até agora, e por isso a verificação é dupla. O antigo é
+ * um JWT que carrega o papel dentro de si, e só dá para saber se é perigoso
+ * decodificando. O novo, adotado quando o Supabase aposentou os legados, diz o
+ * que é já no prefixo: sb_secret_ grava, sb_publishable_ só lê.
+ *
+ * Esta função só passou a olhar o formato novo depois de eu plantar uma chave
+ * sb_secret_ de teste e ver a pasta ser publicada sem nenhum aviso. Uma
+ * verificação que entende só o formato de ontem é pior que nenhuma, porque dá
+ * a impressão de que alguém está olhando.
+ */
+function segredosNoTexto(arquivo, texto) {
+  const achados = [];
+
+  for (const chave of texto.match(/sb_secret_[A-Za-z0-9_-]{8,}/g) || []) {
+    achados.push(arquivo + ' (chave secreta ' + chave.slice(0, 18) + '...)');
+  }
+
+  for (const jwt of texto.match(/eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]+/g) || []) {
     try {
-      const carga = JSON.parse(Buffer.from(achado.split('.')[1], 'base64url').toString());
-      if (carga.role && carga.role !== 'anon') comSegredo.push(arquivo + ' (role ' + carga.role + ')');
+      const carga = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url').toString());
+      if (carga.role && carga.role !== 'anon') achados.push(arquivo + ' (JWT com role ' + carga.role + ')');
     } catch {
       // não é um JWT legível, então não é chave do Supabase
     }
   }
+  return achados;
+}
+
+const comSegredo = [];
+for (const arquivo of arquivos) {
+  if (!['.js', '.json', '.html', '.css', '.txt', '.md'].includes(extname(arquivo))) continue;
+  comSegredo.push(...segredosNoTexto(arquivo, readFileSync(join(destino, arquivo), 'utf8')));
 }
 
 if (suspeitos.length || comSegredo.length) {
@@ -120,7 +140,7 @@ if (suspeitos.length || comSegredo.length) {
 
 const tamanho = arquivos.reduce((total, a) => total + statSync(join(destino, a)).size, 0);
 console.log('publicar/ pronta com %d arquivos, %s KB', arquivos.length, Math.round(tamanho / 1024));
-console.log('conferido: nenhum .env e nenhuma chave além da anônima.');
+console.log('conferido: nenhum .env e nenhuma chave de escrita, nos dois formatos.');
 // Este script e o build do Cloudflare, que o roda a cada push na main. Rodar
 // a mao serve para conferir antes de publicar, ou para servir a pasta local.
 if (process.env.CI || process.env.CF_PAGES || process.env.WORKERS_CI) {
