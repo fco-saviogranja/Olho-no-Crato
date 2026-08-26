@@ -113,6 +113,7 @@ export async function selecionar(recurso, filtros = {}, opcoes = {}) {
   }
   if (opcoes.ordem) busca.set('order', opcoes.ordem);
   if (opcoes.limite) busca.set('limit', String(opcoes.limite));
+  if (opcoes.deslocamento) busca.set('offset', String(opcoes.deslocamento));
   const resposta = await pedir('/rest/v1/' + recurso + '?' + busca.toString(), opcoes);
   if (!resposta) return null;
   try {
@@ -123,6 +124,28 @@ export async function selecionar(recurso, filtros = {}, opcoes = {}) {
 }
 
 /** Chama uma função do banco (as buscas textuais são feitas assim). */
+/**
+ * Igual a selecionar(), mas traz tudo, em blocos.
+ *
+ * O PostgREST devolve no maximo mil linhas por requisicao, e o balancete de um
+ * exercicio do Crato passa de duas mil e oitocentas. Sem isto, a copia guardada
+ * no banco entregaria um terco do orcamento como se fosse o total, que e o tipo
+ * de erro que ninguem percebe olhando a tela.
+ */
+export async function selecionarTudo(recurso, filtros = {}, opcoes = {}) {
+  const bloco = opcoes.bloco || 1000;
+  const teto = opcoes.maxBlocos || 20;
+  const tudo = [];
+  for (let n = 0; n < teto; n += 1) {
+    const pagina = await selecionar(recurso, filtros,
+      Object.assign({}, opcoes, { limite: bloco, deslocamento: n * bloco }));
+    if (!pagina) return tudo.length ? tudo : null;
+    tudo.push(...pagina);
+    if (pagina.length < bloco) break;
+  }
+  return tudo;
+}
+
 export async function chamar(funcao, argumentos = {}, opcoes = {}) {
   const resposta = await pedir('/rest/v1/rpc/' + funcao, {
     ...opcoes,

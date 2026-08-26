@@ -2,6 +2,7 @@
 // secretaria, por tipo de gasto e por ação do orçamento.
 
 import { consultar, referencia, ultimoMesComDados } from '../api/tce.js';
+import * as banco from '../api/banco.js';
 import {
   chaveAcao, dicionarios, grupoFonte, nomeAcao, nomeElemento, nomeFonte, nomeFuncao, nomeOrgao,
   nomeSubfuncao, nomeUnidade,
@@ -71,81 +72,145 @@ export async function montar(raiz, estado) {
       'A ordenação padrão é pelo valor pago, que é o dinheiro que de fato saiu do caixa. '
       + 'Clique em qualquer linha para ver a abertura detalhada.'));
 
-    const bloco = secao({});
-    bloco.corpo.append(abas([
-      {
-        id: 'area',
-        titulo: 'Por área',
-        montar: (c) => c.append(visao(linhas, totais, dic, estado, {
-          chave: 'codigo_funcao',
-          rotulo: (codigo) => nomeFuncao(dic, codigo),
-          icone: (grupo) => pictogramaFuncao(grupo.chave),
-          nomeColuna: 'Função de governo',
-          detalharPor: (l) => nomeSubfuncao(dic, l.codigo_subfuncao),
-          nomeDetalhe: 'Subfunção',
-        })),
-      },
-      {
-        id: 'secretaria',
-        titulo: 'Por secretaria',
-        montar: (c) => c.append(visao(linhas, totais, dic, estado, {
-          chave: 'codigo_orgao',
-          rotulo: (codigo) => nomeOrgao(dic, codigo),
-          nomeColuna: 'Órgão',
-          detalharPor: (l) => nomeUnidade(dic, l.codigo_orgao, l.codigo_unidade_orcamentaria),
-          nomeDetalhe: 'Unidade orçamentária',
-        })),
-      },
-      {
-        id: 'tipo',
-        titulo: 'Por tipo de gasto',
-        montar: (c) => c.append(visao(linhas, totais, dic, estado, {
-          chave: 'codigo_elemento_despesa',
-          rotulo: (codigo) => nomeElemento(dic, codigo),
-          nomeColuna: 'Elemento de despesa',
-          detalharPor: (l) => nomeOrgao(dic, l.codigo_orgao),
-          nomeDetalhe: 'Órgão',
-        })),
-      },
-      {
-        id: 'acao',
-        titulo: 'Por ação',
-        montar: (c) => c.append(visao(linhas, totais, dic, estado, {
-          chave: (l) => chaveAcao(l),
-          rotulo: (chave, exemplo) => nomeAcao(dic, exemplo),
-          nomeColuna: 'Projeto ou atividade',
-          detalharPor: (l) => nomeElemento(dic, l.codigo_elemento_despesa),
-          nomeDetalhe: 'Elemento de despesa',
-        })),
-      },
-      {
-        id: 'fonte',
-        titulo: 'Por origem do recurso',
-        montar: (c) => {
-          c.append(aviso('info',
-            'Fonte de recursos é a origem do dinheiro e diz se ele pode ser gasto livremente ou se '
-            + 'está carimbado para uma finalidade, como educação ou saúde. A API do TCE devolve só o '
-            + 'código; os nomes vêm da Tabela III do Manual do SIM.'));
-          c.append(visao(linhas, totais, dic, estado, {
-            chave: (l) => String(l.codigo_fonte ?? '').trim().slice(0, 3),
-            rotulo: (codigo, exemplo) => grupoFonte(dic, exemplo.codigo_fonte),
-            nomeColuna: 'Fonte de recursos',
-            detalharPor: (l) => nomeFonte(dic, l.codigo_fonte),
-            nomeDetalhe: 'Detalhamento da fonte',
-          }));
-        },
-      },
-    ]));
-    raiz.append(bloco);
+    raiz.append(montarAbas(linhas, totais, dic, estado));
 
     raiz.append(carimbo({
       origem: balancete.origem, ts: balancete.ts,
       endpoints: ['balancetes_despesas_orcamentarias'],
     }));
   } catch (erro) {
+    if (erro && erro.ausente) {
+      const doBanco = await pelaCopia(raiz, estado, erro);
+      if (doBanco) return;
+    }
     raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar(),
       erro && erro.ausente ? saidas(SEM_BALANCETE) : null));
   }
+}
+
+/**
+ * Monta a página a partir do banco de apoio quando o TCE não responde.
+ *
+ * Aqui deu certo sem reescrever nada: a carga guarda o balancete com os mesmos
+ * nomes de coluna que o TCE usa, então as agregações, as abas e as tabelas
+ * funcionam sobre a cópia exatamente como funcionam sobre o original. Só muda
+ * de onde vêm as linhas.
+ */
+async function pelaCopia(raiz, estado, erro) {
+  raiz.replaceChildren(carregando('O TCE não respondeu. Procurando no banco de apoio...'));
+  if (!(await banco.disponivel())) return false;
+
+  const exercicio = estado.ano * 100;
+  const [ultimo, dic] = await Promise.all([
+    banco.selecionar('ultimo_balancete_despesa', { exercicio_orcamento: 'eq.' + exercicio }),
+    dicionarios(estado.ano, ['acoes']).catch(() => null),
+  ]);
+  const ref = ultimo && ultimo[0] && ultimo[0].mes;
+  if (!ref) return false;
+
+  const linhas = await banco.selecionarTudo('balancete_despesa', {
+    exercicio_orcamento: 'eq.' + exercicio,
+    data_referencia_doc: 'eq.' + ref,
+  }, { campos: CAMPOS.join(',') });
+  if (!linhas || !linhas.length) return false;
+
+  const mes = Number(String(ref).slice(4, 6)) || 12;
+  const totais = somarVarios(linhas, VALORES);
+
+  raiz.replaceChildren();
+  raiz.append(el('div', { class: 'topo-pagina' },
+    el('h1', { texto: 'Para onde vai o dinheiro' }),
+    el('p', { class: 'linha-fina' },
+      'Despesa de ' + estado.ano + ' acumulada até ' + MESES[mes - 1] + '. '
+      + dinheiro(totais.valor_pago_ate_mes) + ' já foram pagos, de um orçamento de '
+      + dinheiro(totais.valor_fixado_orcamento_bal_despesa) + '.')));
+
+  raiz.append(aviso('alerta', erro.message + ' Enquanto isso, os números abaixo vêm da cópia que '
+    + 'este site guarda, e não do TCE. Podem estar desatualizados.'));
+
+  raiz.append(montarAbas(linhas, totais, dic, estado));
+
+  const ultimaCarga = await banco.ultimaCarga().catch(() => null);
+  raiz.append(carimbo({
+    origem: 'banco',
+    ts: ultimaCarga && ultimaCarga.concluida_em ? new Date(ultimaCarga.concluida_em).getTime() : null,
+    endpoints: ['balancete_despesa'],
+  }));
+  return true;
+}
+
+/**
+ * As cinco aberturas da despesa. Vive numa função própria porque as monta tanto
+ * a rota normal, com o dado do TCE, quanto a queda para o banco de apoio: são
+ * as mesmas colunas, então é o mesmo código.
+ */
+function montarAbas(linhas, totais, dic, estado) {
+  const bloco = secao({});
+  bloco.corpo.append(abas([
+    {
+      id: 'area',
+      titulo: 'Por área',
+      montar: (c) => c.append(visao(linhas, totais, dic, estado, {
+        chave: 'codigo_funcao',
+        rotulo: (codigo) => nomeFuncao(dic, codigo),
+        icone: (grupo) => pictogramaFuncao(grupo.chave),
+        nomeColuna: 'Função de governo',
+        detalharPor: (l) => nomeSubfuncao(dic, l.codigo_subfuncao),
+        nomeDetalhe: 'Subfunção',
+      })),
+    },
+    {
+      id: 'secretaria',
+      titulo: 'Por secretaria',
+      montar: (c) => c.append(visao(linhas, totais, dic, estado, {
+        chave: 'codigo_orgao',
+        rotulo: (codigo) => nomeOrgao(dic, codigo),
+        nomeColuna: 'Órgão',
+        detalharPor: (l) => nomeUnidade(dic, l.codigo_orgao, l.codigo_unidade_orcamentaria),
+        nomeDetalhe: 'Unidade orçamentária',
+      })),
+    },
+    {
+      id: 'tipo',
+      titulo: 'Por tipo de gasto',
+      montar: (c) => c.append(visao(linhas, totais, dic, estado, {
+        chave: 'codigo_elemento_despesa',
+        rotulo: (codigo) => nomeElemento(dic, codigo),
+        nomeColuna: 'Elemento de despesa',
+        detalharPor: (l) => nomeOrgao(dic, l.codigo_orgao),
+        nomeDetalhe: 'Órgão',
+      })),
+    },
+    {
+      id: 'acao',
+      titulo: 'Por ação',
+      montar: (c) => c.append(visao(linhas, totais, dic, estado, {
+        chave: (l) => chaveAcao(l),
+        rotulo: (chave, exemplo) => nomeAcao(dic, exemplo),
+        nomeColuna: 'Projeto ou atividade',
+        detalharPor: (l) => nomeElemento(dic, l.codigo_elemento_despesa),
+        nomeDetalhe: 'Elemento de despesa',
+      })),
+    },
+    {
+      id: 'fonte',
+      titulo: 'Por origem do recurso',
+      montar: (c) => {
+        c.append(aviso('info',
+          'Fonte de recursos é a origem do dinheiro e diz se ele pode ser gasto livremente ou se '
+          + 'está carimbado para uma finalidade, como educação ou saúde. A API do TCE devolve só o '
+          + 'código; os nomes vêm da Tabela III do Manual do SIM.'));
+        c.append(visao(linhas, totais, dic, estado, {
+          chave: (l) => String(l.codigo_fonte ?? '').trim().slice(0, 3),
+          rotulo: (codigo, exemplo) => grupoFonte(dic, exemplo.codigo_fonte),
+          nomeColuna: 'Fonte de recursos',
+          detalharPor: (l) => nomeFonte(dic, l.codigo_fonte),
+          nomeDetalhe: 'Detalhamento da fonte',
+        }));
+      },
+    },
+    ]));
+  return bloco;
 }
 
 function visao(linhas, totais, dic, estado, config) {

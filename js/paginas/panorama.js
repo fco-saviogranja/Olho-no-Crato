@@ -2,6 +2,7 @@
 // quanto planejou gastar e em que pé está a execução da despesa.
 
 import { consultar, emLote, referencia, ultimoMesComDados, anoAtual } from '../api/tce.js';
+import * as banco from '../api/banco.js';
 import { dicionarios, nomeFuncao, nomeOrgao } from '../api/auxiliares.js';
 import { data, dinheiro, MESES, numero, percentual, texto } from '../api/formato.js';
 import { agrupar, comOutros, ordenarPor, somarVarios } from '../dados/agregacoes.js';
@@ -72,9 +73,95 @@ export async function montar(raiz, estado) {
       endpoints: ['balancetes_despesas_orcamentarias', 'balancetes_receitas_orcamentarias'],
     }));
   } catch (erro) {
+    // O TCE tirou o balancete do ar em 21/08/2026 e o Panorama, que é a
+    // primeira tela do site, virou um aviso de erro. Mas a cópia estava aqui o
+    // tempo todo: o banco de apoio guarda o balancete dos nove exercícios,
+    // justamente para o site não morrer junto com a API. Mostrar o dado de
+    // ontem, dizendo que é de ontem, serve melhor ao cidadão do que não
+    // mostrar nada.
+    if (erro && erro.ausente) {
+      const doBanco = await pelaCopia(raiz, estado, erro);
+      if (doBanco) return;
+    }
     raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar(),
       erro && erro.ausente ? saidas(SEM_BALANCETE) : null));
   }
+}
+
+/**
+ * Monta o Panorama a partir do banco de apoio, quando o TCE não responde.
+ * Devolve false se o banco também não puder ajudar, e aí o erro segue como era.
+ */
+async function pelaCopia(raiz, estado, erro) {
+  raiz.replaceChildren(carregando('O TCE não respondeu. Procurando no banco de apoio...'));
+  if (!(await banco.disponivel())) return false;
+
+  const [execucao0, receita0, porFuncao, ultima] = await Promise.all([
+    banco.selecionar('execucao_por_exercicio', { exercicio: 'eq.' + estado.ano }),
+    banco.selecionar('receita_por_exercicio', { exercicio: 'eq.' + estado.ano }),
+    banco.selecionar('execucao_por_funcao', { exercicio: 'eq.' + estado.ano }, { ordem: 'pago.desc' }),
+    banco.ultimaCarga(),
+  ]);
+
+  const e = execucao0 && execucao0[0];
+  if (!e) return false;
+  const r = (receita0 && receita0[0]) || { previsto: 0, arrecadado: 0 };
+  const mes = Number(String(e.mes_referencia || '').slice(4, 6)) || 12;
+
+  const d = {
+    valor_fixado_orcamento_bal_despesa: Number(e.orcado) || 0,
+    valor_empenhado_ate_mes: Number(e.empenhado) || 0,
+    valor_liquidado_ate_mes: Number(e.liquidado) || 0,
+    valor_pago_ate_mes: Number(e.pago) || 0,
+  };
+  const rec = {
+    valor_previsto_orcamento: Number(r.previsto) || 0,
+    valor_arrecadacao_ate_mes: Number(r.arrecadado) || 0,
+  };
+
+  const dic = await dicionarios(estado.ano).catch(() => null);
+
+  raiz.replaceChildren();
+  raiz.append(cabecalho(estado, mes, null));
+  raiz.append(aviso('alerta', erro.message + ' Enquanto isso, os números abaixo vêm da cópia que '
+    + 'este site guarda, e não do TCE. Podem estar desatualizados.'));
+  raiz.append(cartoes(d, rec));
+  raiz.append(execucao(d));
+
+  if (porFuncao && porFuncao.length) {
+    const itens = comOutros(
+      porFuncao.map((f) => ({ chave: f.funcao, rotulo: nomeFuncao(dic, f.funcao), pago: Number(f.pago) || 0 })),
+      'pago', 7,
+    ).map((g) => ({ rotulo: g.rotulo, valor: g.pago, codigo: g.chave }));
+    const total = itens.reduce((a, i) => a + i.valor, 0);
+
+    const bloco = secao({
+      titulo: 'Em que áreas o dinheiro foi gasto',
+      descricao: 'Divisão por função de governo, com base no que já foi efetivamente pago.',
+    });
+    bloco.corpo.append(rosca(itens, {
+      icone: (item) => pictogramaFuncao(item.codigo),
+      descricao: 'Distribuição do valor pago por função de governo',
+      centro: dinheiro(total).replace(/,\d\d$/, ''),
+      centroDetalhe: 'pago no período',
+    }));
+    raiz.append(bloco);
+  }
+
+  // a abertura por secretaria e a série mês a mês exigem a linha a linha do
+  // balancete, que o banco resume; voltam quando o TCE voltar
+  raiz.append(el('p', { class: 'nota' },
+    'A abertura por secretaria e a série mês a mês só existem com o balancete detalhado do TCE, '
+    + 'e voltam quando ele voltar. ',
+    el('a', { href: '#/historico', texto: 'Ano a ano' }), ' e ',
+    el('a', { href: '#/fornecedores', texto: 'Quem recebe' }), ' seguem completas.'));
+
+  raiz.append(carimbo({
+    origem: 'banco',
+    ts: ultima && ultima.concluida_em ? new Date(ultima.concluida_em).getTime() : null,
+    endpoints: ['execucao_por_exercicio', 'receita_por_exercicio', 'execucao_por_funcao'],
+  }));
+  return true;
 }
 
 function semDados(estado) {

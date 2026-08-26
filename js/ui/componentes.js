@@ -111,13 +111,15 @@ const FONTES_CARIMBO = {
   rede: 'Consultado agora no TCE-CE',
   cache: 'Dado guardado no seu navegador',
   'cache-antigo': 'TCE fora do ar: mostrando a última cópia guardada',
+  banco: 'TCE fora do ar: cópia guardada no banco de apoio, lida',
 };
 
 /** Carimbo de procedência: de onde veio o dado e quando. */
 export function carimbo({ origem, ts, endpoints = [] }) {
   const quando = ts ? new Date(ts).toLocaleString('pt-BR') : '';
   const fonte = FONTES_CARIMBO[origem] || 'TCE-CE';
-  const classe = origem === 'cache-antigo' ? 'carimbo carimbo-alerta' : 'carimbo';
+  const classe = origem === 'cache-antigo' || origem === 'banco'
+    ? 'carimbo carimbo-alerta' : 'carimbo';
   return el('p', { class: classe },
     fonte + (quando ? ' em ' + quando : ''),
     endpoints.length ? el('span', { class: 'carimbo-endpoints' }, ' · ' + endpoints.join(', ')) : null);

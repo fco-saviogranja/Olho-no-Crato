@@ -2,11 +2,12 @@
 // origem, mais os talões que comprovam cada entrada.
 
 import { consultar, emLote, referencia, ultimoMesComDados } from '../api/tce.js';
+import * as banco from '../api/banco.js';
 import { dicionarios, grupoFonte, nomeOrgao, nomeRubrica, rubricas } from '../api/auxiliares.js';
 import { capitalizar, data, dinheiro, MESES, numero, percentual, texto, truncar } from '../api/formato.js';
 import { agrupar, comOutros, ordenarPor, somarVarios } from '../dados/agregacoes.js';
 import {
-  abas, aviso, carimbo, carregando, cartao, el, erroNaTela, grade, ranking, secao, vazio,
+  abas, aviso, carimbo, carregando, cartao, el, erroNaTela, grade, ranking, saidas, secao, vazio,
 } from '../ui/componentes.js';
 import { colunas as graficoColunas, rosca } from '../ui/grafico.js';
 import { tabela } from '../ui/tabela.js';
@@ -17,6 +18,14 @@ const CAMPOS = [
 ];
 
 const VALORES = ['valor_previsto_orcamento', 'valor_arrecadacao_ate_mes', 'valor_anulacoes_ate_mes'];
+
+const SEM_BALANCETE = [
+  { href: '#/fornecedores', rotulo: 'Quem recebe o dinheiro', nota: 'lê as notas de empenho' },
+  { href: '#/contratos', rotulo: 'Contratos e licitações' },
+  { href: '#/obras', rotulo: 'Obras e serviços de engenharia' },
+  { href: '#/patrimonio', rotulo: 'Bens do município' },
+  { href: '#/creditos', rotulo: 'Créditos extras abertos no ano' },
+];
 
 export const titulo = 'De onde vem';
 
@@ -68,41 +77,102 @@ export async function montar(raiz, estado) {
       return;
     }
 
-    raiz.append(grade(
-      cartao({
-        titulo: 'Previsto para o ano', valor: totais.valor_previsto_orcamento, tom: 'previsto',
-        detalhe: 'Estimativa da Lei Orçamentária',
-      }),
-      cartao({
-        titulo: 'Arrecadado', valor: totais.valor_arrecadacao_ate_mes, tom: 'receita',
-        detalhe: percentual(totais.valor_arrecadacao_ate_mes, totais.valor_previsto_orcamento)
-          + ' do previsto',
-      }),
-      cartao({
-        titulo: 'Anulações', valor: totais.valor_anulacoes_ate_mes, tom: 'neutro',
-        detalhe: 'Estornos de receita no período',
-        ajuda: 'Lançamentos cancelados, por exemplo por erro de recolhimento.',
-      }),
-    ));
-
-    const bloco = secao({});
-    bloco.corpo.append(abas([
-      { id: 'categoria', titulo: 'Por tipo de receita', montar: (c) => c.append(porCategoria(linhas, totais, dic)) },
-      { id: 'rubrica', titulo: 'Por rubrica', montar: (c) => c.append(porRubrica(linhas, totais, dic, estado)) },
-      { id: 'fonte', titulo: 'Por destinação', montar: (c) => c.append(porFonte(linhas, totais, dic, estado)) },
-      { id: 'orgao', titulo: 'Por órgão', montar: (c) => c.append(porOrgao(linhas, totais, dic, estado)) },
-      { id: 'mes', titulo: 'Mês a mês', montar: (c) => montarMensal(c, estado, mes) },
-      { id: 'taloes', titulo: 'Talões de receita', montar: (c) => montarTaloes(c, estado, mes) },
-    ]));
-    raiz.append(bloco);
+      montarCorpo(raiz, linhas, totais, dic, estado, mes);
 
     raiz.append(carimbo({
       origem: balancete.origem, ts: balancete.ts,
       endpoints: ['balancetes_receitas_orcamentarias'],
     }));
   } catch (erro) {
-    raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar()));
+    if (erro && erro.ausente) {
+      const doBanco = await pelaCopia(raiz, estado, erro);
+      if (doBanco) return;
+    }
+    raiz.replaceChildren(erroNaTela(erro, () => estado.recarregar(),
+      erro && erro.ausente ? saidas(SEM_BALANCETE) : null));
   }
+}
+
+/**
+ * Os cartões e as seis abas da receita. Em função própria porque as montam
+ * tanto a rota normal, com o dado do TCE, quanto a queda para o banco de apoio.
+ */
+function montarCorpo(alvo, linhas, totais, dic, estado, mes) {
+    alvo.append(grade(
+    cartao({
+      titulo: 'Previsto para o ano', valor: totais.valor_previsto_orcamento, tom: 'previsto',
+      detalhe: 'Estimativa da Lei Orçamentária',
+    }),
+    cartao({
+      titulo: 'Arrecadado', valor: totais.valor_arrecadacao_ate_mes, tom: 'receita',
+      detalhe: percentual(totais.valor_arrecadacao_ate_mes, totais.valor_previsto_orcamento)
+        + ' do previsto',
+    }),
+    cartao({
+      titulo: 'Anulações', valor: totais.valor_anulacoes_ate_mes, tom: 'neutro',
+      detalhe: 'Estornos de receita no período',
+      ajuda: 'Lançamentos cancelados, por exemplo por erro de recolhimento.',
+    }),
+    ));
+
+    const bloco = secao({});
+    bloco.corpo.append(abas([
+    { id: 'categoria', titulo: 'Por tipo de receita', montar: (c) => c.append(porCategoria(linhas, totais, dic)) },
+    { id: 'rubrica', titulo: 'Por rubrica', montar: (c) => c.append(porRubrica(linhas, totais, dic, estado)) },
+    { id: 'fonte', titulo: 'Por destinação', montar: (c) => c.append(porFonte(linhas, totais, dic, estado)) },
+    { id: 'orgao', titulo: 'Por órgão', montar: (c) => c.append(porOrgao(linhas, totais, dic, estado)) },
+    { id: 'mes', titulo: 'Mês a mês', montar: (c) => montarMensal(c, estado, mes) },
+    { id: 'taloes', titulo: 'Talões de receita', montar: (c) => montarTaloes(c, estado, mes) },
+    ]));
+    alvo.append(bloco);
+}
+
+/**
+ * Monta a página a partir do banco de apoio quando o TCE não responde. Como a
+ * carga guarda o balancete com os mesmos nomes de coluna do TCE, as agregações
+ * valem sobre a cópia sem mudar nada.
+ */
+async function pelaCopia(raiz, estado, erro) {
+  raiz.replaceChildren(carregando('O TCE não respondeu. Procurando no banco de apoio...'));
+  if (!(await banco.disponivel())) return false;
+
+  const exercicio = estado.ano * 100;
+  const ultimo = await banco.selecionar('ultimo_balancete_receita',
+    { exercicio_orcamento: 'eq.' + exercicio });
+  const ref = ultimo && ultimo[0] && ultimo[0].mes;
+  if (!ref) return false;
+
+  const [linhas, dic, mapaRubricas] = await Promise.all([
+    banco.selecionarTudo('balancete_receita', {
+      exercicio_orcamento: 'eq.' + exercicio,
+      data_referencia_doc: 'eq.' + ref,
+    }, { campos: CAMPOS.join(',') }),
+    dicionarios(estado.ano).catch(() => ({})),
+    rubricas(estado.ano).catch(() => new Map()),
+  ]);
+  if (!linhas || !linhas.length) return false;
+  dic.rubricas = mapaRubricas;
+
+  const mes = Number(String(ref).slice(4, 6)) || 12;
+  const totais = somarVarios(linhas, VALORES);
+
+  raiz.replaceChildren();
+  raiz.append(el('div', { class: 'topo-pagina' },
+    el('h1', { texto: 'De onde vem o dinheiro' }),
+    el('p', { class: 'linha-fina' },
+      'Receita de ' + estado.ano + ' acumulada até ' + MESES[mes - 1] + '.')));
+  raiz.append(aviso('alerta', erro.message + ' Enquanto isso, os números abaixo vêm da cópia que '
+    + 'este site guarda, e não do TCE. Podem estar desatualizados.'));
+
+  montarCorpo(raiz, linhas, totais, dic, estado, mes);
+
+  const ultimaCarga = await banco.ultimaCarga().catch(() => null);
+  raiz.append(carimbo({
+    origem: 'banco',
+    ts: ultimaCarga && ultimaCarga.concluida_em ? new Date(ultimaCarga.concluida_em).getTime() : null,
+    endpoints: ['balancete_receita'],
+  }));
+  return true;
 }
 
 function categoria(codigo) {
