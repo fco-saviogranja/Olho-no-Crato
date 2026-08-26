@@ -9,3 +9,6 @@ ferramentas/*.xlsx
 
 # pasta montada por ferramentas/preparar-publicacao.mjs
 publicar/
+
+# configuracao local do editor, nao e do projeto
+.claude/

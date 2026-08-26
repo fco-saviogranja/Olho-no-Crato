@@ -336,11 +336,15 @@ main {
 
 .topo-pagina { margin-bottom: var(--esp-6); }
 .topo-pagina h1 { margin-bottom: var(--esp-2); }
+/* A linha de apoio abaixo do título é uma ou duas frases, não texto corrido:
+   os 44ch da medida de leitura a quebravam no meio, e "ainda não / foram
+   enviados ao TCE" lia-se como frase interrompida. Em 62ch as frases curtas
+   cabem inteiras, que é o que se espera de uma legenda. */
 .linha-fina {
   font-family: var(--fonte-texto);
   font-size: var(--txt-md);
   line-height: 1.55;
-  max-width: 44ch;
+  max-width: 62ch;
   color: var(--cor-texto-suave);
   margin: 0;
 }

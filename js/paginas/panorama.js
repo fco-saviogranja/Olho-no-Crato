@@ -123,8 +123,6 @@ async function pelaCopia(raiz, estado, erro) {
 
   raiz.replaceChildren();
   raiz.append(cabecalho(estado, mes, null));
-  raiz.append(aviso('alerta', erro.message + ' Enquanto isso, os números abaixo vêm da cópia que '
-    + 'este site guarda, e não do TCE. Podem estar desatualizados.'));
   raiz.append(cartoes(d, rec));
   raiz.append(execucao(d));
 

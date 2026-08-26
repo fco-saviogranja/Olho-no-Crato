@@ -125,8 +125,6 @@ async function pelaCopia(raiz, estado, erro) {
       + dinheiro(totais.valor_pago_ate_mes) + ' já foram pagos, de um orçamento de '
       + dinheiro(totais.valor_fixado_orcamento_bal_despesa) + '.')));
 
-  raiz.append(aviso('alerta', erro.message + ' Enquanto isso, os números abaixo vêm da cópia que '
-    + 'este site guarda, e não do TCE. Podem estar desatualizados.'));
 
   raiz.append(montarAbas(linhas, totais, dic, estado));
 

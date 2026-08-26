@@ -161,8 +161,6 @@ async function pelaCopia(raiz, estado, erro) {
     el('h1', { texto: 'De onde vem o dinheiro' }),
     el('p', { class: 'linha-fina' },
       'Receita de ' + estado.ano + ' acumulada até ' + MESES[mes - 1] + '.')));
-  raiz.append(aviso('alerta', erro.message + ' Enquanto isso, os números abaixo vêm da cópia que '
-    + 'este site guarda, e não do TCE. Podem estar desatualizados.'));
 
   montarCorpo(raiz, linhas, totais, dic, estado, mes);
 
