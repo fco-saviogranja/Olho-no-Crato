@@ -2,6 +2,7 @@
 
 import { dinheiro, dinheiroCurto, escapar, numero, percentual } from '../api/formato.js';
 import { anosDisponiveis } from '../api/tce.js';
+import { olho, olhoFechado } from './marca.js';
 
 /** Cria elemento com atributos e filhos. */
 export function el(tag, props = {}, ...filhos) {
@@ -59,9 +60,7 @@ export function aviso(tipo, texto, extra) {
 }
 
 export function carregando(texto = 'Consultando o TCE...') {
-  return el('div', { class: 'carregando' },
-    el('div', { class: 'girando', 'aria-hidden': 'true' }),
-    el('p', { texto }));
+  return el('div', { class: 'carregando' }, olho({ piscando: true }), el('p', { texto }));
 }
 
 export function barraProgresso(texto = '') {
@@ -78,10 +77,13 @@ export function barraProgresso(texto = '') {
 }
 
 export function vazio(titulo, texto, extra) {
+  // o olho fechado diz "não há o que ver aqui" antes de a pessoa ler a frase
   return el('div', { class: 'vazio' },
-    el('h3', { texto: titulo }),
-    texto ? el('p', { texto }) : null,
-    extra || null);
+    olhoFechado(),
+    el('div', {},
+      el('h3', { texto: titulo }),
+      texto ? el('p', { texto }) : null,
+      extra || null));
 }
 
 export function erroNaTela(erro, aoRepetir, extra) {

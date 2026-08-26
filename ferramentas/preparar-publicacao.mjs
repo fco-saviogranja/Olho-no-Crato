@@ -22,6 +22,8 @@ const CONTEUDO = [
   // imagem que o WhatsApp e as redes leem ao receber o link
   'compartilhar.png',
   'robots.txt', 'sitemap.xml',
+  // icones de tela inicial do celular, gerados a partir do mesmo desenho da marca
+  'icone-180.png', 'icone-192.png', 'icone-512.png', 'manifest.json',
   // lido pelo Cloudflare, não pelo navegador. Não há _redirects: a regra de
   // endereço desconhecido vive no wrangler.jsonc, em not_found_handling, e
   // escrever a mesma regra nos dois lugares faz o Cloudflare recusar o deploy

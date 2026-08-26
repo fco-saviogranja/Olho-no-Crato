@@ -541,14 +541,47 @@ main {
   min-height: 96px;
 }
 .carregando p { margin: 0; }
-.girando {
-  width: var(--esp-4);
-  height: var(--esp-4);
+/* ---------- o olho da marca em uso ---------- */
+
+/* Traço, nunca preenchimento: assim o mesmo desenho serve no claro, no escuro
+   e sobre o vermelhão do cabeçalho, seguindo a cor do texto ao redor. */
+.olho {
+  width: 34px;
+  height: 34px;
   flex: none;
-  background: var(--cor-acao);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.4;
+  stroke-linecap: square;
+  color: var(--cor-acao);
+}
+.olho-pupila { fill: currentColor; stroke: none; }
+.olho-palpebra { opacity: 0; }
+.olho-cilios { stroke-width: 2.6; opacity: .55; }
+
+/* A piscada. O globo fecha na vertical e a pálpebra aparece no lugar, com a
+   pausa longa entre uma e outra: um olho que pisca sem parar vira enfeite
+   nervoso, e este fica em cena enquanto o TCE responde. */
+.olho-globo { transform-box: fill-box; transform-origin: center; }
+.olho-piscando .olho-globo { animation: piscar 2.6s ease-in-out infinite; }
+.olho-piscando .olho-palpebra { animation: palpebra 2.6s ease-in-out infinite; }
+
+@keyframes piscar {
+  0%, 86%, 100% { transform: scaleY(1); }
+  92%           { transform: scaleY(.06); }
+}
+@keyframes palpebra {
+  0%, 86%, 100% { opacity: 0; }
+  92%           { opacity: 1; }
 }
 
+.carregando .olho { width: 30px; height: 30px; }
+.vazio .olho { width: 40px; height: 40px; color: var(--cor-texto-fraco); }
+
 .vazio {
+  display: flex;
+  gap: var(--esp-4);
+  align-items: flex-start;
   padding: var(--esp-8) var(--esp-4);
   color: var(--cor-texto-suave);
   border: 1px solid var(--cor-borda);
@@ -1279,7 +1312,11 @@ main {
   .lista-detalhes { grid-template-columns: 1fr; }
 }
 
+/* Sem movimento, o olho fica aberto e a pálpebra invisível: o desenho parado
+   diz a mesma coisa que o piscando. */
 @media (prefers-reduced-motion: reduce) {
+  .olho-piscando .olho-globo,
+  .olho-piscando .olho-palpebra { animation: none; }
   *, *::before, *::after {
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;
