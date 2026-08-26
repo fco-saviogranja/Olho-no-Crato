@@ -302,6 +302,27 @@ select, input[type="date"], input[type="search"], input[type="text"] {
   overflow-x: auto;
 }
 
+/* O botão do menu só existe no celular; no computador as quinze seções cabem
+   em duas linhas e ficam sempre à vista. */
+.menu-botao {
+  display: none;
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  min-height: 44px;
+  padding: 0 var(--esp-4);
+  color: var(--oc-creme);
+  background: transparent;
+  border: 1px solid rgba(251, 247, 238, .38);
+  border-radius: var(--raio-0);
+  cursor: pointer;
+}
+.menu-botao::before { content: "1"; margin-right: var(--esp-2); font-size: 17px; }
+.menu-botao[aria-expanded="true"]::before { content: " D7"; }
+.menu-botao:hover { background: rgba(251, 247, 238, .12); }
+
 .nav-grupo { display: flex; gap: 2px; flex-wrap: wrap; }
 .nav-mais, .nav-apoio { position: relative; padding-left: var(--esp-4); }
 .nav-mais::before, .nav-apoio::before {
@@ -1199,9 +1220,28 @@ main {
   .grafico-rosca { grid-template-columns: 1fr; }
   .rosca-caixa { max-width: 240px; margin: 0 auto; }
   .secao { padding: var(--esp-4) var(--esp-3) var(--esp-5); }
-  .navegacao { flex-direction: column; gap: var(--esp-2); }
+  /* Quinze links empilhados davam 539px de menu numa tela de 812px, e o
+     cabeçalho grudento cobria dois terços do que se estava lendo. Agora ele
+     começa recolhido: o cabeçalho fica em torno de 64px e o primeiro número
+     da página aparece sem rolar. */
+  .menu-botao { display: inline-flex; align-items: center; }
+  /* Atualizar dados e trocar o tema sao acoes secundarias: no celular elas
+     empilhavam em duas linhas proprias e empurravam a pagina para baixo.
+     Passam a viver dentro do menu. O seletor de exercicio fica, porque e ele
+     que muda o que a pessoa esta vendo. */
+  .controles .botao { display: none; }
+  .cabecalho.menu-aberto .controles .botao { display: inline-flex; }
+  .cabecalho-topo { gap: var(--esp-3); }
+  .navegacao { display: none; flex-direction: column; gap: var(--esp-2); }
+  .cabecalho.menu-aberto .navegacao {
+    display: flex;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: var(--esp-4);
+  }
   .nav-mais, .nav-apoio { padding-left: 0; }
   .nav-mais::before, .nav-apoio::before { display: none; }
+  .cabecalho-topo { padding-bottom: var(--esp-3); }
   /* alvo de toque de 44px: no dedo, 35px de altura erra com frequência */
   .navegacao a, .rodape a {
     min-height: 44px;

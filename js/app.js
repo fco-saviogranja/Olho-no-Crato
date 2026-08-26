@@ -52,6 +52,28 @@ const CHAVE_ANO = 'olho-no-crato:ano';
 
 const app = document.getElementById('app');
 const navegacao = document.getElementById('navegacao');
+const menuBotao = document.getElementById('menu-botao');
+const cabecalho = document.querySelector('.cabecalho');
+
+/**
+ * No celular o menu comeca recolhido. Fechar depois de escolher uma secao nao
+ * e enfeite: o cabecalho e grudento, e um menu aberto de quinze itens cobriria
+ * justamente a pagina que a pessoa acabou de pedir.
+ */
+function alternarMenu(abrir) {
+  const aberto = abrir === undefined ? !cabecalho.classList.contains('menu-aberto') : abrir;
+  cabecalho.classList.toggle('menu-aberto', aberto);
+  menuBotao.setAttribute('aria-expanded', String(aberto));
+}
+
+menuBotao.addEventListener('click', () => alternarMenu());
+navegacao.addEventListener('click', (e) => { if (e.target.closest('a')) alternarMenu(false); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && cabecalho.classList.contains('menu-aberto')) {
+    alternarMenu(false);
+    menuBotao.focus();
+  }
+});
 const areaAno = document.getElementById('area-ano');
 
 const estado = {
