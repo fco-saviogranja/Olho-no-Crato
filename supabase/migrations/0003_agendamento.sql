@@ -67,6 +67,11 @@ $$;
 comment on function public.disparar_sincronizacao is
   'Chama a funcao de borda que traz do TCE a janela recente dos dados.';
 
+-- Tirar de anon e authenticated nao basta: toda funcao nasce com EXECUTE para
+-- PUBLIC, e os dois papeis herdam dali. Sem a primeira linha, qualquer pessoa
+-- de posse da chave publicavel, que vai no navegador de quem visita, dispara a
+-- carga chamando /rest/v1/rpc/disparar_sincronizacao.
+revoke all on function public.disparar_sincronizacao() from public;
 revoke all on function public.disparar_sincronizacao() from anon, authenticated;
 
 -- ---------------------------------------------------------------------------
