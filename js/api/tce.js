@@ -136,6 +136,44 @@ export function montarParams(params = {}) {
   return saida;
 }
 
+/* ---------------------------------------------------------------------------
+   O formato de data_inicio e data_fim
+   ---------------------------------------------------------------------------
+   A documentacao do TCE manda aaaa-mm-dd, e por dois anos foi isso. Em algum
+   momento ate 09/11/2026 o Tribunal migrou parte dos endpoints para AAAAMMDD,
+   sem avisar e sem atualizar a documentacao. Medido naquele dia, nos nove
+   endpoints que o site consulta por intervalo:
+
+     - oito recusam aaaa-mm-dd com HTTP 500 e o corpo
+       "Error parsing date '2025-01-01': Text '2025-01-01' could not be parsed
+       at index 3", e aceitam AAAAMMDD;
+     - licitantes_fornecedores_bens_servicos faz o contrario: aceita o antigo e
+       recusa o novo com HTTP 400.
+
+   Entao nao da para escolher um e seguir. Nem da para fixar uma lista de quem
+   usa qual, porque essa lista fica errada no dia em que o Tribunal terminar a
+   migracao, e o erro volta calado.
+
+   O site tenta o formato novo, cai no antigo se levar 500, e guarda o que deu
+   certo para aquele endpoint pelo resto da visita. Custa uma requisicao perdida
+   na primeira consulta de quem ainda usa o antigo, e nada depois.
+
+   A chave do cache continua montada com a data tracejada, qualquer que seja o
+   formato que foi para a rede: senao a mesma consulta teria duas entradas.
+--------------------------------------------------------------------------- */
+const FORMATO_DATA = new Map();
+
+function datasCompactas(params) {
+  const saida = { ...params };
+  for (const campo of ['data_inicio', 'data_fim']) {
+    const valor = saida[campo];
+    if (typeof valor === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      saida[campo] = valor.replace(/-/g, '');
+    }
+  }
+  return saida;
+}
+
 function montarUrl(path, params, opcoes) {
   const { select, orderby, inicio = 0, limite = LIMITE_PAGINA } = opcoes;
   const url = new URL(BASE + path);
@@ -183,7 +221,10 @@ async function buscarUrl(url, opcoes = {}) {
           { url, definitivo: true, ausente: true },
         );
       }
-      if (!resposta.ok) throw new ErroTCE('O TCE respondeu ' + resposta.status + '.', { url });
+      if (!resposta.ok) {
+        throw new ErroTCE('O TCE respondeu ' + resposta.status + '.',
+          { url, status: resposta.status });
+      }
       const corpo = await resposta.json();
       if (corpo.__errors__) {
         const msg = corpo.__errors__[0] ? corpo.__errors__[0].message : 'Consulta recusada pelo TCE.';
@@ -219,13 +260,43 @@ export async function consultar(path, params = {}, opcoes = {}) {
   const finais = montarParams(params);
   const chave = montarUrl(path, finais, { select, orderby, limite }) + (tudo ? '|tudo' : '');
 
+  const temIntervalo = 'data_inicio' in finais || 'data_fim' in finais;
+
+  /** Uma página, já resolvendo qual formato de data este endpoint aceita. */
+  async function buscarPagina(inicio) {
+    const pedir = (p, extra) => buscarUrl(
+      montarUrl(path, p, { select, orderby, inicio, limite }), extra,
+    );
+    if (!temIntervalo) return pedir(finais);
+
+    const jaSabido = FORMATO_DATA.get(path);
+    if (jaSabido) return pedir(jaSabido === 'compacto' ? datasCompactas(finais) : finais);
+
+    // Primeira consulta a este endpoint: descobrir qual formato ele quer. Uma
+    // tentativa por formato, e não as três de sempre — insistir no formato
+    // errado só adia a descoberta e enche o console de 500.
+    let ultimo;
+    for (const forma of ['compacto', 'tracejado']) {
+      try {
+        const dados = await pedir(
+          forma === 'compacto' ? datasCompactas(finais) : finais, { tentativas: 1 },
+        );
+        FORMATO_DATA.set(path, forma);
+        return dados;
+      } catch (erro) {
+        ultimo = erro;
+      }
+    }
+    throw ultimo;
+  }
+
   // a carga inicial do banco percorre centenas de milhares de linhas: guardar
   // tudo em cache so serviria para estourar a memoria do processo
   if (semCache) {
     const dados = [];
     let paginas = 0;
     for (let inicio = 0; paginas < maxPaginas; inicio += limite) {
-      const pagina = await buscarUrl(montarUrl(path, finais, { select, orderby, inicio, limite }));
+      const pagina = await buscarPagina(inicio);
       dados.push(...pagina);
       paginas += 1;
       if (progresso) progresso(dados.length, paginas);
@@ -245,8 +316,7 @@ export async function consultar(path, params = {}, opcoes = {}) {
     const dados = [];
     let paginas = 0;
     for (let inicio = 0; paginas < maxPaginas; inicio += limite) {
-      const url = montarUrl(path, finais, { select, orderby, inicio, limite });
-      const pagina = await buscarUrl(url);
+      const pagina = await buscarPagina(inicio);
       dados.push(...pagina);
       paginas += 1;
       if (progresso) progresso(dados.length, paginas);
