@@ -5,7 +5,9 @@
 // ausência é informação: a página mostra o resultado da consulta e compara com
 // municípios vizinhos para deixar claro que o problema não é do site.
 
-import { consultar, emLote, MUNICIPIO, PRIMEIRO_ANO, anoAtual } from '../api/tce.js';
+import {
+  anoAtual, consultar, emLote, MUNICIPIO, municipioPorCodigo, PRIMEIRO_ANO,
+} from '../api/tce.js';
 import { capitalizar, data, dinheiro, documento, numero, texto, truncar } from '../api/formato.js';
 import { ordenarPor, somar } from '../dados/agregacoes.js';
 import {
@@ -26,11 +28,24 @@ const CAMPOS_OSC = [
   'organizacao_vencedora_osc', 'numero_processo_admin_osc', 'data_autuacao_processo_osc',
 ];
 
-const VIZINHOS = [
-  { codigo: '057', nome: 'Fortaleza' },
-  { codigo: '094', nome: 'Juazeiro do Norte' },
-  { codigo: '023', nome: 'Barbalha' },
-];
+// A comparação existe para separar "o município não firmou parceria" de "o
+// município não informou": se os vizinhos têm registro e este não tem, o
+// silêncio diz outra coisa.
+//
+// Fortaleza entra como contraste de fora da região, por ser a capital e por ter
+// registro em praticamente todo endpoint. Os demais saem da própria lista do
+// site, tirando o município aberto, que já é a primeira linha da comparação.
+const CAPITAL = { codigo: '057', nome: 'Fortaleza' };
+const MAIORES = ['094', '023', '049'];
+
+function vizinhos() {
+  const outros = MAIORES
+    .filter((codigo) => codigo !== MUNICIPIO.codigo)
+    .map((codigo) => municipioPorCodigo(codigo))
+    .filter(Boolean)
+    .map((m) => ({ codigo: m.codigo, nome: m.nome }));
+  return [CAPITAL, ...outros];
+}
 
 export const titulo = 'Parcerias';
 
@@ -103,7 +118,7 @@ function comParcerias(parcerias, organizacoes, estado) {
     ordenarPor: 'valor_previsto_realizacao_osc',
     camposBusca: ['organizacao', 'objeto'],
     aoClicarLinha: (l) => abrirParceria(l),
-    nomeArquivo: 'crato-' + estado.ano + '-parcerias',
+    nomeArquivo: '' + estado.ano + '-parcerias',
   }));
   caixa.append(bloco);
   return caixa;
@@ -132,14 +147,14 @@ async function semParcerias(estado, raiz) {
   const caixa = el('div', {});
 
   caixa.append(aviso('alerta',
-    'A consulta ao TCE não devolveu nenhuma parceria do Crato em ' + estado.ano + '. '
+    'A consulta ao TCE não devolveu nenhuma parceria de ' + MUNICIPIO.nome + ' em ' + estado.ano + '. '
     + 'Isso pode significar que o município não firmou parcerias no período ou que não as informou '
     + 'ao Sistema de Informações Municipais.'));
 
   const bloco = secao({
     titulo: 'Comparação com outros municípios',
     descricao: 'Dá para verificar consultando os mesmos endpoints para outros municípios cearenses. '
-      + 'Se eles devolverem dados, a base funciona e a lacuna é do Crato.',
+      + 'Se eles devolverem dados, a base funciona e a lacuna é de ' + MUNICIPIO.nome + '.',
   });
 
   const alvo = el('div', {});
@@ -150,7 +165,7 @@ async function semParcerias(estado, raiz) {
     alvo.replaceChildren(carregando('Consultando o mesmo endpoint em outros municípios...'));
     try {
       const periodoLargo = { inicio: PRIMEIRO_ANO + '-01-01', fim: anoAtual() + '-12-31' };
-      const alvos = [{ codigo: MUNICIPIO.codigo, nome: MUNICIPIO.nome }, ...VIZINHOS];
+      const alvos = [{ codigo: MUNICIPIO.codigo, nome: MUNICIPIO.nome }, ...vizinhos()];
       const resultados = await emLote(alvos, async (m) => {
         const { dados } = await consultar('/parcerias_osc',
           Object.assign({ codigo_municipio: m.codigo }, periodoLargo),

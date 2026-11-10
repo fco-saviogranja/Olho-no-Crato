@@ -5,6 +5,7 @@
 import {
   anoDoExercicio, data, dinheiro, documento, mesReferencia, numero, texto,
 } from '../api/formato.js';
+import { apelidoMunicipio } from '../api/tce.js';
 import { filtrarPorTexto, ordenarPor } from '../dados/agregacoes.js';
 import { el, vazio } from './componentes.js';
 
@@ -72,7 +73,11 @@ export function baixarCSV(nome, colunas, linhas) {
   // o BOM faz o Excel abrir o arquivo em UTF-8 sem estragar os acentos
   const conteudo = '﻿' + paraCSV(colunas, linhas);
   const url = URL.createObjectURL(new Blob([conteudo], { type: 'text/csv;charset=utf-8' }));
-  const link = el('a', { href: url, download: nome + '.csv' });
+  // O município entra aqui, num lugar só, e não no nome que cada página passa:
+  // quem baixa planilha de três cidades para comparar precisa distinguir os
+  // arquivos na pasta de downloads, e era o tipo de prefixo que ficaria para
+  // trás numa página nova.
+  const link = el('a', { href: url, download: apelidoMunicipio() + '-' + nome + '.csv' });
   document.body.append(link);
   link.click();
   link.remove();
@@ -87,7 +92,7 @@ export function baixarCSV(nome, colunas, linhas) {
  */
 export function tabela(linhas, colunas, opcoes = {}) {
   const {
-    busca = true, aoClicarLinha, expandir, nomeArquivo = 'dados-crato',
+    busca = true, aoClicarLinha, expandir, nomeArquivo = 'dados',
     porPagina = POR_PAGINA, vazioTitulo = 'Nenhum registro',
     vazioTexto = 'A consulta não devolveu linhas para este filtro.',
   } = opcoes;

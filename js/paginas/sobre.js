@@ -11,13 +11,14 @@ export const titulo = 'Sobre';
 
 export async function montar(raiz, estado) {
   raiz.append(el('div', { class: 'topo-pagina' },
-    el('h1', { texto: 'Sobre o Olho no Crato' }),
+    el('h1', { texto: 'Sobre o Olho no Cariri' }),
     el('p', { class: 'linha-fina' },
-      'Um site de consulta cidadã aos gastos públicos do município de Crato, no Ceará.')));
+      'Um site de consulta cidadã aos gastos públicos dos nove municípios da Região '
+      + 'Metropolitana do Cariri, no Ceará. Você está vendo ' + MUNICIPIO.nome + '.')));
 
   const oQueE = secao({ titulo: 'O que é' });
   oQueE.corpo.append(el('div', { class: 'texto-longo' },
-    el('p', {}, 'Os dados de gasto público do Crato já são públicos: o município presta contas '
+    el('p', {}, 'Os dados de gasto público já são públicos: cada município presta contas '
       + 'mensalmente ao Tribunal de Contas do Estado do Ceará pelo Sistema de Informações '
       + 'Municipais, e o TCE publica tudo em uma interface aberta de programação. O problema é que '
       + 'essa interface fala em código, não em português: órgão 08, função 12, elemento 33903000.'),
@@ -34,9 +35,9 @@ export async function montar(raiz, estado) {
         'API de Dados Abertos do SIM'),
       ', do TCE-CE. O endereço consultado é ',
       el('code', { class: 'codigo', texto: BASE }),
-      ' e o município é sempre o código ',
+      ' e o município escolhido é o código ',
       el('code', { class: 'codigo', texto: MUNICIPIO.codigo }),
-      ' (Crato, IBGE ' + MUNICIPIO.ibge + ').'),
+      ' (' + MUNICIPIO.nome + ', IBGE ' + MUNICIPIO.ibge + ').'),
     el('p', {}, 'A consulta parte do seu navegador direto para o TCE. Não existe servidor '
       + 'intermediário, banco de dados nem cópia dos números em outro lugar: o que você vê é o que '
       + 'o Tribunal está publicando neste momento.'),
@@ -89,7 +90,7 @@ export async function montar(raiz, estado) {
         + 'Este site não tenta reverter nada disso.'),
       el('li', {}, el('strong', { texto: 'Não é o Portal da Transparência oficial. ' }),
         'Este é um trabalho acadêmico independente. Para atos oficiais, consulte a Prefeitura '
-        + 'Municipal do Crato e o próprio TCE-CE.'))));
+        + 'Municipal de cada cidade e o próprio TCE-CE.'))));
   raiz.append(limites);
 
   const camadas = secao({

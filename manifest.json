@@ -1,7 +1,7 @@
 {
-  "name": "Olho no Crato",
-  "short_name": "Olho no Crato",
-  "description": "Consulta cidadã aos gastos públicos do município de Crato/CE, com dados oficiais do TCE-CE.",
+  "name": "Olho no Cariri",
+  "short_name": "Olho no Cariri",
+  "description": "Consulta cidadã aos gastos públicos dos nove municípios da Região Metropolitana do Cariri, com dados oficiais do TCE-CE.",
   "lang": "pt-BR",
   "start_url": "/",
   "display": "standalone",

@@ -1,7 +1,7 @@
 // Obras e serviços de engenharia: o que está sendo construído ou reformado
 // no município, por quanto e em que situação.
 
-import { consultar, emLote, referencia, ultimoMesComDados } from '../api/tce.js';
+import { consultar, emLote, MUNICIPIO, referencia, ultimoMesComDados } from '../api/tce.js';
 import { dicionarios, nomeOrgao } from '../api/auxiliares.js';
 import { capitalizar, data, dinheiro, numero, texto, truncar } from '../api/formato.js';
 import { agrupar, ordenarPor, somar } from '../dados/agregacoes.js';
@@ -73,7 +73,7 @@ export async function montar(raiz, estado) {
 
     if (!linhas.length) {
       raiz.append(vazio('Nenhuma obra registrada em ' + estado.ano,
-        'O TCE não devolveu obras do Crato iniciadas neste exercício. '
+        'O TCE não devolveu obras de ' + MUNICIPIO.nome + ' iniciadas neste exercício. '
         + 'Obras de anos anteriores podem continuar em execução: consulte os exercícios passados.'));
       raiz.append(situacoesSoltas(status.dados, estado));
       return;
@@ -131,7 +131,7 @@ function listaObras(linhas, estado) {
     ordenarPor: 'valor_total_obra',
     camposBusca: ['descricao', 'orgao', 'situacao'],
     aoClicarLinha: (l) => abrirObra(l),
-    nomeArquivo: 'crato-' + estado.ano + '-obras',
+    nomeArquivo: '' + estado.ano + '-obras',
   });
 }
 
@@ -182,7 +182,7 @@ function situacoesSoltas(status, estado) {
     { campo: 'observacao_status', rotulo: 'Situação', tipo: 'texto' },
     { campo: 'data_envio_informacao', rotulo: 'Informado em', formatar: (v) => data(v) },
     { campo: 'nome_responsavel', rotulo: 'Responsável', tipo: 'texto', formatar: (v) => capitalizar(v) },
-  ], { ordenarPor: 'data_envio_informacao', nomeArquivo: 'crato-' + estado.ano + '-situacao-obras' }));
+  ], { ordenarPor: 'data_envio_informacao', nomeArquivo: '' + estado.ano + '-situacao-obras' }));
   return bloco;
 }
 
@@ -204,7 +204,7 @@ async function montarMedicoes(alvo, estado) {
     if (!medicoes.length) {
       alvo.append(vazio('Nenhuma medição publicada',
         'Medição é a conferência do quanto da obra foi executado em cada etapa. '
-        + 'O TCE não devolveu medições do Crato para ' + estado.ano + '.'));
+        + 'O TCE não devolveu medições de ' + MUNICIPIO.nome + ' para ' + estado.ano + '.'));
       return;
     }
 
@@ -222,7 +222,7 @@ async function montarMedicoes(alvo, estado) {
     ], {
       ordenarPor: 'valor_medicao',
       camposBusca: ['numero_obra_servico', 'nome_responsavel_municipio'],
-      nomeArquivo: 'crato-' + estado.ano + '-medicoes',
+      nomeArquivo: '' + estado.ano + '-medicoes',
     }));
   } catch (erro) {
     alvo.replaceChildren(erroNaTela(erro, () => montarMedicoes(alvo, estado)));

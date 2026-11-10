@@ -1,10 +1,15 @@
 // Roteador e casca do app. Cada página é um módulo carregado sob demanda que
 // exporta montar(raiz, estado).
 
-import { anoAtual, MUNICIPIO, PRIMEIRO_ANO, cache } from './api/tce.js';
+import {
+  anoAtual, cache, definirMunicipio, MUNICIPIO, MUNICIPIO_COM_BANCO, MUNICIPIOS,
+  municipioPorCodigo, PRIMEIRO_ANO,
+} from './api/tce.js';
 import { limparMemoria } from './api/auxiliares.js';
 import * as banco from './api/banco.js';
-import { botao, carregando, el, erroNaTela, seletorAno } from './ui/componentes.js';
+import {
+  aviso, botao, carregando, el, erroNaTela, seletorAno, seletorMunicipio,
+} from './ui/componentes.js';
 
 // semAno:   a página atravessa todos os exercícios, então o seletor de ano não
 //           teria efeito e só confundiria.
@@ -49,6 +54,7 @@ async function carregarPagina(id) {
 
 const PADRAO = 'panorama';
 const CHAVE_ANO = 'olho-no-crato:ano';
+const CHAVE_MUNICIPIO = 'olho-no-crato:municipio';
 
 const app = document.getElementById('app');
 const navegacao = document.getElementById('navegacao');
@@ -78,10 +84,29 @@ const areaAno = document.getElementById('area-ano');
 
 const estado = {
   ano: anoInicial(),
+  // null enquanto ninguem escolheu: e o que faz a tela de escolha aparecer.
+  // Depois de escolhido, vale o codigo do SIM, e MUNICIPIO em tce.js acompanha.
+  municipio: null,
   rota: PADRAO,
   params: new URLSearchParams(),
   navegar(hash) {
     window.location.hash = hash;
+  },
+  definirMunicipio(codigo) {
+    if (!municipioPorCodigo(codigo)) return;
+    const mudou = definirMunicipio(codigo);
+    estado.municipio = MUNICIPIO.codigo;
+    try {
+      localStorage.setItem(CHAVE_MUNICIPIO, MUNICIPIO.codigo);
+    } catch {
+      // sem armazenamento local a escolha vale so nesta visita
+    }
+    mostrarNomeMunicipio();
+    if (!mudou) return;
+    // os nomes de orgao e unidade sao memorizados por municipio: sem limpar,
+    // a proxima cidade herdaria as secretarias da anterior
+    limparMemoria();
+    aplicarHash({ preservarEstado: true });
   },
   definirAno(ano) {
     const limpo = Math.min(anoAtual(), Math.max(PRIMEIRO_ANO, Number(ano) || anoAtual()));
@@ -93,12 +118,42 @@ const estado = {
       // navegador sem armazenamento local: segue sem lembrar a escolha
     }
     limparMemoria();
-    aplicarHash({ preservarAno: true });
+    aplicarHash({ preservarEstado: true });
   },
   recarregar() {
     desenhar();
   },
 };
+
+/**
+ * A linha de apoio da marca diz "o dinheiro de X, aberto". Antes de alguém
+ * escolher, X não pode ser uma cidade: sair "o dinheiro de Crato/CE" na tela
+ * que ainda está perguntando qual município seria responder antes da pergunta.
+ */
+function mostrarNomeMunicipio() {
+  const alvo = document.getElementById('nome-municipio');
+  if (!alvo) return;
+  alvo.textContent = estado.municipio
+    ? MUNICIPIO.nome + '/' + MUNICIPIO.uf
+    : 'nove municípios do Cariri';
+}
+
+/**
+ * Municipio da URL, depois o lembrado, depois nenhum. Nenhum nao e falha: e o
+ * caso da primeira visita, e e o que faz a tela de escolha aparecer. Link
+ * compartilhado com ?municipio= abre direto na cidade certa, sem perguntar.
+ */
+function municipioInicial() {
+  const daUrl = new URLSearchParams(window.location.hash.split('?')[1] || '').get('municipio');
+  if (municipioPorCodigo(daUrl)) return String(daUrl);
+  try {
+    const guardado = localStorage.getItem(CHAVE_MUNICIPIO);
+    if (municipioPorCodigo(guardado)) return String(guardado);
+  } catch {
+    // sem localStorage: pergunta de novo a cada visita, que e o mal menor
+  }
+  return null;
+}
 
 function anoInicial() {
   const daUrl = Number(new URLSearchParams(window.location.hash.split('?')[1] || '').get('ano'));
@@ -123,16 +178,34 @@ function lerHash() {
   };
 }
 
-function aplicarHash({ preservarAno } = {}) {
+function aplicarHash({ preservarEstado } = {}) {
   const { rota, params } = lerHash();
-  if (preservarAno) {
+  if (preservarEstado) {
     params.set('ano', String(estado.ano));
+    if (estado.municipio) params.set('municipio', estado.municipio);
     const consulta = params.toString();
-    window.location.hash = '#/' + rota + (consulta ? '?' + consulta : '');
+    const novo = '#/' + rota + (consulta ? '?' + consulta : '');
+    // trocar o hash dispara hashchange, que redesenha; se o endereco ja for
+    // esse, o evento nao vem e a pagina ficaria com o dado da cidade anterior
+    if (window.location.hash === novo) {
+      estado.params = params;
+      desenhar();
+    } else {
+      window.location.hash = novo;
+    }
     return;
   }
-  const daUrl = Number(params.get('ano'));
-  if (daUrl >= PRIMEIRO_ANO && daUrl <= anoAtual() && daUrl !== estado.ano) estado.ano = daUrl;
+  const anoDaUrl = Number(params.get('ano'));
+  if (anoDaUrl >= PRIMEIRO_ANO && anoDaUrl <= anoAtual() && anoDaUrl !== estado.ano) {
+    estado.ano = anoDaUrl;
+  }
+  const municipioDaUrl = params.get('municipio');
+  if (municipioPorCodigo(municipioDaUrl) && municipioDaUrl !== estado.municipio) {
+    estado.municipio = String(municipioDaUrl);
+    definirMunicipio(municipioDaUrl);
+    limparMemoria();
+    mostrarNomeMunicipio();
+  }
   estado.rota = rota;
   estado.params = params;
   desenhar();
@@ -147,14 +220,25 @@ function marcarNavegacao() {
   }
 }
 
-// as rotas dependentes do banco continuam alcançáveis por link direto mesmo
-// quando não aparecem no menu: quem chegar nelas vê a explicação da própria página
-const ROTAS_NO_MENU = ROTAS.filter((r) => !r.comBanco || banco.configurado());
+/**
+ * As rotas que dependem do banco continuam alcançáveis por link direto mesmo
+ * quando não aparecem no menu: quem chegar nelas vê a explicação na própria
+ * página. Some do menu em dois casos — banco não configurado, e município sem
+ * cópia no banco, que hoje é qualquer um que não seja o Crato.
+ */
+function rotasNoMenu() {
+  const temBanco = banco.configurado() && estado.municipio === MUNICIPIO_COM_BANCO;
+  return ROTAS.filter((r) => !r.comBanco || temBanco);
+}
 
 function montarNavegacao() {
   navegacao.replaceChildren();
+  // na tela de escolha não há seção para visitar: o menu só apareceria para
+  // levar a páginas que iam devolver a mesma pergunta
+  cabecalho.classList.toggle('sem-municipio', !estado.municipio);
+  if (!estado.municipio) return;
   for (const grupo of ['principal', 'mais', 'apoio']) {
-    const itens = ROTAS_NO_MENU.filter((r) => r.grupo === grupo);
+    const itens = rotasNoMenu().filter((r) => r.grupo === grupo);
     if (!itens.length) continue;
     navegacao.append(el('div', { class: 'nav-grupo nav-' + grupo },
       itens.map((r) => el('a', {
@@ -163,12 +247,76 @@ function montarNavegacao() {
   }
 }
 
+/**
+ * Tela de entrada. O site atende nove municípios e nenhum deles é "o padrão"
+ * para quem chega: mostrar o Crato de cara faria o visitante de Barbalha ler
+ * números errados achando que são os da cidade dele. Melhor perguntar uma vez
+ * e lembrar depois.
+ */
+function telaEscolha() {
+  return el('div', { class: 'escolha-municipio' },
+    el('h1', { texto: 'Escolha o município' }),
+    el('p', { class: 'escolha-texto' },
+      'Este site mostra as contas públicas dos nove municípios da Região '
+      + 'Metropolitana do Cariri, do jeito que cada prefeitura informou ao '
+      + 'Tribunal de Contas do Estado. Escolha por onde começar — dá para '
+      + 'trocar a qualquer momento, no alto da página.'),
+    el('div', { class: 'escolha-grade' },
+      MUNICIPIOS.map((m) => el('button', {
+        class: 'escolha-opcao',
+        type: 'button',
+        onClick: () => estado.definirMunicipio(m.codigo),
+      },
+      el('strong', { texto: m.nome }),
+      el('span', { texto: m.uf + ' · código ' + m.codigo })))));
+}
+
+/**
+ * O banco de apoio guarda só o Crato, então Buscar, Ano a ano e Retificações
+ * não têm o que mostrar nos outros oito. Dizer isso em uma tela própria é mais
+ * honesto que deixar a página abrir vazia, e o aviso explica o porquê em vez
+ * de parecer defeito.
+ */
+function telaSemBanco(rota) {
+  return el('div', { class: 'pagina' },
+    el('h1', { texto: rota.titulo }),
+    aviso('alerta',
+      rota.titulo + ' ainda existe só para o Crato. Esta página cruza vários '
+      + 'exercícios de uma vez, coisa que a API do Tribunal não faz, e por isso '
+      + 'depende de uma cópia dos dados guardada à parte — que hoje cobre '
+      + 'apenas o Crato.'),
+    el('p', { class: 'secao-descricao' },
+      'As demais seções funcionam normalmente em ' + MUNICIPIO.nome
+      + ', consultando o TCE ao vivo, um exercício por vez.'),
+    el('div', { class: 'secao-acoes' },
+      botao('Ver ' + rota.titulo + ' no Crato', () => estado.definirMunicipio(MUNICIPIO_COM_BANCO)),
+      botao('Ir para o Panorama de ' + MUNICIPIO.nome, () => estado.navegar('#/panorama'),
+        { classe: 'botao botao-secundario' })));
+}
+
 async function desenhar() {
   const rota = ROTAS.find((r) => r.id === estado.rota) || ROTAS[0];
+  // o menu muda com o município, porque as rotas do banco só existem no Crato
+  montarNavegacao();
   marcarNavegacao();
-  app.replaceChildren(carregando('Abrindo ' + rota.titulo + '...'));
-  document.title = rota.titulo + ' · Olho no Crato';
+  // os seletores refletem rota e município, e os dois acabaram de ser decididos
+  montarBarraAno();
   window.scrollTo({ top: 0 });
+
+  if (!estado.municipio) {
+    document.title = 'Olho no Cariri';
+    app.replaceChildren(telaEscolha());
+    return;
+  }
+
+  document.title = rota.titulo + ' · ' + MUNICIPIO.nome + ' · Olho no Cariri';
+
+  if (rota.comBanco && estado.municipio !== MUNICIPIO_COM_BANCO) {
+    app.replaceChildren(telaSemBanco(rota));
+    return;
+  }
+
+  app.replaceChildren(carregando('Abrindo ' + rota.titulo + '...'));
 
   try {
     const modulo = await carregarPagina(rota.id);
@@ -226,7 +374,18 @@ function montarBarraAno() {
   // confundiria, porque não teria efeito nenhum sobre o que a página mostra.
   const rota = ROTAS.find((r) => r.id === estado.rota);
   const escuro = temaEmUso() === 'escuro';
-  areaAno.replaceChildren(
+
+  // Na tela de escolha os controles não têm sobre o que agir, e um seletor de
+  // exercício ao lado da pergunta "qual município?" só rouba atenção.
+  if (!estado.municipio) {
+    areaAno.replaceChildren();
+    return;
+  }
+
+  // replaceChildren não descarta null como o el() faz: ele escreve "null" na
+  // tela, em letras, ao lado do seletor. Por isso a lista é filtrada antes.
+  const controles = [
+    seletorMunicipio(estado.municipio, (codigo) => estado.definirMunicipio(codigo)),
     rota && rota.semAno ? null : seletorAno(estado.ano, (ano) => estado.definirAno(ano)),
     botao('Atualizar dados', async () => {
       await cache.limpar();
@@ -237,16 +396,16 @@ function montarBarraAno() {
       classe: 'botao botao-secundario',
       titulo: escuro ? 'Mudar para o tema claro' : 'Mudar para o tema escuro',
     }),
-  );
+  ];
+  areaAno.replaceChildren(...controles.filter(Boolean));
 }
 
 window.addEventListener('hashchange', () => aplicarHash());
 
-montarNavegacao();
-document.getElementById('nome-municipio').textContent = MUNICIPIO.nome + '/' + MUNICIPIO.uf;
-// a barra depende da rota, por isso só é montada depois que aplicarHash a define
-aplicarHash();
-montarBarraAno();
+// o município decide quais rotas aparecem no menu, então vem antes dele
+estado.municipio = municipioInicial();
+if (estado.municipio) definirMunicipio(estado.municipio);
+mostrarNomeMunicipio();
 
-// o seletor de ano precisa refletir mudanças vindas da URL
-window.addEventListener('hashchange', montarBarraAno);
+// desenhar() monta menu e barra, então aplicarHash dá conta da partida inteira
+aplicarHash();

@@ -219,7 +219,7 @@ function porRubrica(linhas, totais, dic, estado) {
     ], {
       ordenarPor: 'valor_arrecadacao_ate_mes',
       camposBusca: ['rotulo', 'chave'],
-      nomeArquivo: 'crato-' + estado.ano + '-receita-rubricas',
+      nomeArquivo: '' + estado.ano + '-receita-rubricas',
     }));
 }
 
@@ -305,7 +305,7 @@ async function montarTaloes(alvo, estado, ultimoMes) {
     ], {
       ordenarPor: 'valor_receita',
       camposBusca: ['nome_razao_contribuinte', 'historico_receita'],
-      nomeArquivo: 'crato-' + estado.ano + '-taloes',
+      nomeArquivo: '' + estado.ano + '-taloes',
     }));
     alvo.append(carimbo({ origem, ts, endpoints: ['taloes_receitas_orcamentarias'] }));
   } catch (erro) {

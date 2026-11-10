@@ -2,7 +2,7 @@
 // longo do ano ele é reforçado e remanejado por lei e por decreto. Esta página
 // mostra quanto e para onde.
 
-import { consultar } from '../api/tce.js';
+import { consultar, MUNICIPIO } from '../api/tce.js';
 import { dicionarios, nomeElemento, nomeFuncao, nomeOrgao, nomeSubfuncao } from '../api/auxiliares.js';
 import { data, dinheiro, MESES, numero, percentual, texto } from '../api/formato.js';
 import { agrupar, ordenarPor, porMes, somar, somarVarios } from '../dados/agregacoes.js';
@@ -58,7 +58,7 @@ export async function montar(raiz, estado) {
 
     if (!linhas.length) {
       raiz.append(vazio('Nenhum crédito adicional em ' + estado.ano,
-        'O TCE não devolveu aberturas de crédito do Crato neste exercício.'));
+        'O TCE não devolveu aberturas de crédito de ' + MUNICIPIO.nome + ' neste exercício.'));
       return;
     }
 
@@ -141,7 +141,7 @@ function porNorma(linhas, total, estado) {
     ], {
       ordenarPor: 'valor_total',
       camposBusca: ['rotulo'],
-      nomeArquivo: 'crato-' + estado.ano + '-creditos-normas',
+      nomeArquivo: '' + estado.ano + '-creditos-normas',
     }));
 }
 
@@ -171,7 +171,7 @@ function listaCompleta(linhas, dic, estado) {
   ], {
     ordenarPor: 'valor_total',
     camposBusca: ['numero_decreto', 'numero_lei'],
-    nomeArquivo: 'crato-' + estado.ano + '-creditos',
+    nomeArquivo: '' + estado.ano + '-creditos',
   });
 }
 
@@ -201,7 +201,7 @@ async function montarRemanejamentos(alvo, estado, dic) {
       { campo: 'valor_realocado', rotulo: 'Valor realocado', tipo: 'dinheiro' },
     ], {
       ordenarPor: 'valor_realocado',
-      nomeArquivo: 'crato-' + estado.ano + '-remanejamentos',
+      nomeArquivo: '' + estado.ano + '-remanejamentos',
     }));
     alvo.append(carimbo({
       origem, ts, endpoints: ['remanejamentos_transposicoes_transferencias_dotacoes'],

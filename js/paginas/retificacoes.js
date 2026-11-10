@@ -169,7 +169,7 @@ function maioresMudancas(valores, estado) {
   ], {
     ordenarPor: 'tamanho',
     camposBusca: ['conjunto', 'campo', 'registro'],
-    nomeArquivo: 'crato-retificacoes',
+    nomeArquivo: 'retificacoes',
   }));
   bloco.corpo.append(el('p', { class: 'nota' },
     'O registro é a chave do dado no TCE, montada com os campos que o identificam. '

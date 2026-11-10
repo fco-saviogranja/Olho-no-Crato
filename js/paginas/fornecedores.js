@@ -7,7 +7,7 @@
 // do Crato tem cerca de dez mil empenhos, e trazer o objeto de todos de uma
 // vez custaria oito megabytes na primeira tela.
 
-import { consultar, emLote, referencia, ultimoMesComDados } from '../api/tce.js';
+import { consultar, emLote, MUNICIPIO, referencia, ultimoMesComDados } from '../api/tce.js';
 import { dicionarios, nomeElemento, nomeFuncao, nomeOrgao } from '../api/auxiliares.js';
 import {
   capitalizar, data, dinheiro, documento, frase, numero, percentual, texto, truncar,
@@ -122,7 +122,7 @@ export async function montar(raiz, estado) {
 
     if (!empenhos.length) {
       raiz.append(vazio('Nenhum empenho encontrado',
-        'O TCE não devolveu notas de empenho do Crato para ' + estado.ano + '.'));
+        'O TCE não devolveu notas de empenho de ' + MUNICIPIO.nome + ' para ' + estado.ano + '.'));
       return;
     }
 
@@ -239,7 +239,7 @@ function painelDaNatureza(aba, totalGeral, abrir, estado) {
       ordenarPor: 'valor_empenhado',
       camposBusca: ['rotulo', 'documento'],
       aoClicarLinha: abrir,
-      nomeArquivo: 'crato-' + estado.ano + '-credores-' + aba.id,
+      nomeArquivo: '' + estado.ano + '-credores-' + aba.id,
     }),
   );
   return caixa;
@@ -328,7 +328,7 @@ function blocoDosEmpenhos(grupo, empenhos, dic, estado, ultimoMes) {
     busca: empenhos.length > 12,
     porPagina: 25,
     expandir: comObjeto ? (linha) => detalheDoEmpenho(linha, dic) : undefined,
-    nomeArquivo: 'crato-' + estado.ano + '-empenhos-'
+    nomeArquivo: '' + estado.ano + '-empenhos-'
       + texto(grupo.rotulo).toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40),
   });
 
@@ -481,16 +481,20 @@ function deOndeVem(empenhos) {
     'valor_empenhado',
   );
   const total = somar(empenhos, 'valor_empenhado');
-  const doCrato = grupos.find((g) => g.chave.toLowerCase() === 'crato');
+
+  // Comparação sem acento e sem caixa: o cadastro do TCE escreve "MISSAO
+  // VELHA", e comparar com "Missão Velha" não acharia a própria cidade.
+  const semAcento = (t) => (t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const daCasa = grupos.find((g) => semAcento(g.chave) === semAcento(MUNICIPIO.nome));
 
   const bloco = secao({
     titulo: 'De onde são os credores',
     descricao: 'Município informado no cadastro de cada recebedor.',
   });
-  if (doCrato) {
+  if (daCasa) {
     bloco.corpo.append(aviso('info',
-      percentual(doCrato.valor_empenhado, total) + ' do valor empenhado foi para credores '
-      + 'cadastrados no próprio Crato.'));
+      percentual(daCasa.valor_empenhado, total) + ' do valor empenhado foi para credores '
+      + 'cadastrados na própria cidade.'));
   }
   bloco.corpo.append(ranking(grupos.slice(0, 10), { campo: 'valor_empenhado', total }));
   return bloco;

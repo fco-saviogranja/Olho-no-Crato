@@ -1,7 +1,7 @@
 // Peças de interface reaproveitadas por todas as páginas.
 
 import { dinheiro, dinheiroCurto, escapar, numero, percentual } from '../api/formato.js';
-import { anosDisponiveis } from '../api/tce.js';
+import { anosDisponiveis, MUNICIPIOS } from '../api/tce.js';
 import { olho, olhoFechado } from './marca.js';
 
 /** Cria elemento com atributos e filhos. */
@@ -134,6 +134,16 @@ export function seletorAno(anoAtual, aoMudar, opcoes = {}) {
     select.append(el('option', { value: ano, selected: ano === Number(anoAtual) }, String(ano)));
   }
   select.addEventListener('change', () => aoMudar(Number(select.value)));
+  return el('label', { class: 'campo' }, el('span', { texto: rotulo }), select);
+}
+
+export function seletorMunicipio(codigoAtual, aoMudar, opcoes = {}) {
+  const rotulo = opcoes.rotulo || 'Município';
+  const select = el('select', { class: 'seletor', 'aria-label': rotulo });
+  for (const m of MUNICIPIOS) {
+    select.append(el('option', { value: m.codigo, selected: m.codigo === String(codigoAtual) }, m.nome));
+  }
+  select.addEventListener('change', () => aoMudar(select.value));
   return el('label', { class: 'campo' }, el('span', { texto: rotulo }), select);
 }
 

@@ -1,7 +1,7 @@
-// Panorama do exercício: quanto o Crato previu arrecadar, quanto arrecadou,
+// Panorama do exercício: quanto o município previu arrecadar, quanto arrecadou,
 // quanto planejou gastar e em que pé está a execução da despesa.
 
-import { consultar, emLote, referencia, ultimoMesComDados, anoAtual } from '../api/tce.js';
+import { anoAtual, consultar, emLote, MUNICIPIO, referencia, ultimoMesComDados } from '../api/tce.js';
 import * as banco from '../api/banco.js';
 import { dicionarios, nomeFuncao, nomeOrgao } from '../api/auxiliares.js';
 import { data, dinheiro, MESES, numero, percentual, texto } from '../api/formato.js';
@@ -165,7 +165,7 @@ async function pelaCopia(raiz, estado, erro) {
 function semDados(estado) {
   return el('div', {},
     aviso('alerta', 'O TCE ainda não tem balancete publicado para o exercício de ' + estado.ano
-      + ' no Crato. Escolha um ano anterior.'),
+      + ' em ' + MUNICIPIO.nome + '. Escolha um ano anterior.'),
     botao('Ver ' + (estado.ano - 1), () => estado.definirAno(estado.ano - 1)));
 }
 
@@ -173,7 +173,7 @@ function cabecalho(estado, mes, loa) {
   const parcial = estado.ano >= anoAtual() || mes < 12;
   const caixa = el('div', { class: 'topo-pagina' },
     el('div', {},
-      el('h1', { texto: 'Crato em ' + estado.ano }),
+      el('h1', { texto: MUNICIPIO.nome + ' em ' + estado.ano }),
       el('p', { class: 'linha-fina' },
         parcial
           ? 'Dados publicados até ' + MESES[mes - 1] + '. Os meses seguintes ainda não foram enviados ao TCE.'

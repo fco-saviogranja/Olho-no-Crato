@@ -1417,3 +1417,73 @@ main, .rodape { position: relative; z-index: 1; }
   line-height: 1.7;
 }
 .saida-nota { color: var(--cor-texto-suave); }
+
+/* ---------------------------------------------------------------------------
+   Tela de escolha do município
+   ---------------------------------------------------------------------------
+   O site cobre nove municípios e nenhum deles pode ser o padrão silencioso:
+   abrir no Crato faria quem é de Barbalha ler números de outra cidade achando
+   que são os da sua. Então a primeira visita pergunta, e só pergunta uma vez.
+
+   Os nove cabem numa grade sem rolagem em tela de computador, e viram coluna
+   única no celular. Caixa quadrada e borda sólida, como o resto do sistema. */
+.escolha-municipio {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--esp-10) 0 var(--esp-12);
+}
+.escolha-municipio h1 {
+  margin: 0 0 var(--esp-3);
+}
+.escolha-texto {
+  font-family: var(--fonte-texto);
+  color: var(--cor-texto-suave);
+  line-height: 1.7;
+  margin: 0 0 var(--esp-8);
+}
+.escolha-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--esp-3);
+}
+.escolha-opcao {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  padding: var(--esp-4);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-left: 4px solid var(--cor-acao);
+  border-radius: var(--raio-0);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 120ms, background-color 120ms;
+}
+.escolha-opcao strong {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-md);
+  letter-spacing: 0.01em;
+}
+.escolha-opcao span {
+  font-family: var(--fonte-mono);
+  font-size: var(--txt-xs);
+  color: var(--cor-texto-fraco);
+}
+.escolha-opcao:hover {
+  border-color: var(--cor-borda-forte);
+  border-left-color: var(--cor-acao);
+  background: var(--cor-fundo);
+}
+.escolha-opcao:focus-visible {
+  outline: 3px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+/* Sem município escolhido não há seção para visitar: o menu e o botão que o
+   abre levariam a páginas que devolveriam a mesma pergunta. */
+.cabecalho.sem-municipio .navegacao,
+.cabecalho.sem-municipio .menu-botao {
+  display: none;
+}

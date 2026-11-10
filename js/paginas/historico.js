@@ -126,7 +126,7 @@ async function montarExecucao(alvo) {
     },
   ], {
     ordenarPor: 'exercicio', crescente: true, busca: false,
-    nomeArquivo: 'crato-execucao-por-exercicio',
+    nomeArquivo: 'execucao-por-exercicio',
   }));
 }
 
@@ -185,7 +185,7 @@ async function montarAreas(alvo) {
     { campo: 'total', rotulo: 'Total no período', tipo: 'dinheiro' },
   ], {
     ordenarPor: 'total', camposBusca: ['rotulo'],
-    nomeArquivo: 'crato-areas-por-exercicio',
+    nomeArquivo: 'areas-por-exercicio',
   }));
 }
 

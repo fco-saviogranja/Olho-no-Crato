@@ -245,7 +245,7 @@ function visao(linhas, totais, dic, estado, config) {
       ordenarPor: 'valor_pago_ate_mes',
       camposBusca: ['rotulo'],
       aoClicarLinha: abrir,
-      nomeArquivo: 'crato-' + estado.ano + '-despesa-' + config.nomeColuna.toLowerCase().replace(/\s+/g, '-'),
+      nomeArquivo: '' + estado.ano + '-despesa-' + config.nomeColuna.toLowerCase().replace(/\s+/g, '-'),
     }));
 }
 
@@ -274,7 +274,7 @@ function abrirDetalhe(grupo, dic, config, estado) {
       ordenarPor: 'valor_pago_ate_mes',
       busca: false,
       porPagina: 20,
-      nomeArquivo: 'crato-' + estado.ano + '-detalhe',
+      nomeArquivo: '' + estado.ano + '-detalhe',
     }),
     botao('Ver quem recebeu esse dinheiro', () => estado.navegar('#/fornecedores'),
       { classe: 'botao botao-secundario' }));

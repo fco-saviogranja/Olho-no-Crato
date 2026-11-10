@@ -146,7 +146,7 @@ function montarAbas(termo, achados, empresas, itens, estado) {
       ], {
         ordenarPor: 'valor',
         camposBusca: ['descricao', 'parte', 'identificacao'],
-        nomeArquivo: 'crato-busca-' + termo.replace(/\s+/g, '-'),
+        nomeArquivo: 'busca-' + termo.replace(/\s+/g, '-'),
       })),
     });
   }
@@ -172,7 +172,7 @@ function montarAbas(termo, achados, empresas, itens, estado) {
         ], {
           ordenarPor: 'total_empenhado',
           camposBusca: ['nome', 'documento'],
-          nomeArquivo: 'crato-recebedores-' + termo.replace(/\s+/g, '-'),
+          nomeArquivo: 'recebedores-' + termo.replace(/\s+/g, '-'),
         }),
       ),
     });
@@ -235,7 +235,7 @@ function precoDoItem(itens, termo) {
   ], {
     ordenarPor: 'preco_unitario',
     camposBusca: ['descricao', 'licitacao'],
-    nomeArquivo: 'crato-precos-' + termo.replace(/\s+/g, '-'),
+    nomeArquivo: 'precos-' + termo.replace(/\s+/g, '-'),
   }));
 
   if (anos.length > 1) {

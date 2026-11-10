@@ -11,12 +11,58 @@ import * as cache from './cache.js';
 
 export const BASE = 'https://api-dados-abertos.tce.ce.gov.br/sim';
 
-export const MUNICIPIO = {
-  codigo: '049',
-  nome: 'Crato',
-  uf: 'CE',
-  ibge: '2304202',
-};
+// Os nove municipios da Regiao Metropolitana do Cariri, criada pela Lei
+// Complementar Estadual 78/2009. O recorte e juridico, nao geografico: "Cariri"
+// no uso corrente vai de nove a quase trinta municipios, dependendo de quem
+// fala, e um site de prestacao de contas precisa de uma fronteira que alguem
+// tenha definido por escrito.
+//
+// Os codigos sao os do SIM/TCE, que nao sao os do IBGE: o Crato e 049 para o
+// Tribunal e 2304202 para o IBGE. Quem confunde os dois recebe lista vazia com
+// HTTP 200, sem erro nenhum. Conferidos um a um contra o endpoint /municipios.
+//
+// Em ordem alfabetica porque e assim que aparecem no seletor.
+export const MUNICIPIOS = [
+  { codigo: '023', nome: 'Barbalha', uf: 'CE', ibge: '2301901' },
+  { codigo: '038', nome: 'Caririaçu', uf: 'CE', ibge: '2303204' },
+  { codigo: '049', nome: 'Crato', uf: 'CE', ibge: '2304202' },
+  { codigo: '055', nome: 'Farias Brito', uf: 'CE', ibge: '2304301' },
+  { codigo: '092', nome: 'Jardim', uf: 'CE', ibge: '2307106' },
+  { codigo: '094', nome: 'Juazeiro do Norte', uf: 'CE', ibge: '2307304' },
+  { codigo: '109', nome: 'Missão Velha', uf: 'CE', ibge: '2308401' },
+  { codigo: '117', nome: 'Nova Olinda', uf: 'CE', ibge: '2309201' },
+  { codigo: '154', nome: 'Santana do Cariri', uf: 'CE', ibge: '2312106' },
+];
+
+export const MUNICIPIO_PADRAO = '049';
+
+// O banco de apoio guarda so o Crato. Carregar os nove passaria de 1,4 GB, e o
+// plano gratuito do Supabase da 500 MB. As paginas que dependem dele dizem isso
+// na tela quando o municipio escolhido e outro, em vez de aparecerem vazias.
+export const MUNICIPIO_COM_BANCO = '049';
+
+// Exportado com let de proposito: modulo ES exporta ligacao viva, entao quem
+// importa MUNICIPIO enxerga a troca sem precisar reimportar nem ser avisado.
+export let MUNICIPIO = MUNICIPIOS.find((m) => m.codigo === MUNICIPIO_PADRAO);
+
+/** Nome em forma de arquivo: "Missão Velha" vira "missao-velha". */
+export function apelidoMunicipio() {
+  return MUNICIPIO.nome
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+export function municipioPorCodigo(codigo) {
+  return MUNICIPIOS.find((m) => m.codigo === String(codigo)) || null;
+}
+
+/** Devolve true quando trocou de fato, para quem precisa reagir a mudanca. */
+export function definirMunicipio(codigo) {
+  const achado = municipioPorCodigo(codigo);
+  if (!achado || achado.codigo === MUNICIPIO.codigo) return false;
+  MUNICIPIO = achado;
+  return true;
+}
 
 export const PRIMEIRO_ANO = 2018;
 export const LIMITE_PAGINA = 1000;

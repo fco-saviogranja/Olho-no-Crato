@@ -1,7 +1,7 @@
 // Patrimônio: os bens que o município incorporou e o controle desses bens
 // pelas unidades administrativas.
 
-import { consultar, emLote, referencia, ultimoMesComDados } from '../api/tce.js';
+import { consultar, emLote, MUNICIPIO, referencia, ultimoMesComDados } from '../api/tce.js';
 import { dicionarios, nomeOrgao, nomeUnidade } from '../api/auxiliares.js';
 import { capitalizar, data, dinheiro, numero, texto, truncar } from '../api/formato.js';
 import { agrupar, ordenarPor, somar } from '../dados/agregacoes.js';
@@ -35,12 +35,12 @@ export async function montar(raiz, estado) {
     raiz.append(el('div', { class: 'topo-pagina' },
       el('h1', { texto: 'Patrimônio do município' }),
       el('p', { class: 'linha-fina' },
-        'Bens incorporados ao patrimônio em ' + estado.ano + ': o que o Crato comprou, '
+        'Bens incorporados ao patrimônio em ' + estado.ano + ': o que ' + MUNICIPIO.nome + ' comprou, '
         + 'construiu ou recebeu e passou a ser público.')));
 
     if (!bens.dados.length) {
       raiz.append(vazio('Nenhum bem incorporado em ' + estado.ano,
-        'O TCE não devolveu incorporações patrimoniais do Crato neste período.'));
+        'O TCE não devolveu incorporações patrimoniais de ' + MUNICIPIO.nome + ' neste período.'));
     } else {
       raiz.append(resumo(bens.dados));
 
@@ -99,7 +99,7 @@ function lista(bens, estado) {
     ordenarPor: 'valor_depreciavel',
     camposBusca: ['descricao_bem', 'distrito_localidade', 'endereco', 'numero_registro'],
     aoClicarLinha: (b) => abrirBem(b),
-    nomeArquivo: 'crato-' + estado.ano + '-bens',
+    nomeArquivo: '' + estado.ano + '-bens',
   });
 }
 
@@ -191,7 +191,7 @@ async function montarControle(alvo, estado, dic) {
       { campo: 'data_disponibilizacao', rotulo: 'Disponibilizado em', formatar: (v) => data(v) },
     ], {
       ordenarPor: 'data_disponibilizacao',
-      nomeArquivo: 'crato-' + estado.ano + '-controle-bens',
+      nomeArquivo: '' + estado.ano + '-controle-bens',
     }));
   } catch (erro) {
     alvo.replaceChildren(erroNaTela(erro, () => montarControle(alvo, estado, dic)));

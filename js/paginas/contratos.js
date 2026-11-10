@@ -1,7 +1,7 @@
 // Contratos e licitações do exercício: o que a prefeitura comprou, de quem,
 // por quanto e com base em qual processo.
 
-import { consultar } from '../api/tce.js';
+import { consultar, MUNICIPIO } from '../api/tce.js';
 import { capitalizar, data, dinheiro, documento, numero, texto, truncar } from '../api/formato.js';
 import { agrupar, ordenarPor, somar } from '../dados/agregacoes.js';
 import {
@@ -76,7 +76,7 @@ export async function montar(raiz, estado) {
 
     if (!linhas.length) {
       raiz.append(vazio('Nenhum contrato em ' + estado.ano,
-        'O TCE não devolveu contratos celebrados pelo Crato nesse período.'));
+        'O TCE não devolveu contratos celebrados por ' + MUNICIPIO.nome + ' nesse período.'));
       return;
     }
 
@@ -132,7 +132,7 @@ function listaContratos(linhas, estado) {
     ordenarPor: 'valor_total_contrato',
     camposBusca: ['objeto', 'nome_contratado', 'numero_contrato'],
     aoClicarLinha: (linha) => abrirContrato(linha),
-    nomeArquivo: 'crato-' + estado.ano + '-contratos',
+    nomeArquivo: '' + estado.ano + '-contratos',
   });
 }
 
@@ -200,7 +200,7 @@ function porEmpresa(linhas, estado) {
     ], {
       ordenarPor: 'valor',
       camposBusca: ['rotulo', 'chave'],
-      nomeArquivo: 'crato-' + estado.ano + '-contratadas',
+      nomeArquivo: '' + estado.ano + '-contratadas',
     }));
 }
 
@@ -233,7 +233,7 @@ async function montarLicitacoes(alvo, estado) {
       ordenarPor: 'valor_orcado_estimado',
       camposBusca: ['descricao_objeto_licitacao', 'numero_licitacao'],
       aoClicarLinha: (l) => abrirLicitacao(l),
-      nomeArquivo: 'crato-' + estado.ano + '-licitacoes',
+      nomeArquivo: '' + estado.ano + '-licitacoes',
     }));
     alvo.append(carimbo({ origem, ts, endpoints: ['processos_administrativos_contratacoes'] }));
   } catch (erro) {
@@ -300,7 +300,7 @@ async function montarItens(alvo, estado) {
     ], {
       ordenarPor: 'valor_vencedor_item_licitacao',
       camposBusca: ['descricao_item_licitacao', 'numero_licitacao'],
-      nomeArquivo: 'crato-' + estado.ano + '-itens',
+      nomeArquivo: '' + estado.ano + '-itens',
     }));
     alvo.append(carimbo({ origem, ts, endpoints: ['itens_compoem_bens_servicos'] }));
   } catch (erro) {

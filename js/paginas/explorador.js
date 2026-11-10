@@ -5,7 +5,7 @@
 // Esta página é inteiramente movida pelo catálogo gerado da especificação
 // OpenAPI, então acompanhar uma mudança da API é regerar o catálogo.
 
-import { BASE, consultar, montarParams, referencia } from '../api/tce.js';
+import { BASE, consultar, montarParams, MUNICIPIO, referencia } from '../api/tce.js';
 import { ENDPOINTS, GRUPOS, POR_ID } from '../api/catalogo.js';
 import { MESES, numero } from '../api/formato.js';
 import {
@@ -169,12 +169,12 @@ export async function montar(raiz, estado) {
       resultado.replaceChildren();
       if (!dados.length) {
         resultado.append(vazio('Nenhum registro',
-          'A consulta funcionou, mas o TCE não tem registros do Crato para estes parâmetros. '
+          'A consulta funcionou, mas o TCE não tem registros de ' + MUNICIPIO.nome + ' para estes parâmetros. '
           + 'Vazio aqui costuma significar que o município não enviou esses dados.'));
       } else {
         const campos = Object.keys(dados[0]);
         resultado.append(tabela(dados, colunasDoCatalogo(selecionado, campos), {
-          nomeArquivo: 'crato-' + selecionado.id,
+          nomeArquivo: '' + selecionado.id,
           porPagina: 40,
         }));
         if (dados.length >= 10000) {
