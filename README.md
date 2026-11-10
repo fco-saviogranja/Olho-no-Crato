@@ -1,14 +1,18 @@
-# Olho no Crato
+# Olho no Cariri
 
-Consulta cidadã aos gastos públicos do município de **Crato/CE**, alimentada pela
-API de Dados Abertos do Sistema de Informações Municipais (SIM) do Tribunal de
-Contas do Estado do Ceará.
+Consulta cidadã aos gastos públicos dos nove municípios da **Região Metropolitana
+do Cariri**, no Ceará, alimentada pela API de Dados Abertos do Sistema de
+Informações Municipais (SIM) do Tribunal de Contas do Estado do Ceará.
+
+O recorte é o da Lei Complementar Estadual 78/2009, que instituiu a região: é uma
+fronteira definida por escrito, e não a extensão variável que "Cariri" tem no uso
+corrente. Quem visita escolhe o município ao entrar, e troca quando quiser.
 
 Projeto de Extensão VI · Curso de Direito · 2026.2
 
 ## O problema que ele resolve
 
-Os dados já são públicos. O município presta contas todo mês ao TCE-CE e o
+Os dados já são públicos. Cada município presta contas todo mês ao TCE-CE e o
 Tribunal publica tudo em uma API aberta. Só que a API fala em código: órgão `08`,
 função `12`, elemento `33903000`, fonte `540107000`. Este site faz a tradução e
 apresenta os mesmos números em linguagem de cidadão, sempre com o caminho de
@@ -94,9 +98,21 @@ dado:
 - saber quando um valor já informado ao TCE foi retificado depois.
 
 Para isso existe um banco de apoio no Supabase, carregado periodicamente a
-partir da mesma API. Ele sustenta as páginas **Buscar** e **Ano a ano**. Se
-estiver fora do ar ou nem configurado, essas duas páginas avisam e o restante do
-site continua funcionando normalmente.
+partir da mesma API. Ele sustenta **Buscar**, **Ano a ano** e
+**Retificações**. Se estiver fora do ar ou nem configurado, essas páginas avisam
+e o restante do site continua funcionando normalmente.
+
+**O banco cobre apenas o Crato.** Um município ocupa 233 MB; os nove passariam de
+1,4 GB, contra os 500 MB do plano gratuito do Supabase. Nos outros oito, as três
+páginas somem do menu e explicam a ausência a quem chegar por link direto.
+
+Ampliar o banco não é só questão de espaço. As tabelas não guardam o
+`codigo_municipio`: ele está na lista de campos ignorados em
+`ferramentas/gerar-esquema.mjs`, porque tudo ali é Crato por definição, e o `id`
+de cada registro é montado só com exercício, órgão e número. Carregar um segundo
+município hoje faria os empenhos dos dois colidirem na mesma chave. Para valer, é
+preciso acrescentar a coluna nas doze tabelas, recompor as chaves e revisar as
+oito views e as quatro funções de busca para filtrar por município.
 
 O banco não espelha a API inteira. Um exercício de todos os endpoints medidos
 passa de 90 MB de JSON cru, e nove exercícios não caberiam no plano gratuito.
@@ -173,7 +189,8 @@ ferramentas/               scripts de manutenção, não precisam rodar para usa
 
 ## Páginas
 
-Marcadas com (banco) as que dependem do banco de apoio.
+Marcadas com (banco) as que dependem do banco de apoio, e que por isso só
+existem no Crato. As demais funcionam nos nove municípios.
 
 | Rota | O que mostra |
 |---|---|
@@ -193,14 +210,20 @@ Marcadas com (banco) as que dependem do banco de apoio.
 | `#/glossario` | Empenho, liquidação, pagamento, dotação, fonte e outros |
 | `#/sobre` | Metodologia, tratamento dos dados e limitações |
 
-O exercício selecionado vale para o site todo e vai na própria URL
-(`#/despesas?ano=2025`), então qualquer tela pode ser compartilhada por link.
+O município e o exercício valem para o site todo e vão na própria URL
+(`#/despesas?municipio=094&ano=2025`), então qualquer tela pode ser compartilhada
+por link. Sem município na URL e sem escolha anterior guardada, o site abre
+perguntando qual cidade.
 
 ## A API do TCE-CE, em resumo
 
 Base: `https://api-dados-abertos.tce.ce.gov.br/sim`
 Documentação: <https://api-dados-abertos.tce.ce.gov.br/sim/>
-Crato: `codigo_municipio=049` (IBGE 2304202)
+Municípios: `codigo_municipio` de 001 a 184, numeração própria do Tribunal, sem
+relação com a do IBGE. Os nove do site estão em `js/api/tce.js`, conferidos
+contra o endpoint `/municipios`: Barbalha 023, Caririaçu 038, Crato 049, Farias
+Brito 055, Jardim 092, Juazeiro do Norte 094, Missão Velha 109, Nova Olinda 117
+e Santana do Cariri 154.
 
 Quatro detalhes que custam tempo de quem integra pela primeira vez:
 
@@ -347,7 +370,8 @@ node ferramentas/verificar-endpoints.mjs 2025 1
 - Conjunto vazio significa que o município não informou aquilo ao TCE, e não que
   nada aconteceu. O grupo de parcerias com OSC, por exemplo, está inteiramente
   vazio para o Crato em todo o período disponível, enquanto municípios vizinhos
-  têm registros.
+  têm registros. A completude varia bastante de prefeitura para prefeitura, e
+  comparar cidades exige ler o vazio com cuidado.
 - Programas de governo, modalidades de licitação e tipos de contrato aparecem
   pelo código, porque a API não devolve o nome e não há tabela pública
   equivalente. O site mostra o código cru em vez de adivinhar o significado.
@@ -362,7 +386,10 @@ node ferramentas/verificar-endpoints.mjs 2025 1
 - A folha de pagamento vem em blocos, nunca servidor por servidor. Quem quiser a
   remuneração individual precisa do grupo CPF do SIM, que está fora do escopo
   deste projeto.
-- Este não é o Portal da Transparência oficial da Prefeitura Municipal do Crato.
+- Comparar municípios pelos totais brutos engana: Juazeiro do Norte tem orçamento
+  mais de dez vezes maior que o de Nova Olinda. O site não calcula valor por
+  habitante, para não sugerir equivalência que os números sozinhos não sustentam.
+- Este não é o Portal da Transparência oficial de nenhuma das prefeituras.
 
 ## Fonte e reúso
 

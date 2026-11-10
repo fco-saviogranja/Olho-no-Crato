@@ -1,7 +1,9 @@
 // Sobre: de onde vêm os dados, como foram tratados e o que este site não sabe.
 // Num projeto de extensão, esta página vale tanto quanto os gráficos.
 
-import { anosDisponiveis, BASE, MUNICIPIO, cache } from '../api/tce.js';
+import {
+  anosDisponiveis, BASE, cache, MUNICIPIO, MUNICIPIO_COM_BANCO, MUNICIPIOS, municipioPorCodigo,
+} from '../api/tce.js';
 import * as banco from '../api/banco.js';
 import { ENDPOINTS, GRUPOS } from '../api/catalogo.js';
 import { numero } from '../api/formato.js';
@@ -28,6 +30,28 @@ export async function montar(raiz, estado) {
     el('p', {}, 'Foi feito como Projeto de Extensão VI do curso de Direito, em 2026.2.')));
   raiz.append(oQueE);
 
+  const quais = secao({
+    titulo: 'Quais municípios, e por que esses',
+    descricao: 'A fronteira do site é jurídica, não geográfica.',
+  });
+  quais.corpo.append(el('div', { class: 'texto-longo' },
+    el('p', {}, 'O site cobre os nove municípios da Região Metropolitana do Cariri, instituída '
+      + 'pela Lei Complementar Estadual nº 78, de 26 de junho de 2009. A escolha do recorte não '
+      + 'foi de gosto: "Cariri" no uso corrente vai de nove a quase trinta municípios, dependendo '
+      + 'de quem fala e do critério, e um site de prestação de contas precisa de uma fronteira que '
+      + 'alguém tenha definido por escrito e que possa ser conferida.'),
+    el('ul', { class: 'lista-larga' },
+      MUNICIPIOS.map((m) => el('li', {},
+        el('strong', { texto: m.nome }),
+        ' · código ', el('code', { class: 'codigo', texto: m.codigo }),
+        ' no SIM, ', el('code', { class: 'codigo', texto: m.ibge }), ' no IBGE',
+        m.codigo === MUNICIPIO.codigo ? el('strong', { texto: ' · você está vendo este' }) : null))),
+    el('p', {}, 'Os dois códigos existem porque são sistemas diferentes: o Tribunal numera os '
+      + 'municípios do Ceará por conta própria, de 001 a 184, e esse número não tem relação com o '
+      + 'código do IBGE. Quem consulta a API trocando um pelo outro recebe uma lista vazia com '
+      + 'resposta de sucesso, sem mensagem de erro nenhuma.')));
+  raiz.append(quais);
+
   const fonte = secao({ titulo: 'De onde vêm os dados' });
   fonte.corpo.append(el('div', { class: 'texto-longo' },
     el('p', {}, 'Fonte única: a ',
@@ -41,6 +65,9 @@ export async function montar(raiz, estado) {
     el('p', {}, 'A consulta parte do seu navegador direto para o TCE. Não existe servidor '
       + 'intermediário, banco de dados nem cópia dos números em outro lugar: o que você vê é o que '
       + 'o Tribunal está publicando neste momento.'),
+    el('p', {}, 'Trocar de município não muda nada além desse código: são os mesmos endpoints, '
+      + 'lidos do mesmo jeito, com o mesmo tratamento. Isso importa para quem for comparar '
+      + 'cidades — a diferença que aparecer na tela é diferença do dado, não de método.'),
     el('p', {}, 'O site cobre ' + ENDPOINTS.length + ' conjuntos de dados, distribuídos em '
       + GRUPOS.length + ' grupos, todos abertos em ',
       el('a', { href: '#/explorador', texto: 'Dados brutos' }), '.'),
@@ -78,6 +105,18 @@ export async function montar(raiz, estado) {
       el('li', {}, el('strong', { texto: 'O site mostra o que foi informado, não o que aconteceu. ' }),
         'Se a prefeitura deixou de enviar um conjunto de dados, ele aparece vazio aqui. Vazio não '
         + 'significa que nada foi gasto.'),
+      el('li', {}, el('strong', { texto: 'A completude varia de prefeitura para prefeitura. ' }),
+        'Cada município alimenta o SIM com sua própria estrutura administrativa e seu próprio '
+        + 'grau de disciplina. Um conjunto cheio numa cidade e vazio na vizinha costuma dizer mais '
+        + 'sobre quem informou do que sobre o que foi feito — e é por isso que a página de '
+        + 'Parcerias compara o mesmo endpoint em outros municípios antes de concluir qualquer '
+        + 'coisa a partir de uma tela vazia.'),
+      el('li', {}, el('strong', { texto: 'Comparar cidades exige cuidado com o tamanho delas. ' }),
+        'Juazeiro do Norte tem orçamento mais de dez vezes maior que o de Nova Olinda. Colocar os '
+        + 'totais lado a lado sem considerar população, rede de serviços e competências próprias '
+        + 'de cada município produz comparação que parece análise e não é. O site não calcula '
+        + 'valor por habitante, justamente para não sugerir uma equivalência que os números '
+        + 'sozinhos não sustentam.'),
       el('li', {}, el('strong', { texto: 'Restos a pagar não estão separados. ' }),
         'O balancete de um exercício não inclui pagamentos de empenhos de anos anteriores, então o '
         + 'total pago em um ano não é todo o dinheiro que saiu do caixa naquele ano.'),
@@ -93,9 +132,11 @@ export async function montar(raiz, estado) {
         + 'Municipal de cada cidade e o próprio TCE-CE.'))));
   raiz.append(limites);
 
+  const municipioDoBanco = municipioPorCodigo(MUNICIPIO_COM_BANCO);
   const camadas = secao({
     titulo: 'As duas fontes de dados',
-    descricao: 'Quase tudo vem do TCE ao vivo. Só três recursos dependem de um banco de apoio.',
+    descricao: 'Quase tudo vem do TCE ao vivo. Só três recursos dependem de um banco de apoio, '
+      + 'e esse banco cobre um município só.',
   });
   const situacaoBanco = el('p', { class: 'nota', texto: 'Verificando o banco de apoio...' });
   camadas.corpo.append(el('div', { class: 'texto-longo' },
@@ -105,12 +146,26 @@ export async function montar(raiz, estado) {
     el('p', {}, 'Três coisas a API não consegue fazer: procurar uma palavra, somar um fornecedor '
       + 'em vários anos de uma vez e lembrar o que já foi informado antes. Para isso existe um '
       + 'banco de apoio, carregado periodicamente a partir da mesma API, que sustenta as páginas ',
-    el('a', { href: '#/busca', texto: 'Buscar' }), ' e ',
-    el('a', { href: '#/historico', texto: 'Ano a ano' }), '.'),
+    el('a', { href: '#/busca', texto: 'Buscar' }), ', ',
+    el('a', { href: '#/historico', texto: 'Ano a ano' }), ' e ',
+    el('a', { href: '#/retificacoes', texto: 'Retificações' }), '.'),
     el('p', {}, 'O banco guarda uma cópia do que o TCE publicou em cada carga. É isso que permite '
       + 'mostrar quando um valor já informado foi retificado depois, algo que a API não registra, '
       + 'porque ela sempre devolve apenas a versão mais recente.'),
-    el('p', {}, 'Se o banco estiver fora do ar, essas duas páginas avisam e o resto do site '
+    // Sem artigo antes do nome: "apenas Crato" pede "o", "apenas Barbalha" não,
+    // e o município do banco é configurável. Dois-pontos resolve para qualquer um.
+    el('p', {}, el('strong', { texto: 'Esse banco cobre um município só: '
+      + (municipioDoBanco ? municipioDoBanco.nome : 'um apenas') + '. ' }),
+    'Guardar nove municípios passaria de 1,4 GB, contra os 500 MB do plano gratuito em que o '
+      + 'banco roda. Nos outros oito, ', el('a', { href: '#/busca', texto: 'Buscar' }), ', ',
+    el('a', { href: '#/historico', texto: 'Ano a ano' }), ' e ',
+    el('a', { href: '#/retificacoes', texto: 'Retificações' }),
+    ' saem do menu e explicam a ausência se você chegar nelas por link. Todas as demais seções '
+      + 'funcionam igual nos nove, porque falam direto com o Tribunal.'),
+    el('p', {}, 'Ampliar não é só questão de espaço: as tabelas do banco foram desenhadas quando '
+      + 'o site tratava de uma cidade só, e por isso não guardam o código do município. Incluir '
+      + 'os outros oito exige refazer a estrutura, não apenas carregar mais dados.'),
+    el('p', {}, 'Se o banco estiver fora do ar, essas páginas avisam e o resto do site '
       + 'continua funcionando igual.'),
     situacaoBanco));
   raiz.append(camadas);
@@ -118,7 +173,7 @@ export async function montar(raiz, estado) {
   banco.disponivel().then(async (ativo) => {
     if (!banco.configurado()) {
       situacaoBanco.textContent = 'Banco de apoio: não configurado nesta instalação. '
-        + 'Buscar e Ano a ano ficam indisponíveis; o restante funciona normalmente.';
+        + 'Buscar, Ano a ano e Retificações ficam indisponíveis; o restante funciona normalmente.';
       return;
     }
     if (!ativo) {
