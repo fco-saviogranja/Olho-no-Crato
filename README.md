@@ -241,8 +241,17 @@ existem no Crato. As demais funcionam nos nove municípios.
 
 O município e o exercício valem para o site todo e vão na própria URL
 (`#/despesas?municipio=094&ano=2025`), então qualquer tela pode ser compartilhada
-por link. Sem município na URL e sem escolha anterior guardada, o site abre
-perguntando qual cidade.
+por link.
+
+Quem digita o endereço sem nada depois dele entra pela porta da frente: a raiz
+normaliza para `#/inicio` na barra de endereço, mesmo que já exista uma cidade
+guardada no navegador. A escolha do município é a primeira decisão do site, e é
+ela que precisa aparecer para quem chega. A normalização vai por
+`history.replaceState`, não por `location.hash`, para não criar uma entrada no
+histórico — senão o botão voltar devolveria a mesma tela em vez de sair do site.
+
+Link com rota continua abrindo onde aponta, sem passar pela inicial. É o que
+sustenta a promessa de poder compartilhar qualquer tela.
 
 ## A API do TCE-CE, em resumo
 

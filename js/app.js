@@ -157,14 +157,30 @@ function anoInicial() {
   return new Date().getMonth() < 3 ? anoAtual() - 1 : anoAtual();
 }
 
+/**
+ * Quem digita o endereço sem nada depois dele entra pela porta da frente.
+ *
+ * Antes, endereço nu caía direto no Panorama, e quem já tinha uma cidade
+ * guardada no navegador nunca mais via a inicial — ia parar numa tela de
+ * números sem ter escolhido nada naquela visita. A escolha do município é a
+ * primeira decisão do site, e é ela que precisa aparecer.
+ *
+ * Vale só para o endereço nu. Link com rota continua abrindo onde aponta, que
+ * é o que sustenta a promessa de poder compartilhar qualquer tela.
+ */
 function lerHash() {
   const bruto = window.location.hash.replace(/^#\/?/, '');
   const [caminho, consulta] = bruto.split('?');
-  const id = caminho || PADRAO;
+  const id = caminho || 'inicio';
   return {
     rota: ROTAS.some((r) => r.id === id) ? id : PADRAO,
     params: new URLSearchParams(consulta || ''),
   };
+}
+
+/** True quando não há rota nenhuma no endereço: "", "#" ou "#/". */
+function enderecoNu() {
+  return window.location.hash.replace(/^#\/?/, '').split('?')[0] === '';
 }
 
 function aplicarHash({ preservarEstado } = {}) {
@@ -194,6 +210,11 @@ function aplicarHash({ preservarEstado } = {}) {
     definirMunicipio(municipioDaUrl);
     limparMemoria();
   }
+  // O endereço nu passa a mostrar #/inicio na barra. Vai por replaceState e
+  // não por location.hash: trocar o hash criaria uma entrada no histórico, e
+  // aí o botão voltar devolveria a mesma tela em vez de sair do site.
+  if (enderecoNu()) history.replaceState(null, '', '#/inicio');
+
   estado.rota = rota;
   estado.params = params;
   desenhar();
