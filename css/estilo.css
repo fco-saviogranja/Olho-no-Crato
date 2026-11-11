@@ -1,72 +1,93 @@
-/* Olho no Crato — direção 1b "Olho Aberto".
-   Cordel e xilogravura: caixa alta condensada, cantos retos, sem sombra
-   difusa, sem gradiente. Archivo carrega marca, títulos, rótulos e todo
-   número; Newsreader carrega texto corrido e explicação. A divisão é rígida:
-   número nunca em serif, parágrafo explicativo nunca em sans.
+/* Olho no Cariri — direção "Transparência com raiz".
+   Cordel e xilogravura seguem mandando: cantos retos, sem sombra difusa, sem
+   gradiente. O que mudou foi a base e a tipografia.
 
-   Tokens conforme handoff design_handoff_identidade_1b/tokens-1b.css. */
+   A base deixou de ser carvão sobre creme e passou a ser mata sobre creme: o
+   verde-escuro carrega cabeçalho, rodapé e abertura, o amarelo carrega ação e
+   navegação, e o vermelhão virou terracota, recuado para acento.
+
+   A divisão tipográfica inverteu em relação à direção anterior, que proibia
+   serifa em número. Agora Patua One, uma slab serif, carrega marca, títulos e
+   número grande; Archivo carrega rótulo, navegação, botão e número de tabela,
+   onde o alinhamento tabular pesa mais que a voz; Newsreader segue no texto
+   corrido.
+
+   Contraste: ao contrário da paleta anterior, que precisou de duas variantes
+   de exceção para alcançar os 4,5:1 exigidos, esta passa em todos os pares de
+   conteúdo. Medido par a par: verde sobre creme 13,43:1; creme sobre verde
+   13,43:1; verde sobre amarelo 7,68:1; amarelo sobre verde 7,68:1; terracota
+   sobre creme 5,56:1; creme sobre terracota 5,56:1.
+
+   Tokens conforme o arquivo de design OtzXB3b2HfUYdJrOhkQmsY. */
 
 :root {
   color-scheme: light;
 
   /* Marca */
-  --oc-vermelhao:       #E2402A;
-  --oc-vermelhao-fundo: #FBE7E2;
-  --oc-vermelhao-forte: #B22F1D;
-  --oc-carvao:          #16110E;
-  --oc-azul:            #1D4F91;
-  --oc-azul-fundo:      #E4EBF5;
-  --oc-milho:           #F0D14E;
-  --oc-creme:           #FBF7EE;
+  --oc-mata:            #182F2A;
+  --oc-mata-funda:      #081B17;
+  --oc-mata-media:      #243F35;
+  --oc-salvia:          #7C9480;
+  --oc-terracota:       #B43A23;
+  --oc-terracota-forte: #8E2C19;
+  --oc-amarelo:         #E8B83F;
+  --oc-amarelo-forte:   #D9A82E;
+  --oc-creme:           #FFF8E9;
+  --oc-creme-fundo:     #F6F1E5;
+  --oc-juta:            #B8AD91;
 
   /* Superfícies e texto */
-  --cor-fundo:         #FBF7EE;
-  --cor-superficie:    #FFFFFF;
-  --cor-superficie-2:  #F2EDE1;
-  --cor-borda:         #E4DCCB;
-  --cor-borda-forte:   #CFC4AE;
-  --cor-texto:         #16110E;
-  --cor-texto-suave:   #5E564C;
-  --cor-texto-fraco:   #8B8275;
-  --cor-acao:          #E2402A;   /* grafico: bordas, preenchimentos, marca */
-  --cor-acao-hover:    #B22F1D;
-  --cor-foco:          #1D4F91;
+  --cor-fundo:         #FFF8E9;
+  --cor-superficie:    #FFFDF5;
+  --cor-superficie-2:  #F6F1E5;
+  --cor-borda:         #D6CBB2;
+  --cor-borda-forte:   #182F2A;
+  --cor-texto:         #182F2A;
+  --cor-texto-suave:   #4A5F56;   /* 6,48:1 sobre creme */
+  --cor-texto-fraco:   #5E6B63;   /* 5,28:1 sobre creme */
+  --cor-acao:          #B43A23;   /* grafico: bordas, preenchimentos, marca */
+  --cor-acao-hover:    #8E2C19;
+  --cor-foco:          #B43A23;
 
-  /* O vermelhao #E2402A sobre creme da 3,93:1, e creme sobre ele da o mesmo.
-     Como o handoff exige 4,5:1 para todo texto de conteudo, texto miudo usa a
-     variante forte: 5,92:1 sobre creme e 6,33:1 sobre branco. O vermelhao vivo
-     continua nos elementos graficos e nos numeros grandes, que contam como
-     texto grande e passam com 3:1. */
-  --cor-link:          #B22F1D;
-  --cor-link-hover:    #8E3520;
-  --cor-acao-solida:       #B22F1D;
-  --cor-acao-solida-hover: #8E3520;
-  --cor-acao-solida-texto: #FBF7EE;
+  /* A terracota #B43A23 sobre creme da 5,56:1, e creme sobre ela da o mesmo.
+     Diferente do vermelhao da direcao anterior, que ficava em 3,93:1 e obrigava
+     a uma variante forte so para texto miudo, esta cor passa nos dois sentidos
+     e e usada sem excecao. */
+  --cor-link:          #B43A23;
+  --cor-link-hover:    #8E2C19;
+
+  /* O botao inverteu: era terracota com texto creme, virou amarelo com texto
+     mata. Sobe de 5,56:1 para 7,68:1 e e o que o desenho pede, porque a acao
+     precisa saltar tanto do creme quanto do verde. */
+  --cor-acao-solida:       #E8B83F;
+  --cor-acao-solida-hover: #D9A82E;
+  --cor-acao-solida-texto: #182F2A;
 
   /* Etapas da despesa. Nunca reatribuir: a mesma cor significa a mesma etapa
      em todo o sistema, do cartão ao gráfico. */
-  --etapa-previsto:    #CFC4AE;
-  --etapa-empenhado:   #F0D14E;
-  --etapa-liquidado:   #1D4F91;
-  --etapa-pago:        #E2402A;
-  --etapa-receita:     #1D4F91;
+  --etapa-previsto:    #D6CBB2;
+  --etapa-empenhado:   #243F35;
+  --etapa-liquidado:   #7C9480;
+  --etapa-pago:        #B43A23;
+  --etapa-receita:     #E8B83F;
 
   /* Estados */
   --cor-ok:            #2E6B44;
-  --cor-atencao:       #B87A0A;
-  --cor-erro:          #B22F1D;
+  --cor-atencao:       #9A6A08;
+  --cor-erro:          #B43A23;
 
   /* Série categórica dos gráficos, ordem fixa */
-  --serie-1: #E2402A;
-  --serie-2: #1D4F91;
-  --serie-3: #F0D14E;
-  --serie-4: #2E6B44;
+  --serie-1: #B43A23;
+  --serie-2: #243F35;
+  --serie-3: #E8B83F;
+  --serie-4: #7C9480;
   --serie-5: #8C4A9C;
   --serie-6: #4EA0B5;
-  --serie-7: #B87A0A;
-  --serie-8: #7A6E60;
+  --serie-7: #9A6A08;
+  --serie-8: #8A7F6B;
 
   /* Tipografia */
+  --fonte-display: 'Patua One', Georgia, 'Times New Roman', serif;
   --fonte-titulo: Archivo, 'Helvetica Neue', Arial, sans-serif;
   --fonte-texto:  Newsreader, Georgia, 'Times New Roman', serif;
   --fonte-dados:  Archivo, 'Helvetica Neue', Arial, sans-serif;
@@ -83,8 +104,11 @@
   --raio-1: 2px;
   --raio-pilula: 999px;
 
-  --sombra-1: 0 1px 0 rgba(22, 17, 14, .06);
-  --sombra-2: 0 2px 8px rgba(22, 17, 14, .10);
+  /* Sombra dura, deslocada, sem desfoque: é cartaz impresso fora de registro,
+     não elevação de interface. Continua valendo o "sem sombra difusa". */
+  --sombra-1: 2px 2px 0 rgba(8, 27, 23, .18);
+  --sombra-2: 6px 6px 0 rgba(8, 27, 23, .22);
+  --sombra-cartaz: 8px 8px 0 var(--oc-mata-funda);
 
   --largura: 1180px;
 }
@@ -94,38 +118,39 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="claro"]) {
     color-scheme: dark;
-    --cor-fundo:        #14100D;
-    --cor-superficie:   #1D1815;
-    --cor-superficie-2: #262019;
-    --cor-borda:        #362E27;
-    --cor-borda-forte:  #4C4239;
-    --cor-texto:        #F5EFE4;
-    --cor-texto-suave:  #BDB2A3;
-    --cor-texto-fraco:  #8B8275;
-    --cor-acao:         #FF6A52;
-    --cor-acao-hover:   #FF8C78;
-    --cor-foco:         #7FB2F0;
-    /* no escuro a acao clareia, entao o texto sobre ela precisa escurecer:
-       carvao sobre #FF6A52 da 6,70:1, creme daria 2,47:1 */
-    --cor-link:              #FF6A52;
-    --cor-link-hover:        #FF8C78;
-    --cor-acao-solida:       #FF6A52;
-    --cor-acao-solida-hover: #FF8C78;
-    --cor-acao-solida-texto: #14100D;
+    --cor-fundo:        #0E1F1A;
+    --cor-superficie:   #152C27;
+    --cor-superficie-2: #1D3B33;
+    --cor-borda:        #2C4A40;
+    --cor-borda-forte:  #5E7A6E;
+    --cor-texto:        #FFF8E9;
+    --cor-texto-suave:  #BFCFC5;
+    --cor-texto-fraco:  #94A79B;
+    --cor-acao:         #E8734F;
+    --cor-acao-hover:   #F2906F;
+    --cor-foco:         #E8B83F;
+    /* O botao segue amarelo tambem no escuro: amarelo sobre mata funda da
+       13,0:1, e manter a mesma cor de acao nos dois temas evita que a peca
+       mais clicada do site troque de identidade quando a luz muda. */
+    --cor-link:              #E8734F;
+    --cor-link-hover:        #F2906F;
+    --cor-acao-solida:       #E8B83F;
+    --cor-acao-solida-hover: #F2C860;
+    --cor-acao-solida-texto: #0E1F1A;
 
-    --etapa-previsto:   #4C4239;
-    --etapa-empenhado:  #F0D14E;
-    --etapa-liquidado:  #6FA4E8;
-    --etapa-pago:       #FF6A52;
-    --etapa-receita:    #6FA4E8;
+    --etapa-previsto:   #5E7A6E;
+    --etapa-empenhado:  #9FBCA6;
+    --etapa-liquidado:  #7C9480;
+    --etapa-pago:       #E8734F;
+    --etapa-receita:    #E8B83F;
 
     --cor-ok:      #6BBE8B;
     --cor-atencao: #E8B84B;
-    --cor-erro:    #FF7D69;
+    --cor-erro:    #F08A6A;
 
-    --serie-1: #FF6A52;
-    --serie-2: #6FA4E8;
-    --serie-3: #F0D14E;
+    --serie-1: #E8734F;
+    --serie-2: #9FBCA6;
+    --serie-3: #E8B83F;
     --serie-4: #6BBE8B;
     --serie-5: #C08FD0;
     --serie-6: #6FCADD;
@@ -139,36 +164,36 @@
 
 :root[data-tema="escuro"] {
   color-scheme: dark;
-  --cor-fundo:        #14100D;
-  --cor-superficie:   #1D1815;
-  --cor-superficie-2: #262019;
-  --cor-borda:        #362E27;
-  --cor-borda-forte:  #4C4239;
-  --cor-texto:        #F5EFE4;
-  --cor-texto-suave:  #BDB2A3;
-  --cor-texto-fraco:  #8B8275;
-  --cor-acao:         #FF6A52;
-  --cor-acao-hover:   #FF8C78;
-  --cor-foco:         #7FB2F0;
-  --cor-link:              #FF6A52;
-  --cor-link-hover:        #FF8C78;
-  --cor-acao-solida:       #FF6A52;
-  --cor-acao-solida-hover: #FF8C78;
-  --cor-acao-solida-texto: #14100D;
+  --cor-fundo:        #0E1F1A;
+  --cor-superficie:   #152C27;
+  --cor-superficie-2: #1D3B33;
+  --cor-borda:        #2C4A40;
+  --cor-borda-forte:  #5E7A6E;
+  --cor-texto:        #FFF8E9;
+  --cor-texto-suave:  #BFCFC5;
+  --cor-texto-fraco:  #94A79B;
+  --cor-acao:         #E8734F;
+  --cor-acao-hover:   #F2906F;
+  --cor-foco:         #E8B83F;
+  --cor-link:              #E8734F;
+  --cor-link-hover:        #F2906F;
+  --cor-acao-solida:       #E8B83F;
+  --cor-acao-solida-hover: #F2C860;
+  --cor-acao-solida-texto: #0E1F1A;
 
-  --etapa-previsto:   #4C4239;
-  --etapa-empenhado:  #F0D14E;
-  --etapa-liquidado:  #6FA4E8;
-  --etapa-pago:       #FF6A52;
-  --etapa-receita:    #6FA4E8;
+  --etapa-previsto:   #5E7A6E;
+  --etapa-empenhado:  #9FBCA6;
+  --etapa-liquidado:  #7C9480;
+  --etapa-pago:       #E8734F;
+  --etapa-receita:    #E8B83F;
 
   --cor-ok:      #6BBE8B;
   --cor-atencao: #E8B84B;
-  --cor-erro:    #FF7D69;
+  --cor-erro:    #F08A6A;
 
-  --serie-1: #FF6A52;
-  --serie-2: #6FA4E8;
-  --serie-3: #F0D14E;
+  --serie-1: #E8734F;
+  --serie-2: #9FBCA6;
+  --serie-3: #E8B83F;
   --serie-4: #6BBE8B;
   --serie-5: #C08FD0;
   --serie-6: #6FCADD;
@@ -193,15 +218,17 @@ body {
 
 /* Papéis tipográficos. Título e rótulo em Archivo caixa alta; corpo em
    Newsreader. */
+/* A caixa alta saiu junto com a Archivo. Patua One é uma slab de desenho
+   largo, pensada para título em caixa baixa; em versal ela perde o contraste
+   entre ascendente e corpo, que é justamente o que dá o ar de cartaz. */
 h1, h2, h3 {
-  font-family: var(--fonte-titulo);
-  font-weight: 800;
-  text-transform: uppercase;
+  font-family: var(--fonte-display);
+  font-weight: 400;
   margin: 0 0 var(--esp-2);
 }
-h1 { font-size: var(--txt-2xl); line-height: 1.02; letter-spacing: -.035em; }
-h2 { font-size: var(--txt-lg); line-height: 1.1;  letter-spacing: -.025em; }
-h3 { font-size: var(--txt-base); line-height: 1.15; letter-spacing: -.02em; }
+h1 { font-size: var(--txt-2xl); line-height: 1.08; letter-spacing: -.015em; }
+h2 { font-size: var(--txt-lg); line-height: 1.15; letter-spacing: -.01em; }
+h3 { font-size: var(--txt-base); line-height: 1.2; letter-spacing: 0; }
 
 p { margin: 0 0 var(--esp-2); }
 
@@ -231,7 +258,7 @@ a:hover { color: var(--cor-link-hover); }
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--oc-carvao);
+  background: var(--oc-mata);
   color: var(--oc-creme);
 }
 
@@ -246,24 +273,33 @@ a:hover { color: var(--cor-link-hover); }
   flex-wrap: wrap;
 }
 
-.marca { display: flex; align-items: center; gap: var(--esp-3); }
+/* A marca virou link para a inicial; o sublinhado de link nao serve a um
+   lockup, e a cor tambem nao: ela herda o creme do cabecalho. */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  text-decoration: none;
+  color: inherit;
+}
+.marca:hover { color: inherit; }
+.marca:hover strong { color: var(--oc-amarelo); }
 .marca-simbolo { display: block; width: 34px; height: 34px; flex: none; }
 .marca strong {
   display: block;
-  font-family: var(--fonte-titulo);
-  font-size: var(--txt-md);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  text-transform: uppercase;
+  font-family: var(--fonte-display);
+  font-size: var(--txt-lg);
+  font-weight: 400;
+  letter-spacing: -.01em;
   color: var(--oc-creme);
-  line-height: 1;
+  line-height: 1.05;
 }
 .marca-linha {
   display: block;
   font-family: var(--fonte-texto);
   font-style: italic;
   font-size: var(--txt-sm);
-  color: rgba(251, 247, 238, .72);
+  color: rgba(255, 248, 233, .72);
 }
 
 .controles { display: flex; align-items: flex-end; gap: var(--esp-2); flex-wrap: wrap; }
@@ -277,7 +313,7 @@ a:hover { color: var(--cor-link-hover); }
   color: var(--cor-texto-suave);
 }
 .campo > span { font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-.cabecalho .campo > span { color: rgba(251, 247, 238, .72); }
+.cabecalho .campo > span { color: rgba(255, 248, 233, .72); }
 
 .seletor, .campo-busca, .campo-texto,
 select, input[type="date"], input[type="search"], input[type="text"] {
@@ -292,14 +328,18 @@ select, input[type="date"], input[type="search"], input[type="text"] {
   min-height: 44px;
 }
 
+/* Faixa amarela de ponta a ponta. O padding-inline com max() faz o conteudo
+   parar na mesma coluna do resto do site sem precisar de um invólucro a mais
+   no HTML: em tela larga ele vale a sobra lateral, em tela estreita vale a
+   margem minima. */
 .navegacao {
-  max-width: var(--largura);
-  margin: 0 auto;
-  padding: 0 var(--esp-4) var(--esp-3);
+  background: var(--oc-amarelo);
+  max-width: none;
+  margin: 0;
+  padding: var(--esp-2) max(var(--esp-4), calc((100% - var(--largura)) / 2));
   display: flex;
   gap: var(--esp-4);
   flex-wrap: wrap;
-  overflow-x: auto;
 }
 
 /* O botão do menu só existe no celular; no computador as quinze seções cabem
@@ -317,7 +357,7 @@ select, input[type="date"], input[type="search"], input[type="text"] {
   padding: 0 var(--esp-4);
   color: var(--oc-creme);
   background: transparent;
-  border: 1px solid rgba(251, 247, 238, .38);
+  border: 1px solid rgba(255, 248, 233, .45);
   cursor: pointer;
 }
 .menu-icone {
@@ -339,23 +379,30 @@ select, input[type="date"], input[type="search"], input[type="text"] {
   content: "";
   position: absolute;
   left: var(--esp-2); top: 20%; bottom: 20%;
-  border-left: 1px solid rgba(251, 247, 238, .22);
+  border-left: 1px solid rgba(24, 47, 42, .28);
 }
 
+/* Sobre o amarelo o texto é mata, 7,68:1. A seção aberta ganha uma caixa
+   creme com borda, e não inversão de cor: o amarelo já é o fundo, então
+   destacar por cor deixaria de funcionar. */
 .navegacao a {
   font-family: var(--fonte-titulo);
   font-size: var(--txt-xs);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  padding: var(--esp-2) 9px;
-  color: rgba(251, 247, 238, .72);
+  letter-spacing: .02em;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  color: var(--oc-mata);
   text-decoration: none;
   white-space: nowrap;
-  transition: background 120ms ease-out, color 120ms ease-out;
+  transition: background 120ms ease-out, border-color 120ms ease-out;
 }
-.navegacao a:hover { color: var(--oc-creme); background: rgba(251, 247, 238, .12); }
-.navegacao a.ativo { background: var(--cor-acao-solida); color: var(--cor-acao-solida-texto); }
+.navegacao a:hover { background: rgba(255, 248, 233, .55); }
+.navegacao a.ativo {
+  background: var(--oc-creme);
+  border-color: var(--oc-mata);
+  font-weight: 700;
+}
 
 /* ---------- estrutura ---------- */
 
@@ -464,11 +511,10 @@ main {
   gap: var(--esp-1);
 }
 .cartao-valor {
-  font-family: var(--fonte-dados);
-  font-size: var(--txt-lg);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  font-variant-numeric: tabular-nums;
+  font-family: var(--fonte-display);
+  font-size: var(--txt-xl);
+  font-weight: 400;
+  letter-spacing: -.015em;
   color: var(--cor-texto);
 }
 /* o valor pago é o dinheiro que saiu de fato: destaque em vermelhão */
@@ -523,7 +569,7 @@ main {
 .aviso-info { border-top-color: var(--oc-azul); background: var(--oc-azul-fundo); }
 .aviso-info .aviso-icone { background: var(--oc-azul); color: #FFFFFF; }
 .aviso-alerta { border-top-color: var(--cor-atencao); }
-.aviso-alerta .aviso-icone { background: var(--cor-atencao); color: var(--oc-carvao); }
+.aviso-alerta .aviso-icone { background: var(--cor-atencao); color: var(--oc-mata); }
 .aviso-erro { border-top-color: var(--cor-erro); }
 .aviso-erro .aviso-icone { background: var(--cor-erro); color: #FFFFFF; }
 
@@ -724,9 +770,9 @@ main, .rodape { position: relative; z-index: 1; }
 .cabecalho .botao-secundario {
   background: transparent;
   color: var(--oc-creme);
-  border-color: rgba(251, 247, 238, .45);
+  border-color: rgba(255, 248, 233, .45);
 }
-.cabecalho .botao-secundario:hover { background: rgba(251, 247, 238, .14); color: var(--oc-creme); }
+.cabecalho .botao-secundario:hover { background: rgba(255, 248, 233, .14); color: var(--oc-creme); }
 
 .botao-icone {
   background: none;
@@ -1235,7 +1281,7 @@ main, .rodape { position: relative; z-index: 1; }
 /* ---------- rodapé ---------- */
 
 .rodape {
-  border-top: 4px solid var(--oc-carvao);
+  border-top: 4px solid var(--oc-mata);
   background: var(--cor-superficie);
   padding: var(--esp-6) var(--esp-4) var(--esp-10);
   color: var(--cor-texto-suave);
@@ -1351,18 +1397,18 @@ main, .rodape { position: relative; z-index: 1; }
     display: block;
     max-height: 68vh;
     overflow-y: auto;
-    border-top: 1px solid rgba(251, 247, 238, .18);
+    border-top: 1px solid rgba(24, 47, 42, .22);
   }
   .navegacao .nav-grupo { display: block; }
   /* fio separando os três grupos: principal, mais e apoio */
-  .navegacao .nav-grupo + .nav-grupo { border-top: 1px solid rgba(251, 247, 238, .18); }
+  .navegacao .nav-grupo + .nav-grupo { border-top: 1px solid rgba(24, 47, 42, .22); }
   .navegacao a {
     display: flex;
     align-items: center;
     min-height: 52px;
     padding: 0 var(--esp-4);
     font-size: var(--txt-sm);
-    border-bottom: 1px solid rgba(251, 247, 238, .07);
+    border-bottom: 1px solid rgba(24, 47, 42, .10);
   }
   .navegacao .nav-grupo > a:last-child { border-bottom: none; }
   .nav-mais, .nav-apoio { padding-left: 0; }
@@ -1417,68 +1463,315 @@ main, .rodape { position: relative; z-index: 1; }
   line-height: 1.7;
 }
 .saida-nota { color: var(--cor-texto-suave); }
-
 /* ---------------------------------------------------------------------------
-   Tela de escolha do município
+   Página inicial
    ---------------------------------------------------------------------------
-   O site cobre nove municípios e nenhum deles pode ser o padrão silencioso:
-   abrir no Crato faria quem é de Barbalha ler números de outra cidade achando
-   que são os da sua. Então a primeira visita pergunta, e só pergunta uma vez.
+   É a única página feita de faixas que sangram até a borda, e por isso a única
+   que dispensa a coluna central. As demais vivem dentro de main, que centraliza
+   e limita a largura; aqui quem centraliza é cada faixa, por dentro.
 
-   Os nove cabem numa grade sem rolagem em tela de computador, e viram coluna
-   única no celular. Caixa quadrada e borda sólida, como o resto do sistema. */
-.escolha-municipio {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: var(--esp-10) 0 var(--esp-12);
+   O padding-inline com max() repete o truque da navegação: em tela larga ele
+   vale a sobra lateral e alinha o conteúdo à mesma coluna do resto do site; em
+   tela estreita cai para a margem mínima. Sem isso seria preciso um invólucro
+   a mais em cada seção. */
+
+main.sem-coluna {
+  max-width: none;
+  padding: 0;
 }
-.escolha-municipio h1 {
-  margin: 0 0 var(--esp-3);
+
+.faixa { padding-block: var(--esp-12); }
+.faixa-interna {
+  padding-inline: max(var(--esp-4), calc((100% - var(--largura)) / 2));
 }
-.escolha-texto {
+
+.sobretitulo {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-xs);
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--oc-amarelo);
+  margin-bottom: var(--esp-4);
+}
+
+/* ---------- abertura ---------- */
+
+.faixa-abertura {
+  background: var(--oc-mata);
+  color: var(--oc-creme);
+}
+.faixa-abertura .faixa-interna {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  gap: var(--esp-12);
+  align-items: center;
+}
+.abertura-titulo {
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 1.06;
+  letter-spacing: -.02em;
+  margin-bottom: var(--esp-5);
+}
+.abertura-linha {
+  font-family: var(--fonte-texto);
+  font-size: var(--txt-md);
+  line-height: 1.6;
+  max-width: 46ch;
+  margin-bottom: var(--esp-8);
+}
+.abertura-nota {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-sm);
+  color: rgba(255, 248, 233, .78);
+  margin: var(--esp-4) 0 0;
+}
+
+/* O botão grande da abertura é o único com borda creme: ele vive sobre o
+   verde, e sem a borda o amarelo encostaria no fundo escuro sem respiro. */
+.botao-grande {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-6);
+  min-height: 56px;
+  padding: 0 var(--esp-6);
+  /* o botão da abertura é frase, não rótulo: a caixa alta do .botao vale para
+     os botões curtos da interface, mas aqui ela gritaria */
+  text-transform: none;
+  letter-spacing: 0;
+  background: var(--cor-acao-solida);
+  color: var(--cor-acao-solida-texto);
+  border: 1px solid var(--oc-creme);
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-base);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 120ms ease-out;
+}
+.botao-grande:hover { background: var(--cor-acao-solida-hover); color: var(--cor-acao-solida-texto); }
+.botao-seta { font-size: var(--txt-md); }
+
+/* Moldura de cartaz: borda amarela e sombra dura deslocada, sem desfoque. */
+.abertura-gravura { justify-self: end; max-width: 560px; width: 100%; }
+.abertura-gravura img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--oc-creme-fundo);
+  border: 3px solid var(--oc-amarelo);
+  box-shadow: var(--sombra-cartaz);
+}
+.gravura-assinatura {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-xs);
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--oc-amarelo);
+  text-align: right;
+  margin: var(--esp-4) 0 0;
+}
+
+/* ---------- faixa de confiança ---------- */
+
+.faixa-confianca {
+  background: var(--oc-amarelo);
+  color: var(--oc-mata);
+  padding-block: var(--esp-5);
+}
+.faixa-confianca .faixa-interna {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--esp-6);
+  flex-wrap: wrap;
+}
+.confianca-item {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-xs);
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.confianca-centro { font-weight: 700; }
+
+/* ---------- escolha do município ---------- */
+
+.faixa-escolha { background: var(--cor-fundo); }
+.faixa-escolha .sobretitulo { color: var(--cor-acao); }
+.escolha-cabecalho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  gap: var(--esp-8);
+  align-items: end;
+  margin-bottom: var(--esp-8);
+}
+.escolha-cabecalho h2 { font-size: var(--txt-xl); }
+.escolha-apoio {
   font-family: var(--fonte-texto);
   color: var(--cor-texto-suave);
-  line-height: 1.7;
-  margin: 0 0 var(--esp-8);
+  line-height: 1.6;
+  margin: 0;
 }
-.escolha-grade {
+.municipios-grade {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: var(--esp-3);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--esp-4);
 }
-.escolha-opcao {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.municipio-opcao {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--esp-2) var(--esp-4);
   text-align: left;
-  padding: var(--esp-4);
+  padding: var(--esp-4) var(--esp-4) var(--esp-4) var(--esp-5);
   background: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-left: 4px solid var(--cor-acao);
-  border-radius: var(--raio-0);
+  border: 1px solid var(--oc-mata);
   color: inherit;
-  cursor: pointer;
   font: inherit;
-  transition: border-color 120ms, background-color 120ms;
+  cursor: pointer;
+  transition: background 120ms ease-out, box-shadow 120ms ease-out;
 }
-.escolha-opcao strong {
+.municipio-uf {
+  grid-column: 1;
   font-family: var(--fonte-titulo);
-  font-size: var(--txt-md);
-  letter-spacing: 0.01em;
-}
-.escolha-opcao span {
-  font-family: var(--fonte-mono);
   font-size: var(--txt-xs);
+  letter-spacing: .09em;
   color: var(--cor-texto-fraco);
 }
-.escolha-opcao:hover {
-  border-color: var(--cor-borda-forte);
-  border-left-color: var(--cor-acao);
-  background: var(--cor-fundo);
+.municipio-opcao strong {
+  grid-column: 1;
+  font-family: var(--fonte-display);
+  font-size: var(--txt-lg);
+  font-weight: 400;
+  line-height: 1.1;
 }
-.escolha-opcao:focus-visible {
-  outline: 3px solid var(--cor-foco);
-  outline-offset: 2px;
+/* A seta é um quadrado amarelo, não um ícone solto: repete a forma da marca e
+   deixa claro onde se clica num cartão que é todo clicável. */
+.municipio-seta {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--oc-amarelo);
+  color: var(--oc-mata);
+  font-size: var(--txt-base);
+}
+.municipio-opcao:hover { background: var(--oc-creme-fundo); box-shadow: var(--sombra-2); }
+.municipio-opcao:focus-visible { outline: 3px solid var(--cor-foco); outline-offset: 2px; }
+.escolha-rodape {
+  font-family: var(--fonte-texto);
+  font-size: var(--txt-sm);
+  color: var(--cor-texto-fraco);
+  margin: var(--esp-5) 0 0;
+}
+
+/* ---------- caminhos ---------- */
+
+.faixa-caminhos {
+  background: var(--cor-acao);
+  color: var(--oc-creme);
+}
+.faixa-caminhos h2 {
+  font-size: var(--txt-xl);
+  margin-bottom: var(--esp-8);
+}
+.caminhos-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--esp-4);
+}
+.caminho-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  padding: var(--esp-5);
+  background: var(--oc-creme);
+  border: 1px solid var(--oc-mata);
+  color: var(--cor-texto);
+  text-decoration: none;
+  transition: box-shadow 120ms ease-out, transform 120ms ease-out;
+}
+.caminho-cartao:hover {
+  color: var(--cor-texto);
+  box-shadow: var(--sombra-cartaz);
+  transform: translate(-2px, -2px);
+}
+.caminho-numero {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-xs);
+  font-weight: 700;
+  letter-spacing: .09em;
+  color: var(--cor-acao);
+}
+.caminho-cartao strong {
+  font-family: var(--fonte-display);
+  font-size: var(--txt-md);
+  font-weight: 400;
+  line-height: 1.15;
+}
+.caminho-cartao p {
+  font-family: var(--fonte-texto);
+  font-size: var(--txt-sm);
+  line-height: 1.6;
+  color: var(--cor-texto-suave);
+  margin: 0;
+  flex: 1;
+}
+.caminho-chamada {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--cor-link);
+  margin-top: var(--esp-3);
+}
+
+/* ---------- como funciona ---------- */
+
+.faixa-como { background: var(--cor-fundo); }
+.faixa-como .sobretitulo { color: var(--cor-acao); }
+.como-cabecalho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--esp-12);
+}
+.como-cabecalho h2 { font-size: var(--txt-xl); line-height: 1.2; }
+.como-link {
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-sm);
+  margin-top: var(--esp-5);
+}
+.passos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--esp-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.passos li { border-top: 2px solid var(--oc-mata); padding-top: var(--esp-3); }
+.passo-numero {
+  display: block;
+  font-family: var(--fonte-display);
+  font-size: var(--txt-lg);
+  color: var(--cor-acao);
+  margin-bottom: var(--esp-2);
+}
+.passos strong {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: var(--txt-base);
+  font-weight: 700;
+  margin-bottom: var(--esp-1);
+}
+.passos p {
+  font-family: var(--fonte-texto);
+  font-size: var(--txt-sm);
+  line-height: 1.6;
+  color: var(--cor-texto-suave);
+  margin: 0;
 }
 
 /* Sem município escolhido não há seção para visitar: o menu e o botão que o
@@ -1486,4 +1779,18 @@ main, .rodape { position: relative; z-index: 1; }
 .cabecalho.sem-municipio .navegacao,
 .cabecalho.sem-municipio .menu-botao {
   display: none;
+}
+
+@media (max-width: 900px) {
+  .faixa { padding-block: var(--esp-8); }
+  .faixa-abertura .faixa-interna,
+  .escolha-cabecalho,
+  .como-cabecalho {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--esp-6);
+  }
+  /* no celular a gravura vem depois do texto, que é o que foi lido primeiro */
+  .abertura-gravura { order: 2; justify-self: stretch; }
+  .escolha-cabecalho { align-items: start; }
+  .faixa-confianca .faixa-interna { gap: var(--esp-2); }
 }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Olho no Cariri</title>
   <meta name="description" content="Consulta cidadã aos gastos públicos dos nove municípios da Região Metropolitana do Cariri, com dados oficiais da API de Dados Abertos do TCE-CE.">
-  <meta name="theme-color" content="#16110E">
+  <meta name="theme-color" content="#182F2A">
   <link rel="canonical" href="https://olhonocariri.site/">
 
   <!-- O que aparece quando alguém cola o link no WhatsApp, no Instagram ou no
@@ -29,10 +29,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Patua+One&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- o símbolo da marca é o mesmo do cabeçalho: quadrado vermelhão com olho vazado -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 46'%3E%3Crect width='46' height='46' fill='%23E2402A'/%3E%3Ccircle cx='23' cy='23' r='9' fill='none' stroke='%23FBF7EE' stroke-width='4'/%3E%3Ccircle cx='23' cy='23' r='2.5' fill='%23FBF7EE'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 46'%3E%3Crect width='46' height='46' fill='%23B43A23'/%3E%3Ccircle cx='23' cy='23' r='9' fill='none' stroke='%23FFF8E9' stroke-width='4'/%3E%3Ccircle cx='23' cy='23' r='2.5' fill='%23FFF8E9'/%3E%3C/svg%3E">
 
   <!-- Quem salva o site na tela inicial do celular ganhava um ícone genérico,
        porque não havia nenhum declarado. Agora leva a marca. -->
@@ -58,17 +58,17 @@
 
   <header class="cabecalho">
     <div class="cabecalho-topo">
-      <div class="marca">
+      <a class="marca" href="#/inicio">
         <svg class="marca-simbolo" viewBox="0 0 46 46" role="img" aria-label="Olho no Cariri">
-          <rect width="46" height="46" fill="#E2402A"/>
-          <circle cx="23" cy="23" r="9" fill="none" stroke="#FBF7EE" stroke-width="4"/>
-          <circle cx="23" cy="23" r="2.5" fill="#FBF7EE"/>
+          <rect width="46" height="46" fill="#B43A23"/>
+          <circle cx="23" cy="23" r="9" fill="none" stroke="#FFF8E9" stroke-width="4"/>
+          <circle cx="23" cy="23" r="2.5" fill="#FFF8E9"/>
         </svg>
         <div>
-          <strong>Olho no Cariri</strong>
-          <span class="marca-linha">o dinheiro de <span id="nome-municipio">Crato/CE</span>, aberto</span>
+          <strong>olho no cariri</strong>
+          <span class="marca-linha">Transparência com raiz</span>
         </div>
-      </div>
+      </a>
       <div class="controles" id="area-ano"></div>
       <!-- Só aparece no celular: com quinze seções abertas, o menu tomava dois
            terços da tela e o cabeçalho grudento cobria o que se estava lendo.

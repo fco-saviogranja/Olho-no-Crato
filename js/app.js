@@ -2,7 +2,7 @@
 // exporta montar(raiz, estado).
 
 import {
-  anoAtual, cache, definirMunicipio, MUNICIPIO, MUNICIPIO_COM_BANCO, MUNICIPIOS,
+  anoAtual, cache, definirMunicipio, MUNICIPIO, MUNICIPIO_COM_BANCO,
   municipioPorCodigo, PRIMEIRO_ANO,
 } from './api/tce.js';
 import { limparMemoria } from './api/auxiliares.js';
@@ -17,6 +17,7 @@ import {
 //           do TCE não faz. Sem banco configurado a página some do menu, e o
 //           resto do site continua funcionando igual.
 const ROTAS = [
+  { id: 'inicio', titulo: 'Início', grupo: 'principal', semAno: true, foraDoMenu: true },
   { id: 'panorama', titulo: 'Panorama', grupo: 'principal' },
   { id: 'busca', titulo: 'Buscar', grupo: 'principal', semAno: true, comBanco: true },
   { id: 'despesas', titulo: 'Para onde vai', grupo: 'principal' },
@@ -33,6 +34,8 @@ const ROTAS = [
   { id: 'glossario', titulo: 'Glossário', grupo: 'apoio' },
   { id: 'sobre', titulo: 'Sobre', grupo: 'apoio' },
 ];
+
+const PAGINA_INICIAL = ROTAS.find((r) => r.id === 'inicio');
 
 /**
  * Uma falha de rede ao carregar um módulo fica gravada no mapa de módulos do
@@ -101,7 +104,6 @@ const estado = {
     } catch {
       // sem armazenamento local a escolha vale so nesta visita
     }
-    mostrarNomeMunicipio();
     if (!mudou) return;
     // os nomes de orgao e unidade sao memorizados por municipio: sem limpar,
     // a proxima cidade herdaria as secretarias da anterior
@@ -124,19 +126,6 @@ const estado = {
     desenhar();
   },
 };
-
-/**
- * A linha de apoio da marca diz "o dinheiro de X, aberto". Antes de alguém
- * escolher, X não pode ser uma cidade: sair "o dinheiro de Crato/CE" na tela
- * que ainda está perguntando qual município seria responder antes da pergunta.
- */
-function mostrarNomeMunicipio() {
-  const alvo = document.getElementById('nome-municipio');
-  if (!alvo) return;
-  alvo.textContent = estado.municipio
-    ? MUNICIPIO.nome + '/' + MUNICIPIO.uf
-    : 'nove municípios do Cariri';
-}
 
 /**
  * Municipio da URL, depois o lembrado, depois nenhum. Nenhum nao e falha: e o
@@ -204,7 +193,6 @@ function aplicarHash({ preservarEstado } = {}) {
     estado.municipio = String(municipioDaUrl);
     definirMunicipio(municipioDaUrl);
     limparMemoria();
-    mostrarNomeMunicipio();
   }
   estado.rota = rota;
   estado.params = params;
@@ -228,7 +216,7 @@ function marcarNavegacao() {
  */
 function rotasNoMenu() {
   const temBanco = banco.configurado() && estado.municipio === MUNICIPIO_COM_BANCO;
-  return ROTAS.filter((r) => !r.comBanco || temBanco);
+  return ROTAS.filter((r) => !r.foraDoMenu && (!r.comBanco || temBanco));
 }
 
 function montarNavegacao() {
@@ -245,30 +233,6 @@ function montarNavegacao() {
         href: '#/' + r.id, dados: { rota: r.id }, texto: r.titulo,
       }))));
   }
-}
-
-/**
- * Tela de entrada. O site atende nove municípios e nenhum deles é "o padrão"
- * para quem chega: mostrar o Crato de cara faria o visitante de Barbalha ler
- * números errados achando que são os da cidade dele. Melhor perguntar uma vez
- * e lembrar depois.
- */
-function telaEscolha() {
-  return el('div', { class: 'escolha-municipio' },
-    el('h1', { texto: 'Escolha o município' }),
-    el('p', { class: 'escolha-texto' },
-      'Este site mostra as contas públicas dos nove municípios da Região '
-      + 'Metropolitana do Cariri, do jeito que cada prefeitura informou ao '
-      + 'Tribunal de Contas do Estado. Escolha por onde começar — dá para '
-      + 'trocar a qualquer momento, no alto da página.'),
-    el('div', { class: 'escolha-grade' },
-      MUNICIPIOS.map((m) => el('button', {
-        class: 'escolha-opcao',
-        type: 'button',
-        onClick: () => estado.definirMunicipio(m.codigo),
-      },
-      el('strong', { texto: m.nome }),
-      el('span', { texto: m.uf + ' · código ' + m.codigo })))));
 }
 
 /**
@@ -295,7 +259,13 @@ function telaSemBanco(rota) {
 }
 
 async function desenhar() {
-  const rota = ROTAS.find((r) => r.id === estado.rota) || ROTAS[0];
+  let rota = ROTAS.find((r) => r.id === estado.rota) || ROTAS[0];
+
+  // Sem município escolhido, tudo leva à inicial: é ela que faz a pergunta, e
+  // agora ela responde junto o que o site é. Antes havia uma tela separada só
+  // com a lista de cidades, que não dizia nada a quem chegava pela primeira vez.
+  if (!estado.municipio) rota = PAGINA_INICIAL;
+
   // o menu muda com o município, porque as rotas do banco só existem no Crato
   montarNavegacao();
   marcarNavegacao();
@@ -303,13 +273,13 @@ async function desenhar() {
   montarBarraAno();
   window.scrollTo({ top: 0 });
 
-  if (!estado.municipio) {
-    document.title = 'Olho no Cariri';
-    app.replaceChildren(telaEscolha());
-    return;
-  }
+  // A inicial é de ponta a ponta: as faixas coloridas precisam sangrar até a
+  // borda, então ela dispensa a coluna central que as outras páginas usam.
+  app.classList.toggle('sem-coluna', rota.id === 'inicio');
 
-  document.title = rota.titulo + ' · ' + MUNICIPIO.nome + ' · Olho no Cariri';
+  document.title = rota.id === 'inicio'
+    ? 'Olho no Cariri · as contas das prefeituras do Cariri'
+    : rota.titulo + ' · ' + MUNICIPIO.nome + ' · Olho no Cariri';
 
   if (rota.comBanco && estado.municipio !== MUNICIPIO_COM_BANCO) {
     app.replaceChildren(telaSemBanco(rota));
@@ -405,7 +375,6 @@ window.addEventListener('hashchange', () => aplicarHash());
 // o município decide quais rotas aparecem no menu, então vem antes dele
 estado.municipio = municipioInicial();
 if (estado.municipio) definirMunicipio(estado.municipio);
-mostrarNomeMunicipio();
 
 // desenhar() monta menu e barra, então aplicarHash dá conta da partida inteira
 aplicarHash();

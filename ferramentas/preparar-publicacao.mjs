@@ -21,6 +21,8 @@ const CONTEUDO = [
   'index.html', 'css', 'js', 'dados',
   // imagem que o WhatsApp e as redes leem ao receber o link
   'compartilhar.png',
+  // xilogravura da abertura: chapada, casario, escola e prefeitura
+  'cariri.svg',
   'robots.txt', 'sitemap.xml',
   // icones de tela inicial do celular, gerados a partir do mesmo desenho da marca
   'icone-180.png', 'icone-192.png', 'icone-512.png', 'manifest.json',

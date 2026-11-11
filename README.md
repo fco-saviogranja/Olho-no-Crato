@@ -122,50 +122,78 @@ acumulado do ano.
 
 ## Identidade visual
 
-Direção **1b "Olho Aberto"**, do handoff em
-`ESTUDOS/DIREITO/2026.2/Olho no Crato_ identidade visual/design_handoff_identidade_1b`.
-Cordel e xilogravura: caixa alta condensada, cantos retos, sem sombra difusa e
-sem gradiente.
+Direção **"Transparência com raiz"**, do arquivo de design
+`OtzXB3b2HfUYdJrOhkQmsY` no Figma. Substituiu a direção 1b "Olho Aberto" quando
+o site deixou de ser de uma cidade só.
+
+Cordel e xilogravura continuam mandando: cantos retos, sem sombra difusa e sem
+gradiente. O que mudou foi a base e a tipografia.
 
 | Papel | Cor | Onde aparece |
 |---|---|---|
-| Vermelhão | `#E2402A` | marca, etapa "pago", destaque gráfico |
-| Carvão | `#16110E` | texto principal e barra de navegação |
-| Azul cartório | `#1D4F91` | etapa "liquidado", receita, foco de teclado |
-| Milho | `#F0D14E` | etapa "empenhado" |
-| Creme | `#FBF7EE` | fundo da página |
+| Mata | `#182F2A` | cabeçalho, rodapé, abertura, texto principal |
+| Mata funda | `#081B17` | sombra dura dos cartazes |
+| Amarelo | `#E8B83F` | ação, navegação, etapa "receita" |
+| Terracota | `#B43A23` | marca, link, etapa "pago" |
+| Sálvia | `#7C9480` | etapa "liquidado" |
+| Creme | `#FFF8E9` | fundo da página e texto sobre o verde |
 
 A regra de cor dos dados não é negociável: **uma cor por etapa da despesa**,
 sempre a mesma em todo o sistema. As barras de ranking usam a cor do texto
 sólida, porque ali a hierarquia é o comprimento, não a cor.
 
-Tipografia por Google Fonts, com divisão rígida: **Archivo** carrega marca,
-títulos, rótulos e todos os números; **Newsreader** carrega texto corrido e
-explicações; **IBM Plex Mono** carrega códigos. Número nunca em serif,
-parágrafo explicativo nunca em sans.
+A sombra passou a existir, mas dura: deslocada e sem desfoque, como cartaz
+impresso fora de registro. Não é elevação de interface.
+
+Tipografia por Google Fonts, com divisão rígida, **invertida em relação à
+direção anterior**: **Patua One** carrega marca, títulos e número grande;
+**Archivo** carrega rótulo, navegação, botão e número de tabela; **Newsreader**
+carrega texto corrido e explicações; **IBM Plex Mono** carrega códigos.
+
+A inversão é deliberada. A direção anterior proibia serifa em número, e o
+desenho novo pede o contrário no título e no número de destaque, onde a slab dá
+o ar de cartaz. O número de tabela ficou em Archivo mesmo assim: ali o que pesa
+é o alinhamento tabular, e Patua One não tem figura de largura fixa.
 
 O tema escuro segue a preferência do sistema na primeira visita e a escolha
 explícita depois, guardada em `localStorage` e aplicada por `data-tema` no
-`<html>`.
+`<html>`. O verde da marca não muda com o tema: cabeçalho, rodapé e abertura são
+faixas de identidade nos dois.
 
-### Duas mudanças em relação ao handoff
+### Contraste
 
-Ambas por causa da regra de acessibilidade que o próprio handoff estabelece
-("nenhum texto de conteúdo abaixo de 4,5:1"), que a paleta original não
-alcançava em dois pontos:
+A direção anterior precisou de duas variantes de exceção para alcançar os 4,5:1
+que o próprio handoff exigia. Esta passa em todos os pares de conteúdo, medidos
+um a um:
 
-1. **Texto miúdo em vermelhão** usa a variante forte `#B22F1D`. O vermelhão
-   vivo sobre creme dá 3,93:1; a variante forte dá 5,92:1. O vermelhão vivo
-   continua nos elementos gráficos e nos números grandes, que contam como texto
-   grande e passam com 3:1.
-2. **Fundo de botão e de aba ativa** também usa `#B22F1D`, com texto creme
-   (5,92:1). Creme sobre o vermelhão vivo daria 3,93:1. No tema escuro a lógica
-   inverte: fundo `#FF6A52` com texto carvão, 6,70:1.
+| Par | Razão |
+|---|---|
+| Mata sobre creme, e creme sobre mata | 13,43:1 |
+| Mata sobre amarelo, e amarelo sobre mata | 7,68:1 |
+| Terracota sobre creme, e creme sobre terracota | 5,56:1 |
+| Verde suave `#4A5F56` sobre creme (texto secundário) | 6,48:1 |
+| Cinza-verde `#5E6B63` sobre creme (texto fraco) | 5,28:1 |
+
+Por isso o botão inverteu: era terracota com texto creme, virou amarelo com
+texto mata, que sobe de 5,56:1 para 7,68:1 e salta tanto do creme quanto do
+verde.
+
+### A página inicial
+
+É a única página feita de faixas que sangram até a borda, e a única que dispensa
+a coluna central. A ordem das seções é um argumento: primeiro o direito, depois
+a procedência dos dados, depois a escolha da cidade, depois o que dá para
+descobrir, e só então como se faz.
+
+A xilogravura da abertura está em `cariri.svg`, exportada inteira do arquivo de
+design. Ela é decorativa e vai com `alt` vazio: o que ela comunica já está dito
+no texto ao lado, e descrevê-la de novo só faria o leitor de tela repetir.
 
 ## Estrutura
 
 ```
 index.html                 casca do site
+cariri.svg                 xilogravura da abertura, exportada do Figma
 css/estilo.css             tema claro e escuro, responsivo
 js/
   app.js                   roteador por hash e estado global (exercício)
@@ -180,7 +208,7 @@ js/
     componentes.js         cartões, seções, avisos, ranking, abas, gaveta
     tabela.js              tabela com ordenação, busca, paginação e CSV
     grafico.js             rosca, linhas e colunas em SVG puro
-  paginas/                 uma por rota do site
+  paginas/                 uma por rota do site, inclusive inicio.js
 dados/
   fontes.json              Tabela III do Manual do SIM 2026 (fontes de recursos)
   subfuncoes.json          Tabela II do Manual do SIM 2026 (subfunções)
@@ -194,6 +222,7 @@ existem no Crato. As demais funcionam nos nove municípios.
 
 | Rota | O que mostra |
 |---|---|
+| `#/inicio` | Porta de entrada: o que o site é e a escolha do município |
 | `#/panorama` | Receita, orçamento e execução da despesa do exercício |
 | `#/busca` | Busca por palavra, fornecedor e preço de item em todos os anos (banco) |
 | `#/despesas` | Gasto por área, secretaria, tipo, ação e fonte de recursos |
