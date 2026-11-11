@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Gerar a imagem de compartilhamento</title>
+<!--
+  Desenha compartilhar.png, a imagem que o WhatsApp e as redes mostram quando
+  alguém cola o link do site.
+
+  É página e não script de Node porque o cartão é tipografia: Archivo para
+  marca e números, Newsreader para texto corrido, exatamente como o resto do
+  sistema. Rasterizar fonte fora do navegador exigiria biblioteca, e este
+  projeto não tem nenhuma.
+
+  Como usar:
+    node ferramentas/servidor.mjs
+    abrir http://localhost:5510/ferramentas/gerar-compartilhar.html
+    clicar em Baixar e substituir compartilhar.png na raiz
+
+  Os números não se atualizam sozinhos: estão em DADOS, logo abaixo, e foram
+  medidos somando o balancete de dezembro dos nove municípios. Refazer a conta
+  é o mesmo caminho que o Panorama faz, um exercício por município.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  body { background: #2a2420; color: #FBF7EE; font-family: Archivo, sans-serif;
+         margin: 0; padding: 24px; }
+  canvas { width: 600px; height: 315px; display: block; border: 1px solid #555; }
+  p { font-size: 13px; line-height: 1.6; max-width: 600px; }
+  button { font: inherit; padding: 8px 16px; margin-top: 12px; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="tela" width="1200" height="630"></canvas>
+<p id="estado">Carregando as fontes...</p>
+<button id="baixar" type="button">Baixar compartilhar.png</button>
+
+<script>
+// Medidos em 09/11/2026, somando o balancete de dezembro de 2025 dos nove
+// municípios da Região Metropolitana do Cariri.
+const DADOS = {
+  valor: 'R$ 3,5 bi',
+  valorNota: 'empenhado pelas nove prefeituras em 2025',
+  municipios: '9',
+  municipiosNota: 'municípios da Região Metropolitana do Cariri',
+  periodo: '2018–2026',
+  periodoNota: 'exercícios abertos para consulta',
+};
+
+const COR = {
+  fundo: '#FBF7EE',
+  carvao: '#16110E',
+  vermelhao: '#E2402A',
+  vermelhaoForte: '#B22F1D',
+  creme: '#FBF7EE',
+  suave: '#5E564C',
+  milho: '#F0D14E',
+  azul: '#1D4F91',
+};
+
+function olho(ctx, x, y, lado) {
+  // o mesmo símbolo do cabeçalho e do favicon: quadrado cheio, anel vazado
+  ctx.fillStyle = COR.vermelhao;
+  ctx.fillRect(x, y, lado, lado);
+  const c = lado / 2;
+  ctx.strokeStyle = COR.creme;
+  ctx.lineWidth = lado * 0.087;
+  ctx.beginPath();
+  ctx.arc(x + c, y + c, lado * 0.196, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.fillStyle = COR.creme;
+  ctx.beginPath();
+  ctx.arc(x + c, y + c, lado * 0.054, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function bloco(ctx, x, y, largura, cor, valor, nota) {
+  ctx.fillStyle = cor;
+  ctx.fillRect(x, y, 6, 96);
+
+  ctx.fillStyle = COR.carvao;
+  ctx.font = '800 54px Archivo';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(valor, x + 22, y + 48);
+
+  ctx.fillStyle = COR.suave;
+  ctx.font = '400 19px Newsreader';
+  // a nota quebra em duas linhas quando não cabe
+  const palavras = nota.split(' ');
+  let linha = '';
+  let alturaLinha = y + 78;
+  for (const palavra of palavras) {
+    const tentativa = linha ? linha + ' ' + palavra : palavra;
+    if (ctx.measureText(tentativa).width > largura - 30 && linha) {
+      ctx.fillText(linha, x + 22, alturaLinha);
+      linha = palavra;
+      alturaLinha += 24;
+    } else {
+      linha = tentativa;
+    }
+  }
+  if (linha) ctx.fillText(linha, x + 22, alturaLinha);
+}
+
+function desenhar() {
+  const tela = document.getElementById('tela');
+  const ctx = tela.getContext('2d');
+
+  ctx.fillStyle = COR.fundo;
+  ctx.fillRect(0, 0, 1200, 630);
+
+  // faixa de cor no alto, uma por etapa da despesa, na ordem do sistema
+  const faixas = [COR.milho, COR.azul, COR.vermelhao];
+  for (let i = 0; i < 3; i += 1) {
+    ctx.fillStyle = faixas[i];
+    ctx.fillRect(i * 400, 0, 400, 12);
+  }
+
+  olho(ctx, 80, 86, 92);
+
+  ctx.fillStyle = COR.carvao;
+  ctx.font = '800 76px Archivo';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText('OLHO NO CARIRI', 200, 148);
+
+  ctx.fillStyle = COR.suave;
+  ctx.font = 'italic 400 28px Newsreader';
+  ctx.fillText('o dinheiro das prefeituras do Cariri, aberto', 202, 186);
+
+  // régua
+  ctx.fillStyle = '#E4DCCB';
+  ctx.fillRect(80, 282, 1040, 2);
+
+  // Os blocos ficam mais perto do rodapé que da régua de propósito: com eles no
+  // meio exato sobrava um vão morto embaixo, e o cartão parecia cortado.
+  const largura = 340;
+  bloco(ctx, 80, 368, largura, COR.vermelhao, DADOS.valor, DADOS.valorNota);
+  bloco(ctx, 440, 368, largura, COR.azul, DADOS.municipios, DADOS.municipiosNota);
+  bloco(ctx, 800, 368, largura, COR.milho, DADOS.periodo, DADOS.periodoNota);
+
+  // rodapé
+  ctx.fillStyle = COR.carvao;
+  ctx.fillRect(0, 546, 1200, 84);
+
+  ctx.fillStyle = COR.creme;
+  ctx.font = '700 26px Archivo';
+  ctx.fillText('olhonocariri.site', 80, 598);
+
+  ctx.fillStyle = '#C9BCA8';
+  ctx.font = '400 20px Newsreader';
+  const direita = 'Dados abertos do TCE-CE · Projeto de Extensão VI · Direito';
+  const largTexto = ctx.measureText(direita).width;
+  ctx.fillText(direita, 1120 - largTexto, 597);
+}
+
+async function iniciar() {
+  const estado = document.getElementById('estado');
+  try {
+    await document.fonts.load('800 76px Archivo');
+    await document.fonts.load('700 26px Archivo');
+    await document.fonts.load('800 54px Archivo');
+    await document.fonts.load('italic 400 28px Newsreader');
+    await document.fonts.load('400 20px Newsreader');
+    await document.fonts.ready;
+  } catch (e) {
+    // sem as fontes o cartão sai com as substitutas, e isso é pior que não sair
+    estado.textContent = 'As fontes não carregaram: ' + e.message;
+    return;
+  }
+  desenhar();
+  const dados = document.getElementById('tela').toDataURL('image/png');
+  window.PNG = dados;
+  estado.textContent = 'Pronto. PNG com ' + dados.length + ' caracteres em base64.';
+}
+
+document.getElementById('baixar').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = window.PNG;
+  a.download = 'compartilhar.png';
+  a.click();
+});
+
+iniciar();
+</script>
+</body>
+</html>
